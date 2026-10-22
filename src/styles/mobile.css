@@ -1,0 +1,78 @@
+/*
+ * Regras globais de MOBILE / TOQUE / PWA. O que é específico de um componente
+ * fica no CSS do próprio componente (sempre na ordem: base → tablet → celular).
+ */
+
+@media (max-width: 900px) {
+  html,
+  body {
+    /* Sem "puxar para atualizar" nem efeito elástico quando o dedo desenha perto do topo/fim da folha. */
+    overscroll-behavior: none;
+  }
+
+  body {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Sem atraso de toque nem zoom por duplo toque nos controles. */
+  button,
+  [role='button'],
+  [role='tab'],
+  a,
+  label {
+    touch-action: manipulation;
+  }
+
+  /* Botões e rótulos da interface não selecionam texto no toque longo. */
+  button,
+  [role='button'],
+  [role='tab'] {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+
+  /* 16px nos campos de texto: abaixo disso o iOS dá zoom ao focar e a tela "pula". */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+/* Dispositivos só de toque: sem "hover" preso depois de um toque. */
+@media (hover: none) {
+  button:hover {
+    transition-duration: 0s;
+  }
+}
+
+/* App instalado (PWA): comportamento de app nativo. */
+@media (display-mode: standalone) {
+  html,
+  body {
+    overscroll-behavior: none;
+  }
+
+  body {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Campos e áreas de escrita continuam selecionáveis. */
+  input,
+  textarea,
+  [contenteditable='true'] {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+}
+
+/* Celular deitado: a barra superior e o respiro ficam mais baixos para sobrar altura para a folha. */
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 520px) {
+  :root {
+    --topbar-h: 46px;
+  }
+}

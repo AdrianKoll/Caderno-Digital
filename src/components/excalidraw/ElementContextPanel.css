@@ -1,0 +1,425 @@
+/*
+ * Caixa de edição de objetos — visual do painel de propriedades do Excalidraw
+ * (tema claro): cartão branco, rótulos pequenos, botões de ícone com o
+ * estado ativo em lilás (#e0dfff / #6965db). As cores são fixas de propósito
+ * (não usam as variáveis do tema escuro do app) para ficar idêntico ao original.
+ */
+.element-context-panel {
+  --ecp-bg: #ffffff;
+  --ecp-text: #1b1b1f;
+  --ecp-muted: #5c5c66;
+  --ecp-border: #dcdce3;
+  --ecp-hover: #f1f0ff;
+  --ecp-active-bg: #e0dfff;
+  --ecp-accent: #6965db;
+  --ecp-accent-strong: #4a47b1;
+
+  /* Padrão (telas estreitas): coluna fixa à direita, abaixo da topbar, que
+     para acima da barra de ferramentas (que fica embaixo da tela). */
+  position: fixed;
+  top: var(--topbar-h);
+  right: 0;
+  bottom: 130px;
+  z-index: var(--z-panel);
+  width: 264px;
+  background: var(--ecp-bg);
+  color: var(--ecp-text);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  font-size: 12px;
+  border-radius: 8px 0 0 8px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 2px 12px rgba(0, 0, 0, 0.18);
+}
+
+/* 901–1279px: o painel FLUTUA sobre a folha, no canto direito (a folha usa a
+   largura toda). É `fixed`, então não depende de rolagem nem de coluna. */
+@media (min-width: 901px) and (max-width: 1279px) {
+  .element-context-panel {
+    position: fixed;
+    top: calc(var(--topbar-h) + var(--safe-top) + 12px);
+    right: calc(12px + var(--safe-right));
+    bottom: auto;
+    left: auto;
+    z-index: var(--z-panel);
+    /* Para acima da doca de ferramentas, que fica no pé da tela (<= 1179px). */
+    max-height: calc(100dvh - var(--topbar-h) - var(--safe-top) - var(--mobile-toolbar-h, 0px) - 36px);
+    border-radius: 8px;
+  }
+}
+
+/* >= 1280px: o painel é levado (via portal, ver ExcalidrawLayer.tsx) para a
+   coluna ao lado da folha (.notebook-page__side em NotebookPage.css) — dentro
+   da estrutura da página, encostado na folha, e acompanhando a rolagem. */
+@media (min-width: 1280px) {
+  .element-context-panel {
+    position: sticky;
+    top: 16px;
+    right: auto;
+    bottom: auto;
+    z-index: auto;
+    max-height: calc(100vh - var(--topbar-h) - 40px);
+    border-radius: 8px;
+  }
+}
+
+.ecp-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.ecp-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ecp-text);
+  margin-bottom: 6px;
+}
+
+.ecp-sublabel {
+  font-size: 10.5px;
+  color: var(--ecp-muted);
+  margin: 6px 0 4px;
+}
+
+.ecp-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.ecp-row--spread {
+  justify-content: space-between;
+  color: var(--ecp-muted);
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+/* Botão "Editar texto" (abre o editor de texto formatado). */
+.ecp-edit-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 38px;
+  padding: 6px 10px;
+  background: var(--ecp-active-bg);
+  border: 1px solid var(--ecp-accent);
+  border-radius: 8px;
+  color: var(--ecp-accent-strong);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.ecp-edit-text small {
+  margin-left: auto;
+  font-weight: 500;
+  font-size: 10.5px;
+  opacity: 0.75;
+}
+
+.ecp-edit-text:hover {
+  background: #d4d2ff;
+}
+
+/* Alça de expandir/recolher: só existe no mobile. */
+.ecp-mobile-head {
+  display: none;
+}
+
+/* ---- Botões de ícone -------------------------------------------------- */
+
+.ecp-btn {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--ecp-border);
+  border-radius: 8px;
+  color: var(--ecp-text);
+  font-size: 13px;
+}
+
+.ecp-btn:hover:not(:disabled) {
+  background: var(--ecp-hover);
+}
+
+.ecp-btn.is-active {
+  background: var(--ecp-active-bg);
+  border-color: var(--ecp-accent);
+  color: var(--ecp-accent-strong);
+}
+
+.ecp-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.ecp-btn--text {
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.ecp-btn--font {
+  font-size: 14px;
+}
+
+.ecp-fontlist {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--ecp-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ecp-fontlist__item {
+  text-align: left;
+  padding: 7px 10px;
+  background: transparent;
+  border: none;
+  color: var(--ecp-text);
+  font-size: 14px;
+}
+
+.ecp-fontlist__item:hover {
+  background: var(--ecp-hover);
+}
+
+.ecp-fontlist__item.is-active {
+  background: var(--ecp-active-bg);
+  color: var(--ecp-accent-strong);
+}
+
+.ecp-slider {
+  width: 100%;
+  accent-color: var(--ecp-accent);
+}
+
+/* ---- Cores ------------------------------------------------------------ */
+
+.ecp-row--picks {
+  gap: 6px;
+}
+
+.ecp-divider {
+  width: 1px;
+  height: 22px;
+  background: var(--ecp-border);
+  margin: 0 2px;
+}
+
+.ecp-swatch {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: 6px;
+  flex: none;
+}
+
+.ecp-swatch--lg {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.ecp-swatch:hover {
+  transform: scale(1.06);
+}
+
+.ecp-swatch.is-active,
+.ecp-trigger.is-open {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--ecp-accent);
+}
+
+.ecp-swatch--transparent {
+  background-color: #fff;
+  background-image: linear-gradient(45deg, #d9d9df 25%, transparent 25%, transparent 75%, #d9d9df 75%),
+    linear-gradient(45deg, #d9d9df 25%, transparent 25%, transparent 75%, #d9d9df 75%);
+  background-size: 8px 8px;
+  background-position: 0 0, 4px 4px;
+}
+
+/* ---- Popover de cores (renderizado no <body>) --------------------------- */
+
+.ecp-popover {
+  position: fixed;
+  z-index: 1000;
+  background: #fff;
+  color: #1b1b1f;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 12px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 8px 28px rgba(0, 0, 0, 0.28);
+}
+
+.ecp-popover__title {
+  font-size: 11px;
+  font-weight: 500;
+  color: #5c5c66;
+  margin: 10px 0 6px;
+}
+
+.ecp-popover__title:first-child {
+  margin-top: 0;
+}
+
+.ecp-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  justify-items: center;
+}
+
+.ecp-shades {
+  display: flex;
+  gap: 6px;
+  justify-content: space-between;
+}
+
+.ecp-hex {
+  display: flex;
+  align-items: center;
+  height: 34px;
+  border: 1px solid #dcdce3;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ecp-hex:focus-within {
+  border-color: #6965db;
+}
+
+.ecp-hex__hash {
+  padding: 0 4px 0 10px;
+  color: #5c5c66;
+  font-family: monospace;
+}
+
+.ecp-hex__input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #1b1b1f;
+  font-family: monospace;
+  font-size: 13px;
+  text-transform: lowercase;
+}
+
+.ecp-hex__drop {
+  width: 34px;
+  height: 100%;
+  border: none;
+  border-left: 1px solid #dcdce3;
+  background: transparent;
+  color: #1b1b1f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ecp-hex__drop:hover {
+  background: #f1f0ff;
+}
+
+/*
+ * MOBILE (<= 900px): em vez de uma coluna de 264px que cobria ~70% da tela, o
+ * painel vira uma gaveta acima da barra de ferramentas. Começa recolhido (só
+ * uma pastilha "Propriedades"), abre com um toque e rola por dentro.
+ */
+@media (max-width: 900px) {
+  .element-context-panel {
+    position: fixed;
+    top: auto;
+    right: 8px;
+    left: 8px;
+    bottom: calc(var(--mobile-toolbar-h, 120px) + 8px);
+    width: auto;
+    max-height: min(48dvh, 440px);
+    z-index: var(--z-panel);
+    padding: 0 12px 14px;
+    gap: 14px;
+    border-radius: 14px;
+    overscroll-behavior: contain;
+  }
+
+  .element-context-panel.is-collapsed {
+    left: auto;
+    width: auto;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .element-context-panel.is-collapsed > :not(.ecp-mobile-head) {
+    display: none;
+  }
+
+  .ecp-mobile-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    margin: 0 -12px;
+    min-height: var(--touch-min);
+    padding: 12px;
+    background: var(--ecp-bg);
+    border: none;
+    border-radius: 14px;
+    color: var(--ecp-text);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .element-context-panel.is-collapsed .ecp-mobile-head {
+    margin: 0;
+  }
+
+  /* Alvos de toque de 44px (as cores das paletas são menores só porque são muitas, lado a lado). */
+  .ecp-btn {
+    width: var(--touch-min);
+    height: var(--touch-min);
+  }
+
+  .ecp-row {
+    gap: 8px;
+  }
+
+  .ecp-swatch {
+    width: 34px;
+    height: 34px;
+  }
+
+  .ecp-swatch--lg {
+    width: var(--touch-min);
+    height: var(--touch-min);
+  }
+
+  .ecp-slider {
+    height: 28px;
+  }
+
+  .ecp-fontlist__item {
+    padding: 12px;
+  }
+
+  .ecp-hex__input {
+    font-size: 16px;
+  }
+
+  .ecp-popover {
+    max-width: calc(100vw - 16px);
+  }
+}

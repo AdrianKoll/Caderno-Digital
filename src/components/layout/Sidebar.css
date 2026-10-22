@@ -1,0 +1,432 @@
+.sidebar {
+  height: 100%;
+  background: var(--sidebar);
+  border-right: 1px solid var(--panel-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* Área do entalhe / barra de status quando o app está em tela cheia. */
+  padding-top: var(--safe-top);
+}
+
+/* ---------- Logo ---------- */
+.sidebar__logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: var(--topbar-h);
+  padding: 0 14px 0 18px;
+  border-bottom: 1px solid var(--panel-border);
+  flex-shrink: 0;
+}
+
+.sidebar__logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #fff;
+  font-size: 20px;
+  flex-shrink: 0;
+  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
+}
+
+.sidebar__logo-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+  line-height: 1.25;
+}
+
+.sidebar__logo-text strong {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.sidebar__logo-text small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.sidebar__close {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar__close:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+
+/* ---------- Navegação ---------- */
+.sidebar__nav {
+  padding: 14px 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.sidebar__nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px;
+  border-radius: var(--radius-md);
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 500;
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sidebar__nav-item > i {
+  font-size: 18px;
+  width: 22px;
+  text-align: center;
+}
+
+.sidebar__nav-label {
+  flex: 1;
+}
+
+.sidebar__nav-badge {
+  min-width: 24px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.sidebar__nav-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+}
+
+.sidebar__nav-item.is-active {
+  background: rgba(99, 102, 241, 0.18);
+  color: var(--text);
+  box-shadow: inset 3px 0 0 var(--primary);
+}
+
+.sidebar__nav-item.is-active > i {
+  color: var(--secondary);
+}
+
+.sidebar__nav-item.is-active .sidebar__nav-badge {
+  background: rgba(99, 102, 241, 0.35);
+  color: #fff;
+}
+
+/* ---------- Matérias ---------- */
+.sidebar__section {
+  margin-top: 18px;
+  padding: 14px 14px 0;
+  border-top: 1px solid var(--panel-border);
+  flex: 1;
+  min-height: 120px;
+  overflow-y: auto;
+}
+
+.sidebar__section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 0 4px 10px;
+}
+
+.sidebar__section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sidebar__section-title i {
+  font-size: 14px;
+}
+
+.sidebar__section-header button {
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  color: var(--muted);
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar__section-header button:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.sidebar__new-subject {
+  display: flex;
+  gap: 6px;
+  padding: 0 4px 10px;
+}
+
+.sidebar__new-subject input {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 14px;
+  padding: 8px 10px;
+}
+
+.sidebar__new-subject input:focus {
+  outline: none;
+}
+
+/* ---------- Modelos de página ---------- */
+.sidebar__papers {
+  border-top: 1px solid var(--panel-border);
+  padding: 14px 16px 16px;
+  flex-shrink: 0;
+}
+
+.sidebar__papers-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.sidebar__papers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.sidebar__papers-hint {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.paper-thumb {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px 6px 8px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid transparent;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.paper-thumb:not(:disabled):hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text);
+}
+
+.paper-thumb:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.paper-thumb.is-active {
+  border-color: var(--primary);
+  background: rgba(99, 102, 241, 0.16);
+  color: var(--text);
+}
+
+.paper-thumb__preview {
+  --paper-gap: 9px;
+  --paper-grid: 9px;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 6px;
+  background-color: var(--notebook);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/*
+ * Os desenhos das miniaturas (linhas da pauta, quadrinhos) começavam no canto
+ * superior esquerdo e terminavam cortados, então pareciam descentralizados.
+ * Aqui o desenho é centralizado e a folha ganha um respiro interno igual nos
+ * quatro lados. (Só as miniaturas: a folha real não muda.)
+ */
+.paper-thumb__preview {
+  background-origin: content-box;
+  background-clip: content-box;
+  padding: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.paper-thumb__preview.paper--ruled {
+  background-size: 100% 9px;
+  background-repeat: repeat-y;
+  background-position: center;
+}
+
+.paper-thumb__preview.paper--grid {
+  background-size: 9px 9px;
+  background-position: center;
+}
+
+.paper-thumb__label {
+  text-align: center;
+}
+
+/* ---------- Rodapé ---------- */
+.sidebar__footer {
+  border-top: 1px solid var(--panel-border);
+  padding: 12px 18px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.sidebar__footer-label {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.sidebar__footer-count {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* ---------- Instalar app (PWA) ---------- */
+.sidebar__install {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: calc(100% - 32px);
+  margin: 0 16px 12px;
+  padding: 10px 14px;
+  border: 1px dashed var(--primary);
+  border-radius: var(--radius-md);
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--text);
+  font-size: 13.5px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.sidebar__install i {
+  color: var(--secondary);
+  font-size: 18px;
+}
+
+.sidebar__install small {
+  display: block;
+  color: var(--muted);
+  font-size: 11.5px;
+  font-weight: 400;
+}
+
+.sidebar__install:hover {
+  background: rgba(99, 102, 241, 0.18);
+}
+
+/* ---------- Sobre e créditos ---------- */
+.sidebar__about {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: calc(100% - 32px);
+  margin: 0 16px 10px;
+  padding: 8px 12px;
+  background: transparent;
+  color: var(--muted);
+  border: 0;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  text-align: left;
+}
+
+.sidebar__about i {
+  font-size: 15px;
+}
+
+.sidebar__about:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+
+/* ---------- Celular: alvos de toque de 44px, rolagem suave, margens seguras ---------- */
+@media (max-width: 900px) {
+  .sidebar__logo {
+    height: var(--topbar-h);
+  }
+
+  .sidebar__close {
+    width: var(--touch-min);
+    height: var(--touch-min);
+    font-size: 18px;
+  }
+
+  .sidebar__nav-item {
+    min-height: var(--touch-min);
+    padding: 10px 12px;
+  }
+
+  .sidebar__section {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .sidebar__section-header button {
+    width: var(--touch-min);
+    height: var(--touch-min);
+    font-size: 16px;
+  }
+
+  .sidebar__new-subject input {
+    min-height: var(--touch-min);
+    padding: 10px 12px;
+  }
+
+  .paper-thumb {
+    min-height: var(--touch-min);
+  }
+
+  .sidebar__install,
+  .sidebar__about {
+    min-height: var(--touch-min);
+  }
+
+  /* Rodapé da gaveta acima da barra de gestos do celular. */
+  .sidebar__footer {
+    padding-bottom: calc(12px + var(--safe-bottom));
+  }
+}

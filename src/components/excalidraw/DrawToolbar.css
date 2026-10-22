@@ -1,0 +1,259 @@
+/*
+ * Barra de ferramentas do desenho. Em telas largas (>= 1180px) ela fica no
+ * CENTRO da TopBar: o ExcalidrawLayer a encaixa, via portal, no espaço
+ * `.topbar__tools` (ver TopBar.tsx). Em telas menores não cabe ali e ela
+ * desce, fixa, para o pé da tela (regras no fim do arquivo).
+ */
+.draw-toolbar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.draw-toolbar__group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.draw-toolbar__group::-webkit-scrollbar {
+  display: none;
+}
+
+.draw-toolbar__divider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--panel-border);
+  margin: 2px 4px;
+}
+
+.draw-toolbar__btn {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.draw-toolbar__btn svg {
+  display: block;
+}
+
+.draw-toolbar__btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.draw-toolbar__btn.is-active {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Menu "três pontinhos" (imagem, quadro, laser, travar tela). Fica fora do
+   grupo de botões (que tem overflow) para não ser cortado. */
+.draw-toolbar__menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 190px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-md);
+  padding: 6px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+.draw-toolbar__menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 13px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.draw-toolbar__menu-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.draw-toolbar__menu-item.is-active {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Desfazer/refazer: só na doca (<= 1179px). */
+.draw-toolbar__btn--mobile {
+  display: none;
+}
+
+/* Alça de recolher: só existe na doca (com a barra no topo, é escondida). */
+.draw-toolbar__handle {
+  display: none;
+}
+
+/*
+ * DOCA INFERIOR (<= 1179px): abaixo disso a barra não cabe no centro da barra
+ * superior e desce para o pé da tela — celular, tablet e também o modo "site
+ * para computador" do celular (viewport ~980px). Antes ela virava um cartão
+ * flutuante e centralizado, solto sobre a folha; agora é uma barra de ponta a
+ * ponta, ancorada na borda da tela, e a folha termina acima dela.
+ *
+ * Camadas: a barra mora dentro da .topbar (z-index: var(--z-topbar)), então o
+ * z-index daqui só vale DENTRO dela — por isso a doca fica sempre acima da
+ * folha e dos painéis (--z-panel) e abaixo da gaveta e do fundo escurecido.
+ * Isso é igual em qualquer resolução/zoom, porque não depende de a barra
+ * estar ou não na altura do topo.
+ *
+ * (era: MOBILE <= 900px)
+ *  - fixa no pé da tela, de ponta a ponta, respeitando a barra de gestos;
+ *  - uma única fileira de botões de 44px que rola com o dedo (snap suave), com
+ *    desfazer/refazer na frente e a ferramenta ativa sempre trazida para a vista;
+ *  - uma alça fina no topo recolhe a doca e devolve a altura à folha.
+ * A doca publica a sua altura em --mobile-toolbar-h (ver DrawToolbar.tsx), que a
+ * folha e o painel de propriedades usam para ficar logo acima dela.
+ */
+@media (max-width: 1179px) {
+  .draw-toolbar {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+    width: auto;
+    max-width: none;
+    gap: 0;
+    z-index: var(--z-dock);
+    align-items: stretch;
+    background: var(--panel);
+    border-top: 1px solid var(--panel-border);
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.35);
+    padding: 0 var(--safe-right) var(--safe-bottom) var(--safe-left);
+  }
+
+  /* Alça: faixa fina de largura total com um "puxador" no meio. */
+  .draw-toolbar__handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 24px;
+    padding: 0;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 0;
+  }
+
+  .draw-toolbar__handle::before {
+    content: '';
+    width: 36px;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--panel-border);
+    filter: brightness(1.8);
+  }
+
+  .draw-toolbar__handle i {
+    display: none;
+  }
+
+  .draw-toolbar.is-collapsed .draw-toolbar__group {
+    display: none;
+  }
+
+  .draw-toolbar__btn--mobile {
+    display: inline-flex;
+  }
+
+  .draw-toolbar__group {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2px;
+    width: 100%;
+    max-width: none;
+    max-height: none;
+    padding: 4px 32px 8px 8px;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    scroll-padding: 0 48px;
+    /* Esmaece a borda direita para indicar que há mais botões. */
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+  }
+
+  .draw-toolbar__btn {
+    flex: 0 0 auto;
+    width: var(--touch-min);
+    min-width: var(--touch-min);
+    height: var(--touch-min);
+    scroll-snap-align: center;
+  }
+
+  /* Ordem no celular: desfazer, refazer | travar | ferramentas | mais. */
+  .draw-toolbar__btn--mobile {
+    order: -3;
+  }
+
+  .draw-toolbar__btn[aria-label='Refazer'] {
+    order: -2;
+    margin-right: 4px;
+  }
+
+  .draw-toolbar__divider {
+    display: block;
+    flex: 0 0 1px;
+    width: 1px;
+    height: 24px;
+    align-self: center;
+    margin: 0 6px;
+  }
+
+  /* Menu "mais": sobe da doca, alinhado à direita. */
+  .draw-toolbar__menu {
+    top: auto;
+    bottom: calc(100% + 8px);
+    left: auto;
+    right: 8px;
+    transform: none;
+    min-width: 230px;
+  }
+
+  .draw-toolbar__menu-item {
+    min-height: var(--touch-min);
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+}

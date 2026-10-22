@@ -1,0 +1,117 @@
+.excalidraw-layer {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.15s ease;
+}
+
+.excalidraw-layer--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.excalidraw-layer--active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 5;
+}
+
+/*
+ * "Travar tela": desenha as bordas da folha por cima do canvas. Elementos não
+ * passam delas enquanto o cadeado estiver ativo (ver canvasBounds.ts); ao
+ * destravar, a borda some e os elementos voltam a poder sair. Não captura
+ * cliques (pointer-events: none).
+ */
+.excalidraw-layer--locked::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  /* Transparente de propósito: o limite continua valendo, só não aparece.
+     Para ver a borda de novo, troque a cor abaixo. */
+  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  pointer-events: none;
+}
+
+/*
+ * ---------------------------------------------------------------------
+ * Barra de ferramentas nativa do Excalidraw: escondida
+ * ---------------------------------------------------------------------
+ * Em vez de tentar "dobrar" a barra original do Excalidraw em coluna via
+ * CSS (o que exigiria conhecer nomes de classe internos da lib, que não são
+ * API pública, mudam entre versões e — na prática — resistiram a ficar
+ * verticais numa coluna estreita), simplesmente escondemos essa barra e
+ * usamos nossa própria (`<DrawToolbar>`, ver DrawToolbar.tsx/css), fixada
+ * fora da folha, no canto direito da tela, que conversa com o Excalidraw só
+ * pela API pública dele (`setActiveTool`, `updateScene`).
+ *
+ * `.App-menu_top` é o nome da classe usada pela versão atual do pacote
+ * (@excalidraw/excalidraw ^0.18) para o contêiner do menu + barra de
+ * ferramentas + botão de biblioteca no topo. Se um dia isso parar de
+ * funcionar (a barra nativa reaparecer no topo da folha) depois de
+ * atualizar o pacote, é sinal de que o nome da classe mudou — inspecionar o
+ * elemento pelo DevTools do navegador mostra o nome novo.
+ */
+.excalidraw-layer .App-menu_top {
+  display: none !important;
+}
+
+/*
+ * Ajuste de espaço para o painel de propriedades do Excalidraw (o que
+ * aparece ao selecionar um elemento ou uma ferramenta: Stroke/Background/
+ * Stroke width...). Esse painel é uma UI separada da barra de ferramentas
+ * (por isso continua vindo do próprio Excalidraw normalmente) — só
+ * encolhemos a "pegada" dele dentro da nossa folha, que é bem mais estreita
+ * que uma tela cheia de Excalidraw:
+ *  - encolhido (~88%) e ancorado no canto superior esquerdo do próprio
+ *    espaço que ocupava, então continua clicável normalmente;
+ *  - com teto de altura + scroll interno, pra nunca ultrapassar a área da
+ *    folha caso a lista de propriedades seja longa.
+ * Escopado só dentro do NOSSO .excalidraw-layer — não afeta outros usos.
+ */
+.excalidraw-layer .panelColumn {
+  transform: scale(0.88);
+  transform-origin: top left;
+  max-height: min(70vh, 460px);
+  overflow-y: auto;
+}
+
+/*
+ * O painel de propriedades nativo do Excalidraw (Stroke/Background/...) é
+ * escondido: quem faz esse papel agora é a nossa caixa de edição de objetos
+ * (ElementContextPanel), que reproduz as mesmas funções. Sem isso os dois
+ * apareceriam ao mesmo tempo. O ajuste de escala acima fica como reserva
+ * caso alguém queira reativar o painel nativo.
+ */
+.excalidraw-layer .App-menu__left,
+.excalidraw-layer .panelColumn {
+  display: none !important;
+}
+
+/*
+ * Ferramenta "Texto" armada: camada transparente por cima do canvas que
+ * captura o toque/clique para criar (ou editar) um texto formatado ali.
+ */
+.rich-capture {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  cursor: text;
+  touch-action: none;
+}
+
+/*
+ * Celular: o Excalidraw troca de layout e mostra OUTRA interface nativa — barra
+ * de formas no topo (.App-top-bar), ferramentas soltas à direita
+ * (.mobile-misc-tools-container: biblioteca, cadeado, mão) e a barra de baixo
+ * com menu e desfazer/refazer (.App-bottom-bar). Tudo isso é substituído pela
+ * nossa barra e pelo nosso painel; desfazer/refazer ganharam botões na nossa
+ * barra (ver DrawToolbar.tsx). Se alguma peça nativa reaparecer depois de
+ * atualizar o pacote, inspecione o elemento no navegador e acrescente o nome
+ * novo da classe aqui.
+ */
+.excalidraw-layer .App-top-bar,
+.excalidraw-layer .App-bottom-bar,
+.excalidraw-layer .mobile-misc-tools-container {
+  display: none !important;
+}

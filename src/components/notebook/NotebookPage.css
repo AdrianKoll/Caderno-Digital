@@ -1,0 +1,367 @@
+/*
+ * A FOLHA DO CADERNO — layout fluido (nada de largura fixa em px para a folha).
+ *
+ * A folha ocupa a largura útil da tela (width: 100%, limitada só por
+ * --sheet-max-w, em theme.css) e NUNCA fica mais baixa que a altura útil da
+ * viewport (--sheet-min-h): em telas altas/estreitas (ex.: "site para
+ * computador" no celular) ela cresce para preencher, em vez de virar um
+ * retângulo pequeno no meio de um fundo preto.
+ *
+ * Faixas de largura (ver theme.css):
+ *   >= 1280px   3 colunas  [editor de texto | folha | propriedades] — as laterais
+ *               reservam espaço, então a folha não "pula" quando um painel abre;
+ *   901–1279px  folha com a largura toda; os painéis FLUTUAM sobre ela (position: fixed);
+ *   <= 1179px   a barra de ferramentas vira doca no pé da tela e a folha termina acima dela;
+ *   <= 900px    celular: folha em tela cheia, divisórias e abas dentro do fluxo.
+ */
+
+/* ======================================================================
+   Base (fluida) — vale para qualquer largura
+   ====================================================================== */
+.notebook-page {
+  /* Respiros da página. São variáveis porque a altura mínima da folha é
+     calculada a partir deles (têm que andar juntos). */
+  --page-pad-top: 46px; /* espaço para as abas dos tópicos, que saem acima da folha */
+  --page-pad-x: 24px;
+  --page-pad-bottom: 40px;
+
+  /* Altura útil: viewport − barra superior − respiros. */
+  --sheet-min-h: calc(100vh - var(--topbar-h) - var(--safe-top) - var(--page-pad-top) - var(--page-pad-bottom));
+
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* À direita, a folga das divisórias das matérias, que ficam coladas na borda da folha. */
+  padding: var(--page-pad-top) calc(var(--page-pad-x) + var(--tabs-gutter)) var(--page-pad-bottom) var(--page-pad-x);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+@supports (height: 100dvh) {
+  .notebook-page {
+    --sheet-min-h: calc(100dvh - var(--topbar-h) - var(--safe-top) - var(--page-pad-top) - var(--page-pad-bottom));
+  }
+}
+
+.notebook-page__sheet-wrap {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  /* Centraliza a folha; ela encolhe e cresce com a tela. */
+  display: flex;
+  justify-content: center;
+}
+
+/* Fichário: a folha é o miolo; as abas dos tópicos ficam coladas em cima e as
+   divisórias das matérias coladas na borda direita. */
+.notebook-page__book {
+  position: relative;
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: var(--sheet-max-w);
+  min-width: 0;
+}
+
+.notebook-page__topics {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 100%;
+  z-index: 0;
+  display: flex;
+}
+
+/* Faixa de cima da folha: abas dos tópicos (rolam se forem muitas) + título da página à direita. */
+.notebook-page__topics {
+  align-items: flex-end;
+}
+
+.notebook-page__topics > .topic-tabs {
+  flex: 0 1 auto;
+  max-width: 62%;
+}
+
+.notebook-page__dividers {
+  position: absolute;
+  left: 100%;
+  top: 26px;
+  bottom: 26px;
+  z-index: 0;
+  display: flex;
+}
+
+/* Colunas dos painéis (portais): a de propriedades à direita, a do editor de texto à esquerda. */
+.notebook-page__aside,
+.notebook-page__side {
+  min-width: 0;
+}
+
+.notebook-page__sheet {
+  --sheet-aspect-ratio: 3 / 4;
+
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: var(--sheet-min-h);
+  aspect-ratio: var(--sheet-aspect-ratio);
+
+  /* Cabeçalho com altura de conteúdo + canvas (texto/desenho) ocupando o
+     restante — os dois somados é que respeitam a proporção da folha. */
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+
+  background: var(--notebook);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  /* Margens internas proporcionais à tela (antes eram 28px/40px fixos). */
+  padding: clamp(18px, 2.6vw, 28px) clamp(16px, 3.4vw, 40px) clamp(20px, 3vw, 40px);
+}
+
+/* Cabeçalho: é um "container" — os campos se reorganizam pela largura da FOLHA, não da tela (ver PageHeader.css). */
+.notebook-page__meta {
+  container: sheet-head / inline-size;
+  min-width: 0;
+}
+
+.notebook-page__status {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  font-size: 12px;
+  color: var(--muted);
+  z-index: 10;
+}
+
+.notebook-page__fav {
+  position: absolute;
+  top: 12px;
+  left: 20px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0;
+  color: var(--favorite);
+  z-index: 10;
+}
+
+/* A folha "vira" quando se troca de página. */
+.notebook-page__sheet.is-turning {
+  animation: sheet-turn 0.22s ease-out;
+}
+
+@keyframes sheet-turn {
+  from {
+    opacity: 0.25;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notebook-page__sheet.is-turning {
+    animation: none;
+  }
+}
+
+/*
+ * PageCanvas — o ÚNICO espaço de coordenadas da folha: o ExcalidrawLayer é o
+ * único filho e ocupa 100% dessa área (position: absolute; inset: 0). Texto,
+ * desenho e formas vivem como elementos nativos dele. As linhas do caderno
+ * ficam no fundo do canvas (src/styles/paper.css).
+ */
+.notebook-page__canvas {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+}
+
+/* ======================================================================
+   >= 1280px — 3 colunas: [editor de texto | folha | propriedades]
+   As duas laterais têm sempre a mesma largura (mínimo 304px = painel de
+   280px + respiro), então a folha fica centralizada e NÃO se move quando um
+   painel aparece; se a tela for estreita, é a folha que encolhe, igualmente
+   dos dois lados.
+   ====================================================================== */
+@media (min-width: 1280px) {
+  .notebook-page {
+    /* O espaço das divisórias vem da coluna da direita (padding-left abaixo). */
+    padding-inline: var(--page-pad-x);
+  }
+
+  .notebook-page__sheet-wrap {
+    display: grid;
+    grid-template-columns: minmax(304px, 1fr) minmax(0, var(--sheet-max-w)) minmax(304px, 1fr);
+    justify-content: normal;
+  }
+
+  .notebook-page__aside {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding-right: 16px;
+  }
+
+  .notebook-page__book {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .notebook-page__side {
+    grid-column: 3;
+    grid-row: 1;
+    /* 16px de respiro + a largura das divisórias, que invadem esta coluna. */
+    padding-left: calc(var(--tabs-gutter) + 4px);
+  }
+}
+
+/* ======================================================================
+   901–1279px — a folha usa a largura toda; os painéis flutuam sobre ela
+   (as regras de posição estão em ElementContextPanel.css e RichTextEditor.css).
+   As colunas ficam sem tamanho, para não roubar largura da folha.
+   ====================================================================== */
+@media (min-width: 901px) and (max-width: 1279px) {
+  .notebook-page__aside,
+  .notebook-page__side {
+    flex: 0 0 0;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: visible;
+  }
+}
+
+/* ======================================================================
+   <= 1179px — a barra de ferramentas é uma doca fixa no pé da tela
+   (DrawToolbar.css) e publica a sua altura em --mobile-toolbar-h; a folha
+   termina logo acima dela, sem ficar escondida atrás.
+   ====================================================================== */
+@media (max-width: 1179px) {
+  .notebook-page {
+    --page-pad-bottom: calc(16px + var(--mobile-toolbar-h, 0px));
+  }
+}
+
+/* ======================================================================
+   <= 900px — CELULAR: a folha preenche a tela inteira, como o canvas do
+   Excalidraw — sem rolagem da página, sem proporção de papel, com uma margem
+   fina. As divisórias e as abas entram no fluxo (grade) em volta da folha.
+   ====================================================================== */
+@media (max-width: 900px) {
+  .notebook-page {
+    --page-pad-top: 6px;
+    --page-pad-x: 6px;
+    --page-pad-bottom: calc(6px + var(--mobile-toolbar-h, 0px));
+
+    padding: var(--page-pad-top) var(--page-pad-x) var(--page-pad-bottom);
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  .notebook-page__sheet-wrap {
+    flex: 1 1 0;
+    min-height: 0;
+    align-items: stretch;
+  }
+
+  /* Sem coluna lateral: o editor de texto vira doca no pé da tela. */
+  .notebook-page__aside {
+    display: none;
+  }
+
+  .notebook-page__side {
+    width: 0;
+    height: 0;
+    padding: 0;
+  }
+
+  .notebook-page__book {
+    max-width: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--touch-min);
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .notebook-page__topics {
+    position: static;
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    align-items: flex-end;
+    min-width: 0;
+  }
+
+  .notebook-page__topics > .topic-tabs {
+    max-width: 70%;
+  }
+
+  .notebook-page__dividers {
+    position: relative;
+    left: auto;
+    top: auto;
+    bottom: auto;
+    grid-column: 2;
+    grid-row: 1 / -1;
+    display: flex;
+    min-height: 0;
+    padding-top: 6px;
+  }
+
+  .notebook-page__sheet {
+    grid-column: 1;
+    grid-row: 2;
+    height: 100%;
+    min-height: 0;
+    aspect-ratio: auto;
+    padding: 10px 8px 8px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+  }
+
+  .notebook-page__fav {
+    top: 8px;
+    left: 8px;
+    font-size: 20px;
+    padding: 4px;
+    margin: -4px;
+  }
+
+  /* O "Salvo" acompanhava a Data (escondida no celular): sai daqui. */
+  .notebook-page__status {
+    display: none;
+  }
+
+  .notebook-page__canvas {
+    min-height: 0;
+    /* Não deixa o toque longo abrir menu/seleção de texto sobre o desenho. */
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+}
+
+/* Celular estreito: margens e raio menores = mais área útil de escrita. */
+@media (max-width: 380px) {
+  .notebook-page {
+    --page-pad-x: 4px;
+    --page-pad-top: 4px;
+    --page-pad-bottom: calc(4px + var(--mobile-toolbar-h, 0px));
+  }
+
+  .notebook-page__sheet {
+    padding: 8px 6px 6px;
+    border-radius: 10px;
+  }
+}
+
+/* Celular deitado: pouca altura — margens internas mínimas. */
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 520px) {
+  .notebook-page__sheet {
+    padding: 6px 8px;
+  }
+}

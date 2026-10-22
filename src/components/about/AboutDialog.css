@@ -1,0 +1,188 @@
+.about-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  padding-top: calc(16px + var(--safe-top));
+  padding-bottom: calc(16px + var(--safe-bottom));
+  background: rgba(5, 8, 20, 0.62);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  animation: about-fade 0.15s ease-out;
+}
+
+.about-card {
+  display: flex;
+  flex-direction: column;
+  width: min(520px, 100%);
+  max-height: min(640px, 100%);
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
+  animation: about-pop 0.18s var(--ease);
+}
+
+.about-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 12px 12px 20px;
+}
+
+.about-card__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.about-card__subtitle {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.about-card__close {
+  flex-shrink: 0;
+  width: var(--touch-min);
+  height: var(--touch-min);
+  background: transparent;
+  color: var(--muted);
+  border: 0;
+  border-radius: var(--radius-md);
+  font-size: 16px;
+}
+
+.about-card__close:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+
+.about-card__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 0 20px 8px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.about-section {
+  padding: 14px 0;
+  border-top: 1px solid var(--panel-border);
+}
+
+.about-section h3 {
+  margin: 0 0 6px;
+  font-size: 14.5px;
+  font-weight: 700;
+}
+
+.about-section p {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.about-section p strong {
+  color: var(--text);
+}
+
+/* Excalidraw é o crédito obrigatório: ganha destaque sem virar um card à parte. */
+.about-section--main h3 {
+  font-size: 16px;
+}
+
+.about-section p.about-section__license {
+  color: var(--text);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.about-section p.about-section__note {
+  font-size: 12.5px;
+}
+
+.about-section__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+}
+
+.about-section a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  color: var(--secondary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.about-section a:hover {
+  color: var(--text);
+}
+
+.about-card a:focus-visible,
+.about-card button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.about-card__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 20px 18px;
+  border-top: 1px solid var(--panel-border);
+}
+
+.about-card__btn {
+  min-width: 96px;
+  min-height: var(--touch-min);
+  padding: 0 18px;
+  background: var(--primary);
+  color: #fff;
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-md);
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.about-card__btn:hover {
+  background: var(--secondary);
+}
+
+@keyframes about-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes about-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-backdrop,
+  .about-card {
+    animation: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-card__footer {
+    padding-bottom: 16px;
+  }
+
+  .about-card__btn {
+    width: 100%;
+  }
+}

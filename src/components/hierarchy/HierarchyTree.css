@@ -1,0 +1,244 @@
+.tree-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--text);
+  font-size: 14.5px;
+  user-select: none;
+}
+
+.tree-row:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.tree-row:hover .tree-row__actions,
+.tree-row:focus-within .tree-row__actions,
+.tree-page:hover .tree-row__actions,
+.tree-page:focus-within .tree-row__actions {
+  opacity: 1;
+}
+
+.tree-row__chevron {
+  width: 14px;
+  color: var(--muted);
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.tree-row__icon {
+  font-size: 16px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.tree-row__icon--subject {
+  color: var(--secondary);
+}
+
+.tree-row__label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tree-row__count {
+  color: var(--muted);
+  font-size: 12px;
+  margin-right: 4px;
+}
+
+.tree-row__actions {
+  display: flex;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.tree-row__actions button {
+  background: none;
+  border: none;
+  color: var(--muted);
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tree-row__actions button:hover {
+  background: var(--panel-border);
+  color: var(--text);
+}
+
+.tree-row__actions button.is-danger:hover {
+  background: rgba(248, 113, 113, 0.16);
+  color: var(--danger);
+}
+
+.tree-row__input {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--primary);
+  border-radius: 4px;
+  color: var(--text);
+  font-size: 14px;
+  padding: 5px 8px;
+}
+
+.tree-row__input.has-error {
+  border-color: var(--danger);
+}
+
+/* Campo de renomear + mensagem de erro logo abaixo, sem empurrar a árvore. */
+.inline-name {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+}
+
+.inline-name .tree-row__input {
+  width: 100%;
+  min-width: 0;
+}
+
+.inline-name__error {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 5;
+  max-width: 100%;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #3a1d24;
+  color: #fecaca;
+  font-size: 12px;
+  line-height: 1.3;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.tree-row__input--new {
+  margin: 2px 0 2px 22px;
+  width: calc(100% - 30px);
+}
+
+.tree-children {
+  margin-left: 18px;
+  border-left: 1px solid var(--panel-border);
+  padding-left: 6px;
+}
+
+.tree-page {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+  color: var(--muted);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+}
+
+/* O botão que abre a página ocupa a linha; as ações (renomear) ficam ao lado, fora dele. */
+.tree-page__main {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  color: inherit;
+  padding: 7px 8px;
+  border-radius: var(--radius-sm);
+  font-size: inherit;
+  text-align: left;
+}
+
+.tree-page__prefix {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.tree-page__icon {
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.tree-page:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+}
+
+.tree-page.is-active {
+  background: rgba(99, 102, 241, 0.18);
+  color: var(--text);
+}
+
+.tree-page.is-active .tree-page__icon {
+  color: var(--secondary);
+}
+
+.tree-page__label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tree-page__fav {
+  color: var(--favorite);
+  font-size: 12px;
+}
+
+.tree-empty {
+  color: var(--muted);
+  font-size: 13px;
+  padding: 4px 8px;
+}
+
+/*
+ * Toque: não existe "hover", então as ações (renomear, excluir, adicionar)
+ * ficavam invisíveis. Em telas pequenas e dispositivos de toque elas ficam
+ * sempre visíveis e com alvo de toque maior.
+ */
+@media (max-width: 900px), (hover: none) and (pointer: coarse) {
+  .tree-row {
+    min-height: var(--touch-min);
+    padding: 4px 8px;
+  }
+
+  .tree-row__actions {
+    opacity: 1;
+  }
+
+  .tree-row__actions button {
+    width: var(--touch-min);
+    height: var(--touch-min);
+    font-size: 16px;
+  }
+
+  .tree-page {
+    min-height: var(--touch-min);
+  }
+
+  .tree-page__main {
+    min-height: var(--touch-min);
+    padding: 4px 8px;
+  }
+
+  .tree-page .tree-row__actions {
+    opacity: 1;
+  }
+
+  .tree-row__input {
+    font-size: 16px;
+    padding: 8px 10px;
+  }
+}

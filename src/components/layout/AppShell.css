@@ -1,0 +1,103 @@
+/*
+ * A barra lateral deixou de ocupar uma coluna fixa do grid — agora é sempre
+ * uma "gaveta" (drawer) flutuante, acionada pelo botão de menu no TopBar,
+ * em qualquer tamanho de tela. Isso devolve toda a largura da coluna da
+ * esquerda para a folha (escrita/desenho), que é o espaço que mais importa.
+ */
+.app-shell {
+  display: grid;
+  grid-template-columns: 1fr;
+  /* A barra superior ganha a altura do entalhe/barra de status quando o app roda em tela cheia. */
+  grid-template-rows: calc(var(--topbar-h) + var(--safe-top)) minmax(0, 1fr);
+  grid-template-areas:
+    'topbar'
+    'main';
+  /* Sem 100vw: ele inclui a barra de rolagem e criava rolagem lateral. */
+  width: 100%;
+  min-width: 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.app-shell__topbar {
+  grid-area: topbar;
+  min-width: 0;
+}
+
+.app-shell__main {
+  grid-area: main;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  position: relative;
+  background: var(--bg);
+}
+
+/* Gaveta: fica fora do fluxo do grid, sobreposta ao conteúdo, fechada por
+   padrão (fora da tela à esquerda) e deslizando para dentro quando aberta. */
+.app-shell__sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: min(340px, 88vw);
+  z-index: var(--z-drawer);
+  transform: translateX(-100%);
+  /* Fechada, a gaveta sai do alcance do teclado/leitor de tela (visibility só muda depois da animação). */
+  visibility: hidden;
+  transition: transform var(--t-drawer) var(--ease), visibility 0s linear var(--t-drawer);
+  box-shadow: 4px 0 32px rgba(0, 0, 0, 0.45);
+  /* Entalhe lateral (celular deitado) e barra de gestos. */
+  padding-left: var(--safe-left);
+  background: var(--sidebar);
+  overscroll-behavior: contain;
+}
+
+.app-shell__sidebar.is-open {
+  transform: translateX(0);
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* Fundo escurecido atrás da gaveta aberta — clicar nele fecha a gaveta. */
+.app-shell__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: var(--z-drawer-backdrop);
+  animation: app-shell-backdrop-fade 0.18s ease;
+}
+
+@keyframes app-shell-backdrop-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Mobile: 100vh inclui a barra de endereço do navegador e corta o rodapé;
+   dvh acompanha a área realmente visível. */
+@media (max-width: 900px) {
+  /* No celular o conteúdo respeita as margens seguras laterais (celular deitado com entalhe). */
+  .app-shell__main {
+    padding-left: var(--safe-left);
+    padding-right: var(--safe-right);
+  }
+}
+
+/* Divisórias do fichário nas telas de lista: coladas na borda direita. */
+.app-shell__dividers {
+  position: absolute;
+  top: 24px;
+  right: var(--safe-right);
+  bottom: 24px;
+  z-index: 5;
+  display: flex;
+  pointer-events: none;
+}
+
+.app-shell__dividers > * {
+  pointer-events: auto;
+}

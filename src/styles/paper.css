@@ -1,0 +1,31 @@
+/*
+ * Estilos de folha (pautada, branca, quadriculada). Usados pela folha real
+ * (.notebook-page__canvas) e pelas miniaturas do seletor "Modelos de página"
+ * na gaveta lateral — as miniaturas só reduzem o espaçamento por variável.
+ */
+.paper {
+  --paper-gap: 36px;
+  --paper-grid: 28px;
+  background-color: transparent;
+}
+
+.paper--ruled {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent calc(var(--paper-gap) - 1px),
+    var(--notebook-lines) var(--paper-gap)
+  );
+}
+
+.paper--grid {
+  background-image:
+    linear-gradient(var(--notebook-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--notebook-grid) 1px, transparent 1px);
+  background-size: var(--paper-grid) var(--paper-grid);
+  background-position: 0 0;
+}
+
+.paper--blank {
+  background-image: none;
+}

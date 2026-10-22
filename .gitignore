@@ -1,0 +1,22 @@
+# dependências e build
+node_modules
+dist
+
+# gerados pelo TypeScript (o build usa tsc --noEmit; protege contra builds antigos)
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
+
+# ambiente local
+.env
+.env.*
+*.local
+.wrangler
+
+# sistema e editor
+.DS_Store
+Thumbs.db
+npm-debug.log*
+.vscode/*
+!.vscode/extensions.json
+.idea
