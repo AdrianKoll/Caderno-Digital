@@ -27,7 +27,11 @@ export function SubjectTabs({ onOpenMenu }: { onOpenMenu?: () => void }) {
 
   const subjects = useLiveQuery(async () => {
     const list = (await db.subjects.toArray()).sort((a, b) => a.createdAt - b.createdAt);
+<<<<<<< HEAD
     const counts = await Promise.all(list.map(async (s) => (await db.pages.where('subjectId').equals(s.id).toArray()).filter((p) => !p.deletedAt).length));
+=======
+    const counts = await Promise.all(list.map((s) => db.pages.where('subjectId').equals(s.id).count()));
+>>>>>>> origin/main
     return list.map((s, i) => ({ id: s.id, name: s.name, pages: counts[i] }));
   }, []);
 

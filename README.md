@@ -15,8 +15,11 @@ sincronização.
   setas, texto formatado com cor por letra, marcadores, painel de propriedades e
   "travar tela".
 - Favoritos, listas de "Todas as páginas" com filtros e ordenação.
+<<<<<<< HEAD
 - Lixeira para páginas, com restauração e exclusão permanente sob confirmação.
 - Backup JSON completo para baixar e restaurar os dados locais.
+=======
+>>>>>>> origin/main
 - Exportar a página aberta: imprimir (A4), PDF ou imagem PNG.
 - Layout para celular (gaveta, doca de ferramentas, alvos de toque de 44 px) e uso
   offline depois da primeira visita.
@@ -64,10 +67,14 @@ antes e depois do deploy, está em [docs/DEPLOY.md](docs/DEPLOY.md).
 
 - Matérias, tópicos, páginas e desenhos ficam no IndexedDB do navegador, neste
   aparelho e neste endereço (domínio). Limpar os dados do site apaga o caderno, e
+<<<<<<< HEAD
   trocar de domínio começa com um caderno vazio. Use **Menu → Backup local → Salvar backup**
   e mantenha uma cópia fora do aparelho.
 - Restaurar um backup substitui os dados atualmente armazenados neste navegador; o app
   pede confirmação antes da substituição. O arquivo de backup não é criptografado pelo app.
+=======
+  trocar de domínio começa com um caderno vazio.
+>>>>>>> origin/main
 - O app não tem análise de uso nem rastreamento.
 - Para carregar fontes, o navegador consulta serviços de terceiros: Inter e Caveat no
   Google Fonts e as fontes de desenho do Excalidraw em um CDN. Isso expõe o endereço
@@ -76,9 +83,14 @@ antes e depois do deploy, está em [docs/DEPLOY.md](docs/DEPLOY.md).
 
 ## Limitações conhecidas
 
+<<<<<<< HEAD
 - Excluir uma página pode ser desfeito pela lixeira. Excluir uma matéria ou tópico ainda
   remove permanentemente a estrutura e suas páginas; faça backup antes dessas operações.
 - O backup é manual: não há cópia automática, sincronização ou recuperação em servidor.
+=======
+- **Excluir é definitivo.** A lixeira ainda é só uma tela vazia, e não há exportar nem
+  importar backup dos dados.
+>>>>>>> origin/main
 - Não há sincronização entre aparelhos.
 - Mover uma página para outro tópico ainda não tem tela (a função `movePage` existe em
   `src/db/pages.ts`).

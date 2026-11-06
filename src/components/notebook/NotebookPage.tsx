@@ -6,23 +6,32 @@ import { updatePage, toggleFavorite } from '../../db/pages';
 import { useAutosave } from '../../hooks/useAutosave';
 import { createLegacyTextElement, htmlToPlainText } from '../../utils/legacyContent';
 import { PageHeader } from './PageHeader';
+<<<<<<< HEAD
 import { PageMenu } from './PageMenu';
 import { SheetAppearanceMenu } from './SheetAppearanceMenu';
+=======
+>>>>>>> origin/main
 import { ExcalidrawLayer } from '../excalidraw/ExcalidrawLayer';
 import { SubjectTabs } from '../binder/SubjectTabs';
 import { TopicTabs } from '../binder/TopicTabs';
 import { PageTitle } from '../binder/PageTitle';
 import { readableOn, subjectColor } from '../binder/colors';
+<<<<<<< HEAD
 import { MOBILE_QUERY, useMediaQuery } from '../../hooks/useMediaQuery';
 import { usePaperTone } from '../../hooks/usePaperTone';
+=======
+>>>>>>> origin/main
 import './NotebookPage.css';
 
 export function NotebookPage({ page, onOpenMenu }: { page: Page; onOpenMenu?: () => void }) {
   const subject = useLiveQuery(() => db.subjects.get(page.subjectId), [page.subjectId]);
   const topic = useLiveQuery(() => db.topics.get(page.topicId), [page.topicId]);
+<<<<<<< HEAD
   // No celular o título não ocupa a faixa de cima da folha: ele se edita pela lista (menu lateral › Todas as páginas).
   const isMobile = useMediaQuery(MOBILE_QUERY);
   const { tone: paperTone } = usePaperTone();
+=======
+>>>>>>> origin/main
 
   // Estado local espelha a data da página atual; ao trocar de página, reinicializa.
   const [date, setDate] = useState(page.date);
@@ -46,14 +55,19 @@ export function NotebookPage({ page, onOpenMenu }: { page: Page; onOpenMenu?: ()
     return () => window.clearTimeout(t);
   }, [page.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
+<<<<<<< HEAD
   const dateSave = useAutosave(date, (d) => updatePage(page.id, { date: d }), 600, page.id);
   const [sceneStatus, setSceneStatus] = useState<'saving' | 'saved' | 'error'>('saved');
   const [failedScene, setFailedScene] = useState<{ pageId: string; serialized: string } | null>(null);
   useEffect(() => setSceneStatus('saved'), [page.id]);
+=======
+  const dateStatus = useAutosave(date, (d) => updatePage(page.id, { date: d }));
+>>>>>>> origin/main
 
   // O id vem da camada de desenho: o salvamento é adiado, então a página aberta
   // pode já ser outra quando ele dispara.
   async function handleExcalidrawChange(pageId: string, serialized: string) {
+<<<<<<< HEAD
     try {
       await updatePage(pageId, { excalidrawData: serialized });
       setFailedScene(null);
@@ -69,6 +83,9 @@ export function NotebookPage({ page, onOpenMenu }: { page: Page; onOpenMenu?: ()
       setFailedScene(null);
       setSceneStatus('saved');
     } catch { setSceneStatus('error'); }
+=======
+    await updatePage(pageId, { excalidrawData: serialized });
+>>>>>>> origin/main
   }
 
   // -------------------------------------------------------------------
@@ -115,6 +132,7 @@ export function NotebookPage({ page, onOpenMenu }: { page: Page; onOpenMenu?: ()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page.id]);
 
+<<<<<<< HEAD
   const status = dateSave.status === 'error' || sceneStatus === 'error' ? 'error'
     : dateSave.status === 'saving' || sceneStatus === 'saving' ? 'saving' : 'saved';
 
@@ -123,6 +141,12 @@ export function NotebookPage({ page, onOpenMenu }: { page: Page; onOpenMenu?: ()
   const paperSpacingStyle = page.paperLineSpacing == null
     ? undefined
     : ({ '--paper-gap': `${page.paperLineSpacing}px` } as CSSProperties);
+=======
+  const status = dateStatus === 'saving' ? 'saving' : 'saved';
+
+  const color = subjectColor(page.subjectId);
+  const bookStyle = { '--tab': color, '--tab-fg': readableOn(color) } as CSSProperties;
+>>>>>>> origin/main
 
   return (
     <div className="notebook-page">
@@ -135,6 +159,7 @@ export function NotebookPage({ page, onOpenMenu }: { page: Page; onOpenMenu?: ()
           <div className="notebook-page__topics">
             <TopicTabs subjectId={page.subjectId} activeTopicId={page.topicId} />
             {/* O título da página mora aqui, ao lado da aba do tópico — e não dentro da folha. */}
+<<<<<<< HEAD
             {!isMobile && <PageTitle page={page} />}
             <SheetAppearanceMenu page={page} />
           </div>
@@ -144,6 +169,13 @@ export function NotebookPage({ page, onOpenMenu }: { page: Page; onOpenMenu?: ()
               {status === 'saving' ? 'Salvando…' : status === 'error' ? 'Não foi possível salvar' : 'Salvo'}
               {status === 'error' && <button type="button" onClick={() => { setSceneStatus('saving'); void retrySave(); }}>Tentar novamente</button>}
             </span>
+=======
+            <PageTitle page={page} />
+          </div>
+
+          <div className={`notebook-page__sheet ${flip ? 'is-turning' : ''}`}>
+            <span className="notebook-page__status">{status === 'saving' ? 'Salvando...' : 'Salvo'}</span>
+>>>>>>> origin/main
             <button
               className="notebook-page__fav"
               title={page.isFavorite ? 'Remover dos favoritos' : 'Favoritar'}
@@ -152,9 +184,12 @@ export function NotebookPage({ page, onOpenMenu }: { page: Page; onOpenMenu?: ()
               <i className={`bi ${page.isFavorite ? 'bi-star-fill' : 'bi-star'}`} />
             </button>
 
+<<<<<<< HEAD
             {/* Celular: o menu "⋯" no canto da folha (troca de página, nova página, renomear). */}
             <PageMenu page={page} />
 
+=======
+>>>>>>> origin/main
             <div className="notebook-page__meta">
               <PageHeader
                 page={{ ...page, date }}
@@ -170,11 +205,16 @@ export function NotebookPage({ page, onOpenMenu }: { page: Page; onOpenMenu?: ()
               nativos dele, no mesmo espaço de coordenadas). Não há mais uma
               segunda camada de escrita para sincronizar com a câmera.
             */}
+<<<<<<< HEAD
             <div className={`notebook-page__canvas paper paper--${page.paperStyle ?? 'ruled'}`} style={paperSpacingStyle}>
+=======
+            <div className={`notebook-page__canvas paper paper--${page.paperStyle ?? 'ruled'}`}>
+>>>>>>> origin/main
               <ExcalidrawLayer
                 pageId={page.id}
                 data={initialExcalidrawData}
                 active
+<<<<<<< HEAD
                 paperStyle={page.paperStyle ?? 'ruled'}
                 paperTone={paperTone}
                 paperLineSpacing={page.paperLineSpacing ?? (isMobile ? 30 : 36)}
@@ -183,6 +223,11 @@ export function NotebookPage({ page, onOpenMenu }: { page: Page; onOpenMenu?: ()
                 editorContainer={asideEl}
                 onChange={handleExcalidrawChange}
                 onSaveStatus={setSceneStatus}
+=======
+                panelContainer={sideEl}
+                editorContainer={asideEl}
+                onChange={handleExcalidrawChange}
+>>>>>>> origin/main
               />
             </div>
           </div>

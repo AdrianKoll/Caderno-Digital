@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* ==========================================================================
  *  CAIXA DE FERRAMENTAS DE TEXTO (editor de texto formatado)
  * ==========================================================================
@@ -22,6 +23,13 @@
  * ========================================================================== */
 
 /* ---- 1. FUNDO ESCURECIDO --------------------------------------------------- */
+=======
+/*
+ * Editor de texto formatado. A caixa de texto usa as mesmas proporções do
+ * desenho final (ver render.ts): recuo, coluna do marcador, altura de linha.
+ * Cores fixas e claras, iguais às do painel de propriedades.
+ */
+>>>>>>> origin/main
 .rte-backdrop {
   position: fixed;
   inset: 0;
@@ -29,7 +37,10 @@
   background: rgba(15, 23, 42, 0.18);
 }
 
+<<<<<<< HEAD
 /* ---- 2. BARRA FLUTUANTE ---------------------------------------------------- */
+=======
+>>>>>>> origin/main
 .rte-toolbar {
   --rte-bg: #ffffff;
   --rte-text: #1b1b1f;
@@ -38,11 +49,19 @@
   --rte-active-bg: #e0dfff;
   --rte-accent: #6965db;
   --rte-group-bg: #f6f6fa;
+<<<<<<< HEAD
   --rte-btn: var(--rte-control-size);
 
   position: fixed;
   z-index: 93;
   top: calc(var(--topbar-h, 68px) + var(--rte-toolbar-top-gap) + var(--vv-top, 0px));
+=======
+  --rte-btn: 32px;
+
+  position: fixed;
+  z-index: 93;
+  top: calc(var(--topbar-h, 68px) + 8px + var(--vv-top, 0px));
+>>>>>>> origin/main
   /* Centralizada sem `left: 50% + translateX`: aquele truque limita a largura
      da barra à metade da tela e a fazia quebrar em linhas estreitas. */
   left: 0;
@@ -55,6 +74,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+<<<<<<< HEAD
   gap: var(--rte-toolbar-gap);
   padding: var(--rte-toolbar-padding);
   background: var(--rte-bg);
@@ -65,15 +85,33 @@
 }
 
 /* ---- 3. GRUPOS E BOTÕES ---------------------------------------------------- */
+=======
+  gap: 6px;
+  padding: 6px;
+  background: var(--rte-bg);
+  color: var(--rte-text);
+  border-radius: 12px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 8px 28px rgba(0, 0, 0, 0.3);
+  font-size: 12px;
+}
+
+>>>>>>> origin/main
 /* Cada grupo é uma "pílula": quando a barra quebra em várias linhas, os grupos
    se rearranjam inteiros (nada de divisória sobrando no começo de linha). */
 .rte-group {
   display: flex;
   align-items: center;
+<<<<<<< HEAD
   gap: var(--rte-group-gap);
   padding: var(--rte-group-pad);
   background: var(--rte-group-bg);
   border-radius: var(--rte-group-radius);
+=======
+  gap: 2px;
+  padding: 2px;
+  background: var(--rte-group-bg);
+  border-radius: 9px;
+>>>>>>> origin/main
 }
 
 /* Ações (cancelar / concluir): no computador ficam no fim da barra. */
@@ -92,18 +130,30 @@
 .rte-field {
   display: inline-flex;
   align-items: center;
+<<<<<<< HEAD
   gap: var(--rte-field-gap);
+=======
+  gap: 6px;
+>>>>>>> origin/main
   color: #5c5c66;
   cursor: default;
 }
 
 .rte-field > i {
+<<<<<<< HEAD
   font-size: var(--rte-field-icon-size);
+=======
+  font-size: 15px;
+>>>>>>> origin/main
 }
 
 .rte-field__label {
   display: none;
+<<<<<<< HEAD
   font-size: var(--rte-field-label-size);
+=======
+  font-size: 11px;
+>>>>>>> origin/main
   font-weight: 600;
   white-space: nowrap;
 }
@@ -111,6 +161,7 @@
 .rte-btn {
   min-width: var(--rte-btn);
   height: var(--rte-btn);
+<<<<<<< HEAD
   padding: 0 var(--rte-btn-pad-x);
   display: inline-flex;
   align-items: center;
@@ -121,6 +172,18 @@
   border: 1px solid transparent;
   border-radius: var(--rte-btn-radius);
   font-size: var(--rte-btn-font-size);
+=======
+  padding: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: transparent;
+  color: var(--rte-text);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 15px;
+>>>>>>> origin/main
   touch-action: manipulation;
 }
 
@@ -143,12 +206,21 @@
 .rte-color-a {
   font-weight: 700;
   line-height: 1;
+<<<<<<< HEAD
   font-size: var(--rte-btn-font-size);
 }
 
 .rte-color-bar {
   width: var(--rte-color-bar-w);
   height: var(--rte-color-bar-h);
+=======
+  font-size: 15px;
+}
+
+.rte-color-bar {
+  width: 18px;
+  height: 4px;
+>>>>>>> origin/main
   border-radius: 2px;
   border: 1px solid rgba(0, 0, 0, 0.15);
 }
@@ -156,9 +228,15 @@
 .rte-btn--done {
   background: var(--rte-accent);
   color: #fff;
+<<<<<<< HEAD
   font-size: var(--rte-done-font-size);
   font-weight: 600;
   padding: 0 var(--rte-done-pad-x);
+=======
+  font-size: 13px;
+  font-weight: 600;
+  padding: 0 12px;
+>>>>>>> origin/main
 }
 
 .rte-btn--done:hover {
@@ -169,7 +247,11 @@
   color: #5c5c66;
 }
 
+<<<<<<< HEAD
 /* ---- 4. MENUS (cor / marcadores) ------------------------------------------ */
+=======
+/* ---- Menus (cor / marcadores) ------------------------------------------ */
+>>>>>>> origin/main
 .rte-menu {
   position: fixed;
   z-index: 94;
@@ -181,15 +263,26 @@
   max-width: calc(100vw - 16px);
   max-height: calc(100vh - 120px);
   overflow-y: auto;
+<<<<<<< HEAD
   padding: var(--rte-menu-pad);
   background: #fff;
   color: #1b1b1f;
   border-radius: var(--rte-menu-radius);
+=======
+  padding: 12px;
+  background: #fff;
+  color: #1b1b1f;
+  border-radius: 12px;
+>>>>>>> origin/main
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 12px 32px rgba(0, 0, 0, 0.32);
 }
 
 .rte-menu__title {
+<<<<<<< HEAD
   font-size: var(--rte-menu-title-size);
+=======
+  font-size: 11px;
+>>>>>>> origin/main
   font-weight: 600;
   color: #5c5c66;
   margin: 10px 0 6px;
@@ -207,13 +300,21 @@
 }
 
 .rte-auto {
+<<<<<<< HEAD
   height: var(--rte-auto-h);
+=======
+  height: 30px;
+>>>>>>> origin/main
   padding: 0 12px;
   background: #f4f4f8;
   border: 1px solid #dcdce3;
   border-radius: 8px;
   color: inherit;
+<<<<<<< HEAD
   font-size: var(--rte-auto-font-size);
+=======
+  font-size: 12px;
+>>>>>>> origin/main
   font-weight: 600;
 }
 
@@ -224,6 +325,7 @@
 
 .rte-palette {
   display: grid;
+<<<<<<< HEAD
   grid-template-columns: repeat(var(--rte-palette-cols), var(--rte-swatch-size));
   gap: var(--rte-palette-gap);
 }
@@ -234,6 +336,18 @@
   padding: 0;
   border: 1px solid rgba(0, 0, 0, 0.14);
   border-radius: var(--rte-swatch-radius);
+=======
+  grid-template-columns: repeat(13, 22px);
+  gap: 4px;
+}
+
+.rte-swatch {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: 5px;
+>>>>>>> origin/main
 }
 
 .rte-swatch.is-active {
@@ -242,6 +356,7 @@
 
 .rte-markers {
   display: grid;
+<<<<<<< HEAD
   gap: var(--rte-marker-gap);
 }
 
@@ -255,15 +370,38 @@
 
 .rte-marker {
   height: var(--rte-marker-h);
+=======
+  gap: 6px;
+}
+
+.rte-markers--bullets {
+  grid-template-columns: repeat(5, 44px);
+}
+
+.rte-markers--numbers {
+  grid-template-columns: repeat(3, 84px);
+}
+
+.rte-marker {
+  height: 40px;
+>>>>>>> origin/main
   background: #f8f8fb;
   border: 1px solid #dcdce3;
   border-radius: 8px;
   color: inherit;
+<<<<<<< HEAD
   font-size: var(--rte-marker-font-size);
 }
 
 .rte-marker--wide {
   font-size: var(--rte-marker-wide-font-size);
+=======
+  font-size: 20px;
+}
+
+.rte-marker--wide {
+  font-size: 12px;
+>>>>>>> origin/main
   font-weight: 600;
 }
 
@@ -272,7 +410,11 @@
   border-color: #6965db;
 }
 
+<<<<<<< HEAD
 /* ---- 5. CAIXA DE EDIÇÃO (o objeto de texto na folha) ------------------------ */
+=======
+/* ---- Caixa de edição ------------------------------------------------------ */
+>>>>>>> origin/main
 .rte-box {
   position: fixed;
   z-index: 92;
@@ -322,28 +464,49 @@
   font-family: inherit;
 }
 
+<<<<<<< HEAD
 /* ---- 6. PAINEL ENCAIXADO (coluna à esquerda da folha, telas largas) ------
+=======
+/* ---- Painel encaixado (coluna à esquerda da folha, telas largas) ----------
+>>>>>>> origin/main
    Mesmo cartão do painel de propriedades (à direita): coluna de seções com
    rótulo. Fica acima do fundo escurecido (z-index 90) para continuar clicável. */
 .rte-toolbar--docked {
   position: sticky;
+<<<<<<< HEAD
   top: var(--rte-docked-top);
+=======
+  top: 16px;
+>>>>>>> origin/main
   left: auto;
   right: auto;
   z-index: 93;
   margin: 0;
+<<<<<<< HEAD
   width: var(--rte-panel-width);
   max-width: 100%;
   max-height: calc(100vh - var(--topbar-h, 48px) - var(--rte-docked-max-height-gap));
+=======
+  width: 280px;
+  max-width: 100%;
+  max-height: calc(100vh - var(--topbar-h, 48px) - 40px);
+>>>>>>> origin/main
   overflow-y: auto;
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: stretch;
   justify-content: flex-start;
+<<<<<<< HEAD
   gap: var(--rte-panel-gap);
   padding: var(--rte-panel-padding);
   border-radius: var(--rte-panel-radius);
   font-size: var(--rte-panel-font-size);
+=======
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 12px;
+>>>>>>> origin/main
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 2px 12px rgba(0, 0, 0, 0.18);
 }
 
@@ -352,29 +515,47 @@
 @media (min-width: 901px) and (max-width: 1279px) {
   .rte-toolbar--docked {
     position: fixed;
+<<<<<<< HEAD
     top: calc(var(--topbar-h, 48px) + var(--safe-top, 0px) + var(--rte-float-panel-top-gap));
     left: calc(var(--rte-float-panel-left-gap) + var(--safe-left, 0px));
+=======
+    top: calc(var(--topbar-h, 48px) + var(--safe-top, 0px) + 12px);
+    left: calc(12px + var(--safe-left, 0px));
+>>>>>>> origin/main
     max-height: calc(100dvh - var(--topbar-h, 48px) - var(--safe-top, 0px) - var(--mobile-toolbar-h, 0px) - 36px);
   }
 }
 
 .rte-panel-title {
   order: -2;
+<<<<<<< HEAD
   font-size: var(--rte-panel-title-size);
+=======
+  font-size: 13px;
+>>>>>>> origin/main
   font-weight: 700;
   color: var(--rte-text);
 }
 
 .rte-toolbar--docked .rte-group {
   flex-wrap: wrap;
+<<<<<<< HEAD
   gap: var(--rte-docked-section-gap);
   padding: var(--rte-docked-section-padding);
+=======
+  gap: 4px;
+  padding: 6px;
+>>>>>>> origin/main
 }
 
 .rte-group__label {
   flex: 0 0 100%;
   margin: 0 0 2px 2px;
+<<<<<<< HEAD
   font-size: var(--rte-group-label-size);
+=======
+  font-size: 11px;
+>>>>>>> origin/main
   font-weight: 600;
   color: #5c5c66;
 }
@@ -395,8 +576,13 @@
 .rte-toolbar--docked .rte-group--steppers {
   flex-direction: column;
   align-items: stretch;
+<<<<<<< HEAD
   gap: var(--rte-docked-stepper-gap);
   padding: var(--rte-docked-stepper-padding);
+=======
+  gap: 8px;
+  padding: 8px;
+>>>>>>> origin/main
 }
 
 .rte-toolbar--docked .rte-field {
@@ -419,7 +605,11 @@
   overflow: visible;
   background: #fbfbfd;
   border: 1px solid var(--rte-border, #dcdce3);
+<<<<<<< HEAD
   border-radius: var(--rte-panel-radius);
+=======
+  border-radius: 8px;
+>>>>>>> origin/main
   box-shadow: none;
 }
 
@@ -446,17 +636,29 @@
 /* ---- Telas médias: os nomes dos campos cabem, a barra pode ocupar duas linhas ---- */
 @media (min-width: 901px) and (max-width: 1180px) {
   .rte-toolbar {
+<<<<<<< HEAD
     max-width: min(var(--rte-toolbar-max-width), calc(100vw - 16px));
   }
 }
 
 /* ---- 7. DOCA DO CELULAR: no pé da tela, acima do teclado -----------------------------
+=======
+    max-width: min(720px, calc(100vw - 16px));
+  }
+}
+
+/* ---- Mobile: DOCA no pé da tela, acima do teclado -----------------------------
+>>>>>>> origin/main
    Uma fileira de botões de 44px que rola com o dedo; Cancelar/Concluir ficam
    fixos à esquerda. Cor e marcadores abrem numa folha logo acima da doca.
    (--vv-bottom = altura do teclado virtual, medida pelo visualViewport.) */
 @media (max-width: 900px) {
   .rte-toolbar--dock {
+<<<<<<< HEAD
     --rte-btn: var(--rte-control-size);
+=======
+    --rte-btn: var(--touch-min);
+>>>>>>> origin/main
     top: auto;
     bottom: var(--vv-bottom, 0px);
     left: 0;
@@ -467,9 +669,15 @@
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: center;
+<<<<<<< HEAD
     gap: var(--rte-dock-gap);
     padding: var(--rte-dock-pad) var(--rte-dock-pad) calc(var(--rte-dock-pad) + var(--dock-pad-b, 0px)) calc(var(--rte-dock-pad) + var(--safe-left, 0px));
     border-radius: var(--rte-dock-radius);
+=======
+    gap: 6px;
+    padding: 8px 8px calc(8px + var(--dock-pad-b, 0px)) calc(8px + var(--safe-left, 0px));
+    border-radius: 16px 16px 0 0;
+>>>>>>> origin/main
     max-height: none;
     overflow-x: auto;
     overflow-y: hidden;
@@ -504,7 +712,11 @@
   .rte-toolbar--dock .rte-btn--done {
     flex: 0 0 auto;
     max-width: none;
+<<<<<<< HEAD
     padding: 0 var(--rte-dock-done-pad-x);
+=======
+    padding: 0 14px;
+>>>>>>> origin/main
   }
 
   .rte-toolbar--dock .rte-group--steppers {
@@ -525,7 +737,11 @@
     margin: 0;
     width: auto;
     max-width: none;
+<<<<<<< HEAD
     max-height: var(--rte-dock-sheet-max-h);
+=======
+    max-height: min(42dvh, 360px);
+>>>>>>> origin/main
     padding: 12px;
     border-radius: 16px;
     overscroll-behavior: contain;
@@ -534,15 +750,24 @@
 
   /* Paleta: quadrados de 34px; a grade rola para o lado em vez de encolher. */
   .rte-menu--sheet .rte-palette {
+<<<<<<< HEAD
     grid-template-columns: repeat(var(--rte-palette-cols), var(--rte-dock-swatch-size));
+=======
+    grid-template-columns: repeat(13, 34px);
+>>>>>>> origin/main
     gap: 6px;
     overflow-x: auto;
     padding-bottom: 6px;
   }
 
   .rte-menu--sheet .rte-swatch {
+<<<<<<< HEAD
     width: var(--rte-dock-swatch-size);
     height: var(--rte-dock-swatch-size);
+=======
+    width: 34px;
+    height: 34px;
+>>>>>>> origin/main
   }
 
   .rte-menu--sheet .rte-auto {
@@ -558,7 +783,11 @@
   }
 
   .rte-menu--sheet .rte-marker {
+<<<<<<< HEAD
     height: var(--rte-dock-marker-h);
+=======
+    height: 48px;
+>>>>>>> origin/main
   }
 }
 

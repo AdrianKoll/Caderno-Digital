@@ -1,9 +1,17 @@
+<<<<<<< HEAD
 import { useRef, useState } from 'react';
+=======
+import { useState } from 'react';
+>>>>>>> origin/main
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../../db/db';
 import { Subject } from '../../types';
 import { TopicNode } from './TopicNode';
+<<<<<<< HEAD
 import { createTopic, topicNameTaken } from '../../db/topics';
+=======
+import { createTopic } from '../../db/topics';
+>>>>>>> origin/main
 import { renameSubject, deleteSubject, subjectNameTaken } from '../../db/subjects';
 import { InlineName } from '../rename/InlineName';
 import { NAME_MAX } from '../../utils/names';
@@ -13,9 +21,12 @@ export function SubjectNode({ subject }: { subject: Subject }) {
   const [editing, setEditing] = useState(false);
   const [addingTopic, setAddingTopic] = useState(false);
   const [newTopicName, setNewTopicName] = useState('');
+<<<<<<< HEAD
   const [topicError, setTopicError] = useState<string | null>(null);
   const creatingTopic = useRef(false);
   const topicsId = `subject-topics-${subject.id}`;
+=======
+>>>>>>> origin/main
 
   const topics = useLiveQuery(
     () => db.topics.where('subjectId').equals(subject.id).sortBy('name'),
@@ -24,12 +35,17 @@ export function SubjectNode({ subject }: { subject: Subject }) {
 
   async function handleDelete(e: React.MouseEvent) {
     e.stopPropagation();
+<<<<<<< HEAD
     if (confirm(`Excluir permanentemente a matéria "${subject.name}" e todas as suas páginas? Essa ação não usa a lixeira. Faça um backup antes de continuar.`)) {
+=======
+    if (confirm(`Excluir a matéria "${subject.name}" e todo o seu conteúdo?`)) {
+>>>>>>> origin/main
       await deleteSubject(subject.id);
     }
   }
 
   async function commitNewTopic() {
+<<<<<<< HEAD
     if (creatingTopic.current) return;
     const name = newTopicName.trim();
     if (!name) {
@@ -52,11 +68,25 @@ export function SubjectNode({ subject }: { subject: Subject }) {
     } finally {
       creatingTopic.current = false;
     }
+=======
+    if (newTopicName.trim()) {
+      await createTopic(subject.id, newTopicName.trim());
+      setExpanded(true);
+    }
+    setAddingTopic(false);
+    setNewTopicName('');
+>>>>>>> origin/main
   }
 
   return (
     <div className="tree-subject">
+<<<<<<< HEAD
       <div className="tree-row tree-row--subject">
+=======
+      <div className="tree-row tree-row--subject" onClick={() => setExpanded((v) => !v)}>
+        <i className={`bi ${expanded ? 'bi-chevron-down' : 'bi-chevron-right'} tree-row__chevron`} />
+        <i className={`bi ${expanded ? 'bi-folder2-open' : 'bi-folder-fill'} tree-row__icon tree-row__icon--subject`} />
+>>>>>>> origin/main
         {editing ? (
           <InlineName
             initial={subject.name}
@@ -70,12 +100,18 @@ export function SubjectNode({ subject }: { subject: Subject }) {
             onCancel={() => setEditing(false)}
           />
         ) : (
+<<<<<<< HEAD
           <button type="button" className="tree-row__toggle" aria-expanded={expanded} aria-controls={topicsId}
             onClick={() => setExpanded((v) => !v)}>
             <i className={`bi ${expanded ? 'bi-chevron-down' : 'bi-chevron-right'} tree-row__chevron`} aria-hidden="true" />
             <i className={`bi ${expanded ? 'bi-folder2-open' : 'bi-folder-fill'} tree-row__icon tree-row__icon--subject`} aria-hidden="true" />
             <span className="tree-row__label" title="Duplo clique para renomear" onDoubleClick={() => setEditing(true)}>{subject.name}</span>
           </button>
+=======
+          <span className="tree-row__label" title="Duplo clique para renomear" onDoubleClick={() => setEditing(true)}>
+            {subject.name}
+          </span>
+>>>>>>> origin/main
         )}
         <span className="tree-row__actions">
           <button
@@ -104,8 +140,13 @@ export function SubjectNode({ subject }: { subject: Subject }) {
           </button>
         </span>
       </div>
+<<<<<<< HEAD
       <div className="tree-children" id={topicsId} hidden={!expanded}>
         {expanded && <>
+=======
+      {expanded && (
+        <div className="tree-children">
+>>>>>>> origin/main
           {topics?.map((t) => (
             <TopicNode key={t.id} topic={t} />
           ))}
@@ -114,6 +155,7 @@ export function SubjectNode({ subject }: { subject: Subject }) {
               autoFocus
               className="tree-row__input tree-row__input--new"
               placeholder="Nome do tópico"
+<<<<<<< HEAD
               aria-label={`Nome do novo tópico em ${subject.name}`}
               value={newTopicName}
               onChange={(e) => { setNewTopicName(e.target.value); setTopicError(null); }}
@@ -127,6 +169,16 @@ export function SubjectNode({ subject }: { subject: Subject }) {
           {addingTopic && topicError && <p className="inline-name__error" role="alert">{topicError}</p>}
         </>}
       </div>
+=======
+              value={newTopicName}
+              onChange={(e) => setNewTopicName(e.target.value)}
+              onBlur={commitNewTopic}
+              onKeyDown={(e) => e.key === 'Enter' && commitNewTopic()}
+            />
+          )}
+        </div>
+      )}
+>>>>>>> origin/main
     </div>
   );
 }

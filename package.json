@@ -11,11 +11,17 @@
     "dev": "vite",
     "typecheck": "tsc --noEmit",
     "prebuild": "node scripts/generate-licenses.mjs",
+<<<<<<< HEAD
     "build": "npm run typecheck && npm run check:css && vite build",
     "preview": "vite preview",
     "licenses": "node scripts/generate-licenses.mjs",
     "check:css": "node scripts/check-css.mjs",
     "docs:tokens": "node scripts/gen-token-map.mjs"
+=======
+    "build": "npm run typecheck && vite build",
+    "preview": "vite preview",
+    "licenses": "node scripts/generate-licenses.mjs"
+>>>>>>> origin/main
   },
   "dependencies": {
     "@excalidraw/excalidraw": "^0.18.1",

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* ==========================================================================
  *  FICHÁRIO › NOME DA PÁGINA
  * ==========================================================================
@@ -16,18 +17,42 @@
   display: flex;
   align-items: center;
   gap: var(--page-title-gap);
+=======
+/*
+ * Título da página: fica na faixa das abas de tópico, logo à direita da última
+ * aba, sobre o fundo escuro (fora da folha). Parece texto e vira campo ao clicar.
+ */
+.page-title {
+  flex: 1 1 140px;
+  min-width: 0;
+  max-width: 560px;
+  height: 30px;
+  margin: 0 0 1px 2px;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+>>>>>>> origin/main
   color: var(--muted);
   cursor: text;
 }
 
 /* Com abas de tópico antes, um respiro maior separa a última aba do título. */
 .topic-tabs + .page-title {
+<<<<<<< HEAD
   margin-left: var(--page-title-after-tabs);
+=======
+  margin-left: 14px;
+>>>>>>> origin/main
 }
 
 .page-title__icon {
   flex: 0 0 auto;
+<<<<<<< HEAD
   font-size: var(--page-title-icon-size);
+=======
+  font-size: 14px;
+>>>>>>> origin/main
   opacity: 0.8;
 }
 
@@ -43,7 +68,11 @@
   outline: none;
   color: var(--text);
   font-family: var(--font-ui);
+<<<<<<< HEAD
   font-size: var(--page-title-font-size);
+=======
+  font-size: 14px;
+>>>>>>> origin/main
   font-weight: 600;
   text-overflow: ellipsis;
 }
@@ -67,3 +96,34 @@
   border-bottom-style: solid;
   border-bottom-color: var(--primary);
 }
+<<<<<<< HEAD
+=======
+
+/* Celular: a faixa fica rente à folha; alvo de toque maior, sem o ícone. */
+@media (max-width: 900px) {
+  .page-title {
+    height: var(--touch-min);
+    margin: 0 0 -4px 2px;
+    flex-basis: 120px;
+  }
+
+  .topic-tabs + .page-title {
+    margin-left: 8px;
+  }
+
+  .page-title__icon {
+    display: none;
+  }
+
+  .page-title__input {
+    font-size: 15px;
+  }
+}
+
+/* Celular deitado (pouca altura): só mostra o título quando existe um. */
+@media (max-width: 900px) and (max-height: 520px) {
+  .page-title[data-empty='true'] {
+    display: none;
+  }
+}
+>>>>>>> origin/main

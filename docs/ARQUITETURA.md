@@ -89,10 +89,15 @@ docs/                      esta documentação
 - Canvas único: texto, desenho e formas vivem como elementos do Excalidraw
   (não há mais modos Desenhar / Mapa Mental na barra superior).
 - Três estilos de folha por página — pautada, branca e quadriculada —
+<<<<<<< HEAD
   escolhidos pelo menu "Editar folha" no canto superior direito da faixa de tópico e título
   (`page.paperStyle`, estilos em `src/styles/paper.css`).
 - O fundo branco/preto da folha é escolhido no mesmo menu; sua preferência é global,
   persistente e independente do tema da interface (`hooks/usePaperTone.ts`).
+=======
+  escolhidos em "Modelos de página" na gaveta lateral (`page.paperStyle`,
+  estilos em `src/styles/paper.css`).
+>>>>>>> origin/main
 - Ícones da interface com Bootstrap Icons (`bootstrap-icons`, importado em
   `src/main.tsx`).
 - Autosave com indicador "Salvando... / Salvo" (debounce de 600ms).

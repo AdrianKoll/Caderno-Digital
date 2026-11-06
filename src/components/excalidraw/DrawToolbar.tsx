@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 import React, { useEffect, useRef, useState } from 'react';
 import { Icon, IconName } from './icons';
 import { DOCK_QUERY } from '../../hooks/useMediaQuery';
 import { DockPageButtons } from './DockPageButtons';
 import { PaperStyle } from '../../types';
+=======
+import { useEffect, useRef, useState } from 'react';
+import { Icon, IconName } from './icons';
+import { DOCK_QUERY } from '../../hooks/useMediaQuery';
+>>>>>>> origin/main
 import './DrawToolbar.css';
 
 interface Tool {
@@ -36,6 +42,7 @@ const MORE_TOOLS: Tool[] = [
   { type: 'laser', icon: 'laser', title: 'Ponteiro laser' },
 ];
 
+<<<<<<< HEAD
 /** Ícone de traço fino (desfazer / refazer na doca do celular). */
 function StrokeIcon({ children }: { children: React.ReactNode }) {
   return (
@@ -45,6 +52,8 @@ function StrokeIcon({ children }: { children: React.ReactNode }) {
   );
 }
 
+=======
+>>>>>>> origin/main
 interface Props {
   activeTool: string;
   toolLocked: boolean;
@@ -55,9 +64,12 @@ interface Props {
   onAddStickyNote: () => void;
   onUndo: () => void;
   onRedo: () => void;
+<<<<<<< HEAD
   paperStyle: PaperStyle;
   paperLineSpacing: number;
   onPaperLineSpacingChange: (spacing: number) => void;
+=======
+>>>>>>> origin/main
 }
 
 /**
@@ -75,12 +87,17 @@ export function DrawToolbar({
   onAddStickyNote,
   onUndo,
   onRedo,
+<<<<<<< HEAD
   paperStyle,
   paperLineSpacing,
   onPaperLineSpacingChange,
 }: Props) {
   const [moreOpen, setMoreOpen] = useState(false);
   const [spacingOpen, setSpacingOpen] = useState(false);
+=======
+}: Props) {
+  const [moreOpen, setMoreOpen] = useState(false);
+>>>>>>> origin/main
   // Só tem efeito na doca (a alça de recolher é escondida por CSS quando a barra está no topo).
   const [collapsed, setCollapsed] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -109,12 +126,17 @@ export function DrawToolbar({
   // Doca (<= 1179px): ela rola; mantém a ferramenta ativa à vista.
   useEffect(() => {
     if (!window.matchMedia(DOCK_QUERY).matches) return;
+<<<<<<< HEAD
     const active = wrapRef.current?.querySelector<HTMLElement>('.draw-toolbar__btn--tool.is-active');
+=======
+    const active = wrapRef.current?.querySelector<HTMLElement>('.draw-toolbar__group .is-active');
+>>>>>>> origin/main
     active?.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
   }, [activeTool]);
 
   // Fecha o menu ao clicar fora ou apertar Esc.
   useEffect(() => {
+<<<<<<< HEAD
     if (!moreOpen && !spacingOpen) return;
     const onDown = (e: PointerEvent) => {
       if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) {
@@ -127,6 +149,14 @@ export function DrawToolbar({
         setMoreOpen(false);
         setSpacingOpen(false);
       }
+=======
+    if (!moreOpen) return;
+    const onDown = (e: PointerEvent) => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) setMoreOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMoreOpen(false);
+>>>>>>> origin/main
     };
     document.addEventListener('pointerdown', onDown);
     document.addEventListener('keydown', onKey);
@@ -134,6 +164,7 @@ export function DrawToolbar({
       document.removeEventListener('pointerdown', onDown);
       document.removeEventListener('keydown', onKey);
     };
+<<<<<<< HEAD
   }, [moreOpen, spacingOpen]);
 
   const moreActive = moreOpen || MORE_TOOLS.some((t) => t.type === activeTool) || canvasLocked;
@@ -142,17 +173,28 @@ export function DrawToolbar({
     if (paperStyle !== 'ruled') setSpacingOpen(false);
   }, [paperStyle]);
 
+=======
+  }, [moreOpen]);
+
+  const moreActive = moreOpen || MORE_TOOLS.some((t) => t.type === activeTool) || canvasLocked;
+
+>>>>>>> origin/main
   const toolButton = (tool: Tool) => (
     <button
       key={tool.type}
       type="button"
       title={tool.title}
       aria-label={tool.title}
+<<<<<<< HEAD
       className={`draw-toolbar__btn draw-toolbar__btn--tool ${activeTool === tool.type ? 'is-active' : ''}`}
       onClick={() => {
         setSpacingOpen(false);
         onSelectTool(tool.type);
       }}
+=======
+      className={`draw-toolbar__btn ${activeTool === tool.type ? 'is-active' : ''}`}
+      onClick={() => onSelectTool(tool.type)}
+>>>>>>> origin/main
     >
       <Icon name={tool.icon} />
     </button>
@@ -174,6 +216,7 @@ export function DrawToolbar({
         {collapsed ? 'Mostrar ferramentas' : 'Recolher'}
       </button>
 
+<<<<<<< HEAD
       <div className="draw-toolbar__row">
       {/* Doca: desfazer/refazer ficam fixos à esquerda (no computador esta lateral é escondida por CSS). */}
       <div className="draw-toolbar__side draw-toolbar__side--left">
@@ -191,6 +234,8 @@ export function DrawToolbar({
         </button>
       </div>
 
+=======
+>>>>>>> origin/main
       <div className="draw-toolbar__group">
         <button
           type="button"
@@ -200,6 +245,7 @@ export function DrawToolbar({
           className={`draw-toolbar__btn ${toolLocked ? 'is-active' : ''}`}
           onClick={onToggleLock}
         >
+<<<<<<< HEAD
           {/* Computador: cadeado cheio; celular: cadeado de contorno (CSS troca os dois). */}
           <span className="draw-toolbar__ico draw-toolbar__ico--solid">
             <Icon name={toolLocked ? 'lock' : 'lockOpen'} />
@@ -207,6 +253,9 @@ export function DrawToolbar({
           <span className="draw-toolbar__ico draw-toolbar__ico--outline">
             <Icon name={toolLocked ? 'lockOutline' : 'lockOpenOutline'} />
           </span>
+=======
+          <Icon name={toolLocked ? 'lock' : 'lockOpen'} />
+>>>>>>> origin/main
         </button>
 
         <div className="draw-toolbar__divider" />
@@ -215,6 +264,7 @@ export function DrawToolbar({
 
         {toolButton({ type: 'eraser', icon: 'eraser', title: 'Borracha' })}
 
+<<<<<<< HEAD
         <button
           type="button"
           title={paperStyle === 'ruled' ? 'Espaçamento das pautas' : 'Disponível apenas na folha pautada'}
@@ -234,6 +284,8 @@ export function DrawToolbar({
           </svg>
         </button>
 
+=======
+>>>>>>> origin/main
         <div className="draw-toolbar__divider" />
 
         <button
@@ -255,6 +307,7 @@ export function DrawToolbar({
           aria-label="Mais ferramentas"
           aria-expanded={moreOpen}
           className={`draw-toolbar__btn ${moreActive ? 'is-active' : ''}`}
+<<<<<<< HEAD
           onClick={() => {
             setSpacingOpen(false);
             setMoreOpen((v) => !v);
@@ -293,6 +346,22 @@ export function DrawToolbar({
           </div>
         </section>
       )}
+=======
+          onClick={() => setMoreOpen((v) => !v)}
+        >
+          <Icon name="more" />
+        </button>
+
+        {/* Só no celular (sem teclado para Ctrl+Z): a barra nativa com
+            desfazer/refazer é escondida, então eles moram aqui. */}
+        <button type="button" title="Desfazer" aria-label="Desfazer" className="draw-toolbar__btn draw-toolbar__btn--mobile" onClick={onUndo}>
+          <i className="bi bi-arrow-counterclockwise" />
+        </button>
+        <button type="button" title="Refazer" aria-label="Refazer" className="draw-toolbar__btn draw-toolbar__btn--mobile" onClick={onRedo}>
+          <i className="bi bi-arrow-clockwise" />
+        </button>
+      </div>
+>>>>>>> origin/main
 
       {moreOpen && (
         <div className="draw-toolbar__menu" role="menu">

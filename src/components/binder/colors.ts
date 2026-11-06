@@ -3,12 +3,21 @@
  * forma estável (a partir do id), sem precisar de campo novo no banco.
  */
 const PALETTE = [
+<<<<<<< HEAD
   '#02ac57', // verde-floresta
   '#d63327', // verde
   '#ff941a', // verde-limão
   '#f3cd22', // amarelo
   '#d98c3a', // laranja
   '#1f31da', // marrom
+=======
+  '#2f6f4f', // verde-floresta
+  '#4f9a62', // verde
+  '#8fb339', // verde-limão
+  '#e0c340', // amarelo
+  '#d98c3a', // laranja
+  '#8a5a3a', // marrom
+>>>>>>> origin/main
   '#3f7f9f', // azul-petróleo
   '#6b5b9a', // roxo
   '#b5553c', // terracota

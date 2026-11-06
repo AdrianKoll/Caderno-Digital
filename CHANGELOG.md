@@ -3,6 +3,7 @@
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 versionamento [SemVer](https://semver.org/lang/pt-BR/).
 
+<<<<<<< HEAD
 ## [Não lançado]
 
 ### Alterado (celular, até 900px — o computador não muda)
@@ -11,6 +12,8 @@ versionamento [SemVer](https://semver.org/lang/pt-BR/).
 - Voltar/avançar de página, nova página e renomear passaram para o menu ⋯ da folha (`PageMenu`).
 - Botão da lua alterna entre tema escuro e claro (`useTheme`); o escolhido fica salvo no aparelho.
 
+=======
+>>>>>>> origin/main
 ## [1.0.0] - 2026-10-22
 
 Primeira versão preparada para publicação.

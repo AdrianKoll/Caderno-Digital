@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { useEffect, useRef, useState } from 'react';
+=======
+import { useEffect, useState } from 'react';
+>>>>>>> origin/main
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Sidebar } from './Sidebar';
 import { ListView } from './ListView';
@@ -16,6 +20,7 @@ import './AppShell.css';
 
 export function AppShell() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+<<<<<<< HEAD
   const sidebarRef = useRef<HTMLDivElement>(null);
   const topbarRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
@@ -26,10 +31,16 @@ export function AppShell() {
   const isMobile = useMediaQuery(MOBILE_QUERY);
   const focusMode = useNotebookStore((s) => s.focusMode);
   const setFocusMode = useNotebookStore((s) => s.setFocusMode);
+=======
+  const selectedPageId = useNotebookStore((s) => s.selectedPageId);
+  const view = useNotebookStore((s) => s.view);
+  const isMobile = useMediaQuery(MOBILE_QUERY);
+>>>>>>> origin/main
 
   // Gaveta: arrastar da borda abre, arrastar para o lado fecha; Esc também fecha.
   useDrawerGestures(sidebarOpen, setSidebarOpen, isMobile);
   useEffect(() => {
+<<<<<<< HEAD
     if (!sidebarOpen) {
       sidebarRef.current?.setAttribute('inert', '');
       [topbarRef.current, mainRef.current].forEach((el) => {
@@ -67,6 +78,10 @@ export function AppShell() {
         e.preventDefault(); first.focus();
       }
     };
+=======
+    if (!sidebarOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setSidebarOpen(false);
+>>>>>>> origin/main
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, [sidebarOpen]);
@@ -76,6 +91,7 @@ export function AppShell() {
     [selectedPageId],
   );
 
+<<<<<<< HEAD
   // Modo escrita: só vale no celular, dentro de uma página aberta. Sair da folha (listas, etc.) o desliga.
   const focus = focusMode && isMobile && view === 'notebook' && !!page;
   useEffect(() => {
@@ -100,6 +116,23 @@ export function AppShell() {
         <TopBar sidebarOpen={sidebarOpen} onToggleSidebar={() => setSidebarOpen((v) => !v)} />
       </div>
       <div className="app-shell__main" ref={mainRef}>
+=======
+  return (
+    <div className="app-shell">
+      <div
+        className={`app-shell__sidebar ${sidebarOpen ? 'is-open' : ''}`}
+        aria-hidden={!sidebarOpen}
+        role="dialog"
+        aria-label="Menu do caderno"
+      >
+        <Sidebar onNavigate={() => setSidebarOpen(false)} />
+      </div>
+      {sidebarOpen && <div className="app-shell__backdrop" onClick={() => setSidebarOpen(false)} />}
+      <div className="app-shell__topbar">
+        <TopBar onToggleSidebar={() => setSidebarOpen((v) => !v)} />
+      </div>
+      <div className="app-shell__main">
+>>>>>>> origin/main
         {view === 'notebook' && page && <NotebookPage page={page} onOpenMenu={() => setSidebarOpen(true)} />}
         {view === 'notebook' && !page && <EmptyState onOpenMenu={() => setSidebarOpen(true)} />}
         {view !== 'notebook' && (
@@ -113,6 +146,7 @@ export function AppShell() {
         )}
       </div>
 
+<<<<<<< HEAD
       {focus && (
         <button
           type="button"
@@ -125,6 +159,8 @@ export function AppShell() {
         </button>
       )}
 
+=======
+>>>>>>> origin/main
       <RenameDialog />
       <AboutDialog />
     </div>

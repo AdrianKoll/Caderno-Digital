@@ -12,7 +12,10 @@ import './PageTitle.css';
 export function PageTitle({ page }: { page: Page }) {
   const [value, setValue] = useState(page.title);
   const focused = useRef(false);
+<<<<<<< HEAD
   const cancelOnBlur = useRef(false);
+=======
+>>>>>>> origin/main
 
   // Acompanha mudanças de fora (renomeou pelo menu/janela, trocou de página) enquanto não se está digitando.
   useEffect(() => {
@@ -20,12 +23,15 @@ export function PageTitle({ page }: { page: Page }) {
   }, [page.id, page.title]);
 
   async function commit() {
+<<<<<<< HEAD
     if (cancelOnBlur.current) {
       cancelOnBlur.current = false;
       focused.current = false;
       setValue(page.title);
       return;
     }
+=======
+>>>>>>> origin/main
     focused.current = false;
     const clean = normalizeName(value).slice(0, TITLE_MAX);
     setValue(clean);
@@ -50,8 +56,11 @@ export function PageTitle({ page }: { page: Page }) {
           const input = e.target as HTMLInputElement;
           if (e.key === 'Enter') input.blur();
           if (e.key === 'Escape') {
+<<<<<<< HEAD
             e.preventDefault();
             cancelOnBlur.current = true;
+=======
+>>>>>>> origin/main
             setValue(page.title);
             focused.current = false;
             input.blur();

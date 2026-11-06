@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import { Page } from '../../types';
 import { useNotebookStore } from '../../store/notebookStore';
+<<<<<<< HEAD
 import { deletePage, renamePage } from '../../db/pages';
+=======
+import { renamePage } from '../../db/pages';
+>>>>>>> origin/main
 import { InlineName } from '../rename/InlineName';
 import { TITLE_MAX } from '../../utils/names';
 
@@ -54,11 +58,14 @@ export function PageNode({ page }: { page: Page }) {
         <button title="Renomear página" aria-label="Renomear página" onClick={() => setEditing(true)}>
           <i className="bi bi-pencil" />
         </button>
+<<<<<<< HEAD
         <button title="Mover página para a lixeira" aria-label={`Mover Página ${page.number} para a lixeira`} onClick={async () => {
           if (confirm(`Mover a Página ${page.number} para a lixeira?`)) await deletePage(page.id);
         }}>
           <i className="bi bi-trash3" />
         </button>
+=======
+>>>>>>> origin/main
       </span>
     </div>
   );

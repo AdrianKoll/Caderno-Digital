@@ -12,7 +12,11 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "strict": true,
+<<<<<<< HEAD
     "noUnusedLocals": true,
+=======
+    "noUnusedLocals": false,
+>>>>>>> origin/main
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true
   },

@@ -6,6 +6,7 @@
   border-radius: var(--radius-sm);
   cursor: pointer;
   color: var(--text);
+<<<<<<< HEAD
   font-size: var(--tree-row-font-size);
   user-select: none;
 }
@@ -30,6 +31,12 @@
   outline-offset: 2px;
 }
 
+=======
+  font-size: 14.5px;
+  user-select: none;
+}
+
+>>>>>>> origin/main
 .tree-row:hover {
   background: rgba(255, 255, 255, 0.04);
 }
@@ -44,12 +51,20 @@
 .tree-row__chevron {
   width: 14px;
   color: var(--muted);
+<<<<<<< HEAD
   font-size: var(--tree-row-chevron-size);
+=======
+  font-size: 11px;
+>>>>>>> origin/main
   flex-shrink: 0;
 }
 
 .tree-row__icon {
+<<<<<<< HEAD
   font-size: var(--tree-row-icon-size);
+=======
+  font-size: 16px;
+>>>>>>> origin/main
   color: var(--muted);
   flex-shrink: 0;
 }
@@ -67,7 +82,11 @@
 
 .tree-row__count {
   color: var(--muted);
+<<<<<<< HEAD
   font-size: var(--tree-row-count-size);
+=======
+  font-size: 12px;
+>>>>>>> origin/main
   margin-right: 4px;
 }
 
@@ -82,10 +101,17 @@
   background: none;
   border: none;
   color: var(--muted);
+<<<<<<< HEAD
   width: var(--tree-action-size);
   height: var(--tree-action-size);
   border-radius: 6px;
   font-size: var(--tree-action-font-size);
+=======
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  font-size: 14px;
+>>>>>>> origin/main
   line-height: 1;
   display: flex;
   align-items: center;
@@ -108,7 +134,11 @@
   border: 1px solid var(--primary);
   border-radius: 4px;
   color: var(--text);
+<<<<<<< HEAD
   font-size: var(--tree-edit-input-font-size);
+=======
+  font-size: 14px;
+>>>>>>> origin/main
   padding: 5px 8px;
 }
 
@@ -139,7 +169,11 @@
   border-radius: 6px;
   background: #3a1d24;
   color: #fecaca;
+<<<<<<< HEAD
   font-size: var(--tree-error-font-size);
+=======
+  font-size: 12px;
+>>>>>>> origin/main
   line-height: 1.3;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
@@ -162,7 +196,11 @@
   width: 100%;
   color: var(--muted);
   border-radius: var(--radius-sm);
+<<<<<<< HEAD
   font-size: var(--tree-page-font-size);
+=======
+  font-size: 14px;
+>>>>>>> origin/main
 }
 
 /* O botão que abre a página ocupa a linha; as ações (renomear) ficam ao lado, fora dele. */
@@ -187,7 +225,11 @@
 }
 
 .tree-page__icon {
+<<<<<<< HEAD
   font-size: var(--tree-page-icon-size);
+=======
+  font-size: 15px;
+>>>>>>> origin/main
   flex-shrink: 0;
 }
 
@@ -214,12 +256,20 @@
 
 .tree-page__fav {
   color: var(--favorite);
+<<<<<<< HEAD
   font-size: var(--tree-page-favorite-size);
+=======
+  font-size: 12px;
+>>>>>>> origin/main
 }
 
 .tree-empty {
   color: var(--muted);
+<<<<<<< HEAD
   font-size: var(--tree-empty-font-size);
+=======
+  font-size: 13px;
+>>>>>>> origin/main
   padding: 4px 8px;
 }
 
@@ -241,7 +291,11 @@
   .tree-row__actions button {
     width: var(--touch-min);
     height: var(--touch-min);
+<<<<<<< HEAD
     font-size: var(--tree-action-mobile-font-size);
+=======
+    font-size: 16px;
+>>>>>>> origin/main
   }
 
   .tree-page {
@@ -258,7 +312,11 @@
   }
 
   .tree-row__input {
+<<<<<<< HEAD
     font-size: var(--tree-edit-mobile-input-font-size);
+=======
+    font-size: 16px;
+>>>>>>> origin/main
     padding: 8px 10px;
   }
 }

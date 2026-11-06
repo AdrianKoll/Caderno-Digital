@@ -21,7 +21,10 @@ export async function searchAll(query: string): Promise<SearchResult[]> {
   const results: SearchResult[] = [];
 
   for (const page of pages) {
+<<<<<<< HEAD
     if (page.deletedAt) continue;
+=======
+>>>>>>> origin/main
     const subject = subjectById.get(page.subjectId);
     const topic = topicById.get(page.topicId);
     const subjectName = subject?.name ?? '';

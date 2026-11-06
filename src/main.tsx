@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+<<<<<<< HEAD
 // ORDEM DOS ESTILOS (importa para quem vence um empate de CSS):
 //   1) ícones  2) theme.css/global.css (tokens e base)  3) componentes (importados por App).
 // Os estilos vêm ANTES do App de propósito: assim os CSS dos componentes carregam depois
@@ -14,6 +15,13 @@ import { registerServiceWorker } from './pwa/register';
 // Tema (claro/escuro) aplicado antes do primeiro desenho, para não piscar.
 applyTheme(getStoredTheme());
 
+=======
+import App from './App';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import './styles/global.css';
+import { registerServiceWorker } from './pwa/register';
+
+>>>>>>> origin/main
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <App />
@@ -21,7 +29,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 );
 
 registerServiceWorker();
+<<<<<<< HEAD
 
 // Pede ao navegador para NÃO apagar os cadernos quando faltar espaço (o Chrome decide
 // conforme o uso e a instalação do app; não aparece nenhum aviso para a pessoa).
 void navigator.storage?.persist?.();
+=======
+>>>>>>> origin/main

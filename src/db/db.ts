@@ -29,12 +29,15 @@ class NotebookDB extends Dexie {
       pages: 'id, number, subjectId, topicId, isFavorite, title, date',
       meta: 'key',
     });
+<<<<<<< HEAD
     this.version(2).stores({
       subjects: 'id, name',
       topics: 'id, subjectId, name',
       pages: 'id, number, subjectId, topicId, isFavorite, title, date, deletedAt',
       meta: 'key',
     });
+=======
+>>>>>>> origin/main
   }
 }
 
