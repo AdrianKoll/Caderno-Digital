@@ -1,0 +1,365 @@
+.sidebar {
+  height: 100%;
+  background: var(--sidebar);
+  border-right: 1px solid var(--panel-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* Área do entalhe / barra de status quando o app está em tela cheia. */
+  padding-top: var(--safe-top);
+}
+
+/* ---------- Logo ---------- */
+.sidebar__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--sidebar-logo-gap);
+  height: var(--topbar-h);
+  padding: 0 var(--sidebar-logo-pad-x-end) 0 var(--sidebar-logo-pad-x-start);
+  border-bottom: 1px solid var(--panel-border);
+  flex-shrink: 0;
+}
+
+.sidebar__logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--sidebar-logo-icon-size);
+  height: var(--sidebar-logo-icon-size);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--primary);
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font-size: var(--sidebar-logo-icon-glyph-size);
+  flex-shrink: 0;
+  box-shadow: none;
+  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+}
+
+.sidebar__logo-icon:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: none;
+}
+
+.sidebar__logo-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.sidebar__logo-icon:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 3px;
+}
+
+.sidebar__logo-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+  line-height: 1.25;
+}
+
+.sidebar__logo-text strong {
+  font-size: var(--sidebar-logo-title-size);
+  font-weight: 700;
+}
+
+.sidebar__brand-caderno { color: var(--brand-caderno-color); }
+.sidebar__brand-digital { color: var(--brand-digital-color); }
+
+.sidebar__logo-text small {
+  color: var(--muted);
+  font-size: var(--sidebar-logo-subtitle-size);
+}
+
+/* ---------- Navegação ---------- */
+.sidebar__nav {
+  padding: var(--sidebar-nav-pad-top) var(--sidebar-nav-pad-x) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sidebar-nav-gap);
+  flex-shrink: 0;
+}
+
+.sidebar__nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sidebar-nav-item-gap);
+  padding: var(--sidebar-nav-item-pad-y) var(--sidebar-nav-item-pad-x);
+  border-radius: var(--radius-md);
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: var(--sidebar-nav-font-size);
+  font-weight: 500;
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sidebar__nav-item > i {
+  font-size: var(--sidebar-nav-icon-size);
+  width: var(--sidebar-nav-icon-width);
+  text-align: center;
+}
+
+.sidebar__nav-label {
+  flex: 1;
+}
+
+.sidebar__nav-badge {
+  min-width: var(--sidebar-nav-badge-min-width);
+  padding: var(--sidebar-nav-badge-pad-y) var(--sidebar-nav-badge-pad-x);
+  border-radius: 999px;
+  background: var(--panel-raised);
+  color: var(--muted);
+  font-size: var(--sidebar-section-header-font-size);
+  font-weight: 600;
+  text-align: center;
+}
+
+.sidebar__nav-item:hover {
+  background: var(--panel-hover);
+  color: var(--text);
+}
+
+.sidebar__nav-item.is-active {
+  background: var(--selection-bg);
+  color: var(--text);
+  box-shadow: none;
+}
+
+.sidebar__nav-item.is-active > i {
+  color: var(--primary);
+}
+
+.sidebar__nav-item.is-active .sidebar__nav-badge {
+  background: var(--selection-outline);
+  color: var(--primary-strong);
+}
+
+.sidebar__backup {
+  display: grid;
+  grid-template-columns: var(--sidebar-backup-button-columns);
+  gap: var(--sidebar-backup-gap);
+  padding: var(--sidebar-backup-pad-y) var(--sidebar-backup-pad-x);
+  border-top: 1px solid var(--panel-border);
+  flex-shrink: 0;
+}
+.sidebar__backup strong {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: var(--sidebar-backup-title-size);
+}
+.sidebar__backup button {
+  min-height: var(--sidebar-backup-button-height);
+  padding: var(--sidebar-backup-button-pad-y) var(--sidebar-backup-button-pad-x);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-sm);
+  background: var(--panel);
+  color: var(--text);
+  text-align: left;
+}
+.sidebar__backup button:hover:not(:disabled) { border-color: var(--secondary); }
+.sidebar__backup button:focus-visible { outline: 2px solid var(--secondary); outline-offset: 2px; }
+.sidebar__backup small {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: var(--sidebar-backup-note-size);
+  line-height: 1.4;
+}
+
+/* ---------- Matérias ---------- */
+.sidebar__section {
+  margin-top: var(--sidebar-section-top-gap);
+  padding: var(--sidebar-section-pad-top) var(--sidebar-section-pad-x) 0;
+  border-top: 1px solid var(--panel-border);
+  flex: 1;
+  min-height: var(--sidebar-section-min-height);
+  overflow-y: auto;
+}
+
+.sidebar__section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: var(--sidebar-section-header-font-size);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 0 var(--sidebar-section-header-pad-x) var(--sidebar-section-header-pad-bottom);
+}
+
+.sidebar__section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--sidebar-section-title-gap);
+}
+
+.sidebar__section-title i {
+  font-size: var(--sidebar-section-icon-size);
+}
+
+.sidebar__section-header button {
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  color: var(--muted);
+  width: var(--sidebar-section-button-size);
+  height: var(--sidebar-section-button-size);
+  border-radius: 8px;
+  font-size: var(--sidebar-add-button-font-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar__section-header button:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.sidebar__new-subject {
+  display: flex;
+  gap: var(--sidebar-new-subject-gap);
+  padding: 0 var(--sidebar-section-header-pad-x) var(--sidebar-new-subject-pad-bottom);
+}
+
+.sidebar__new-subject input {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: var(--sidebar-input-font-size);
+  padding: var(--sidebar-input-pad-y) var(--sidebar-input-pad-x);
+}
+
+.sidebar__new-subject input:focus {
+  outline: none;
+}
+
+/* ---------- Rodapé ---------- */
+.sidebar__footer {
+  border-top: 1px solid var(--panel-border);
+  padding: var(--sidebar-footer-padding-y) var(--sidebar-footer-padding-x);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.sidebar__footer-label {
+  color: var(--muted);
+  font-size: var(--sidebar-footer-label-size);
+}
+
+.sidebar__footer-count {
+  font-size: var(--sidebar-footer-count-size);
+  font-weight: 700;
+}
+
+/* ---------- Instalar app (PWA) ---------- */
+.sidebar__install {
+  display: flex;
+  align-items: center;
+  gap: var(--sidebar-secondary-button-gap);
+  width: calc(100% - var(--sidebar-install-width-inset));
+  margin: 0 var(--sidebar-install-margin-x) var(--sidebar-install-margin-bottom);
+  padding: var(--sidebar-secondary-button-padding-y) var(--sidebar-secondary-button-padding-x);
+  border: 1px dashed var(--primary);
+  border-radius: var(--radius-md);
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--text);
+  font-size: var(--sidebar-install-font-size);
+  font-weight: 600;
+  text-align: left;
+}
+
+.sidebar__install i {
+  color: var(--secondary);
+  font-size: var(--sidebar-install-icon-size);
+}
+
+.sidebar__install small {
+  display: block;
+  color: var(--muted);
+  font-size: var(--sidebar-install-note-size);
+  font-weight: 400;
+}
+
+.sidebar__install:hover {
+  background: rgba(99, 102, 241, 0.18);
+}
+
+/* ---------- Sobre e créditos ---------- */
+.sidebar__about {
+  display: flex;
+  align-items: center;
+  gap: var(--sidebar-about-gap);
+  width: calc(100% - var(--sidebar-about-width-inset));
+  margin: 0 var(--sidebar-about-margin-x) var(--sidebar-about-margin-bottom);
+  padding: var(--sidebar-input-pad-y) var(--sidebar-about-pad-x);
+  background: transparent;
+  color: var(--muted);
+  border: 0;
+  border-radius: var(--radius-md);
+  font-size: var(--sidebar-about-font-size);
+  text-align: left;
+}
+
+.sidebar__about i {
+  font-size: var(--sidebar-about-icon-size);
+}
+
+.sidebar__about:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+
+/* ---------- Celular: alvos de toque de 44px, rolagem suave, margens seguras ---------- */
+@media (max-width: 900px) {
+  .sidebar__logo {
+    height: var(--topbar-h);
+  }
+
+  .sidebar__nav-item {
+    min-height: var(--touch-min);
+    padding: var(--sidebar-nav-item-pad-y) var(--sidebar-nav-item-pad-x);
+  }
+
+  .sidebar__section {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .sidebar__section-header button {
+    width: var(--sidebar-section-button-size);
+    height: var(--sidebar-section-button-size);
+    font-size: 16px;
+  }
+
+  .sidebar__new-subject input {
+    min-height: var(--touch-min);
+    padding: var(--sidebar-input-pad-y) var(--sidebar-input-pad-x);
+  }
+
+  .sidebar__backup button {
+    min-height: var(--sidebar-backup-button-height);
+    padding: var(--sidebar-backup-button-pad-y) var(--sidebar-backup-button-pad-x);
+  }
+
+  .sidebar__install,
+  .sidebar__about {
+    min-height: var(--touch-min);
+  }
+
+  /* Rodapé da gaveta acima da barra de gestos do celular. */
+  .sidebar__footer {
+    padding-bottom: calc(var(--sidebar-footer-padding-y) + var(--safe-bottom));
+  }
+}

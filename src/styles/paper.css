@@ -1,0 +1,30 @@
+/*
+ * Estilos de folha (pautada, branca, quadriculada) aplicados ao canvas real
+ * (.notebook-page__canvas); a seleção fica no menu Editar folha.
+ */
+.paper {
+  --paper-gap: var(--paper-line-gap); /* distância entre as linhas (theme.css, seção 14; celular: 30px) */
+  --paper-grid: var(--paper-grid-size);
+  background-color: transparent;
+}
+
+.paper--ruled {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent calc(var(--paper-gap) - 1px),
+    var(--notebook-lines) var(--paper-gap)
+  );
+}
+
+.paper--grid {
+  background-image:
+    linear-gradient(var(--notebook-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--notebook-grid) 1px, transparent 1px);
+  background-size: var(--paper-grid) var(--paper-grid);
+  background-position: 0 0;
+}
+
+.paper--blank {
+  background-image: none;
+}

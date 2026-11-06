@@ -1,0 +1,109 @@
+/* ==========================================================================
+ *  FICHÁRIO › TÓPICOS (abas acima da folha)
+ * ==========================================================================
+ *  Tamanhos, formatos e espaços: theme.css, seção 6. Ordem: base → celular.
+ *  A aba ativa tem a cor do papel e "cola" na folha.
+ * ========================================================================== */
+.topic-tabs {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--topic-tab-gap);
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  /* Folga em cima para o realce da aba ativa não ser cortado pelo overflow. */
+  padding-top: var(--topic-tabs-pad-top);
+}
+
+.topic-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.topic-tab {
+  position: relative;
+  flex: 0 0 auto;
+  max-width: var(--topic-tab-max-w);
+  height: var(--topic-tab-height);
+  padding: var(--topic-tab-pad-top) var(--topic-tab-pad-x) 0;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: var(--topic-tab-radius) var(--topic-tab-radius) 0 0;
+  background: color-mix(in srgb, var(--tab) 70%, #0b1020);
+  color: color-mix(in srgb, var(--tab-fg) 88%, transparent);
+  font-size: var(--topic-tab-font-size);
+  font-weight: 600;
+  box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.22);
+  transition: filter 0.15s ease, height 0.15s ease;
+  touch-action: manipulation;
+}
+
+.topic-tab span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.topic-tab:hover:not(.is-active) {
+  filter: brightness(1.12);
+}
+
+.topic-tab:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -2px;
+}
+
+/* Aba aberta: cor do papel, mais alta, "colada" na folha (cobre a sombra de cima dela). */
+.topic-tab.is-active {
+  height: var(--topic-tab-active-height);
+  margin-bottom: -1px;
+  z-index: 2;
+  background: var(--notebook, #fafaf8);
+  color: #1b1b1f;
+  box-shadow: none;
+  border-top: 0;
+}
+
+/* ==========================================================================
+ *  CELULAR (<= 900px): a faixa rola com o dedo; cada aba tem 44px de altura de
+ *  TOQUE e o corpo colorido (::before) é mais baixo, encostado na folha.
+ * ========================================================================== */
+@media (max-width: 900px) {
+  .topic-tabs {
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+  }
+
+  .topic-tab,
+  .topic-tab.is-active {
+    isolation: isolate;
+    height: var(--topic-tab-height);
+    max-width: var(--topic-tab-max-w);
+    background: transparent;
+    box-shadow: none;
+    border-top: 0;
+    scroll-snap-align: start;
+  }
+
+  .topic-tab::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: var(--topic-tab-body-inset);
+    right: var(--topic-tab-body-inset);
+    top: var(--topic-tab-body-top);
+    bottom: 0;
+    border-radius: var(--topic-tab-radius) var(--topic-tab-radius) 0 0;
+    background: color-mix(in srgb, var(--tab) 70%, #0b1020);
+    box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.22);
+  }
+
+  .topic-tab.is-active::before {
+    top: var(--topic-tab-body-top-active);
+    background: var(--notebook, #fafaf8);
+    border-top: 0;
+    box-shadow: none;
+  }
+}

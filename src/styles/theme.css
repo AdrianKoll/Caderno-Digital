@@ -1,0 +1,720 @@
+/* ==========================================================================
+ *  theme.css — ÚNICO lugar para mudar TAMANHO, FORMATO e ESPAÇO da interface.
+ * ==========================================================================
+ *
+ *  COMO USAR
+ *  1. Ache o elemento no ÍNDICE abaixo e vá até a seção.
+ *  2. Cada token tem o valor do COMPUTADOR (bloco :root) e, quando o celular
+ *     usa outro, o valor do CELULAR na seção 15 (mesmo nome, mesmo grupo).
+ *  3. Os arquivos de componente (.css ao lado de cada .tsx) só LEEM estes
+ *     tokens: não há mais número solto neles para as áreas abaixo.
+ *  4. NÃO crie regra de tamanho nova em outro arquivo para estes elementos:
+ *     foi isso que fazia o theme.css "não funcionar" (o último a carregar vencia).
+ *
+ *  ÍNDICE
+ *   0. Pontos de corte (media queries)
+ *   1. Cores e tema (escuro / claro)
+ *   2. Base: tipografia, raios, camadas, movimento, toque, margens seguras
+ *   3. FOLHA e o espaço em volta dela
+ *   4. FICHÁRIO › MATÉRIAS (divisórias coladas na borda direita da folha)
+ *   5. FICHÁRIO › ATALHOS (ícones Início / Todas as páginas / Favoritos)
+ *   6. FICHÁRIO › TÓPICOS (abas em cima da folha)
+ *   7. FICHÁRIO › NOME DA PÁGINA (título ao lado das abas)
+ *   8. CABEÇALHO DA FOLHA (Matéria · Tópico · Data, estrela, menu ⋯)
+ *   9. BARRA SUPERIOR (topbar)
+ *  10. MENU ESQUERDO (gaveta): navegação, matérias, backup/rodapé
+ *  11. ÁRVORE do menu e BACKUP / RODAPÉ do menu
+ *  12. CAIXA DE FERRAMENTAS DE TEXTO (barra/painel de formatação + contador)
+ *  13. CAIXA DE FERRAMENTAS DE FORMAS (painel de propriedades do objeto)
+ *  14. BARRA DE DESENHO (ferramentas: seleção, retângulo, losango, elipse…)
+ *  15. CELULAR e TELAS MÉDIAS: valores que mudam (mesmos nomes de cima)
+ * ========================================================================== */
+
+/* ---- 0. PONTOS DE CORTE ---------------------------------------------------
+ * media queries não aceitam variáveis; estes são os cortes usados no CSS todo:
+ *   >= 1280px  3 colunas: editor de texto | folha | propriedades
+ *   >= 1180px  a barra de desenho cabe no centro da barra superior
+ *   <= 1179px  a barra de desenho vira DOCA no pé da tela
+ *   <= 900px   CELULAR (gaveta, doca inferior, folha em tela cheia)
+ *   <= 380px   celular estreito
+ *   <= 900px + paisagem + altura <= 520px   celular deitado
+ * ------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: dark;
+  /* ---- 1. CORES E TEMA (escuro é o padrão; o claro está mais abaixo) ------ */
+  --bg: #0a0a0a;
+  --bg-secondary: #121212;
+  --sidebar: #121212;
+  --panel: #19191a;
+  --panel-raised: #232325;
+  --panel-hover: #2b2b2e;
+  --panel-border: #33353a;
+  --panel-border-soft: #292b2f;
+  --primary: #c93403;
+  --secondary: #c2410c;
+  --primary-pressed: #a83208;
+  --hover-bg: #c93403;
+  --hover-fg: #ffffff;
+  --primary-strong: #f2470c;
+  --primary-ink: #ffffff;
+  --selection-bg: #b63205;
+  --selection-outline: rgba(242, 71, 12, 0.48);
+  --focus: #f2470c;
+  --text: #f0f0f0;
+  --muted: #969696;
+  --subtle: #727272;
+  --disabled: #777777;
+  --tooltip-bg: #202020;
+  --tooltip-text: #ffffff;
+  --notebook: #ffffff; /* fundo da folha clara; o tom independente é aplicado por página */
+  --notebook-lines: #d8dfd2; /* linhas claras */
+  --notebook-grid: #d8dfd2; /* quadriculado claro */
+  --sheet-dark-bg: #121212;
+  --sheet-dark-ink: #f0f0f0;
+  --sheet-dark-lines: #33353a;
+  --sheet-light-bg: #ffffff;
+  --sheet-light-ink: #202020;
+  --sheet-light-lines: #d8dfd2;
+  --brand-caderno-color: #ffffff;
+  --brand-digital-color: #f2470c;
+  --chip-bg: var(--panel-raised);
+  --chip-border: var(--panel-border-soft);
+  --chip-fg: var(--text);
+  --dock-bg: var(--panel);
+  --handle: rgba(232, 236, 236, 0.72);
+  --accent-grad: linear-gradient(135deg, var(--primary), var(--secondary));
+  --shadow-neon: 0 0 12px rgba(242, 71, 12, 0.18);
+  --shadow-soft: 0 10px 28px rgba(0, 0, 0, 0.28);
+  --font-control-size: 13px;
+  --font-helper-size: 12px;
+  --danger: #f87171;
+  --favorite: #ff5b0f;
+
+  /* ---- 2. BASE ------------------------------------------------------------ */
+  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-hand: 'Caveat', cursive;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
+  /* Alvo mínimo de toque (Apple HIG / WCAG 2.5.5). */
+  --touch-min: 44px;
+
+  /* Margens seguras (entalhe, ilha dinâmica, barra de gestos); 0 no computador. */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+
+  /* Camadas (z-index), da mais baixa para a mais alta. Só mexa aqui. */
+  --z-dock: 30; /* barra de ferramentas do desenho (doca) */
+  --z-panel: 35; /* painel de propriedades (celular) */
+  --z-topbar: 50;
+  --z-drawer-backdrop: 55;
+  --z-drawer: 60;
+  --z-modal: 80; /* janelas (renomear): acima da gaveta e da barra superior */
+
+  /* Movimento */
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-fast: 0.15s;
+  --t-drawer: 0.24s;
+
+  --main-drawer-width: 280px; /* largura do menu lateral esquerdo (gaveta) */
+
+  /* ---- 3. FOLHA E O ESPAÇO EM VOLTA ---------------------------------------
+   *  [ respiro ][ folha ][ divisórias ]  ← o respiro direito inclui --tabs-gutter */
+  --sheet-max-w: 960px; /* largura máxima da folha em telas grandes */
+  --sheet-aspect-ratio: 3 / 4; /* proporção largura/altura da folha */
+  --sheet-radius: var(--radius-lg); /* canto arredondado da folha */
+  --sheet-canvas-radius: var(--radius-sm); /* canto da área de escrita/desenho */
+  --sheet-shadow: 0 20px 60px rgba(0, 0, 0, 0.15); /* sombra da folha */
+  --sheet-content-pad-top: clamp(18px, 2.6vw, 28px); /* margem interna superior */
+  --sheet-content-pad-x: clamp(16px, 3.4vw, 35px); /* margens internas laterais */
+  --sheet-content-pad-bottom: clamp(20px, 3vw, 40px); /* margem interna inferior */
+  --sheet-side-col-w: 210px; /* largura das 2 colunas laterais (>= 1280px); mantenha iguais */
+
+  --layout-page-pad-top: 46px; /* respiro externo acima da folha */
+  --layout-page-pad-x: 24px; /* respiro externo lateral (base de esquerda/direita) */
+  --layout-page-pad-left: var(--layout-page-pad-x); /* respiro à esquerda da folha */
+  --layout-page-pad-right: var(--layout-page-pad-x); /* respiro à direita (antes das divisórias) */
+  --layout-page-pad-bottom: 40px; /* respiro externo abaixo da folha */
+  --tabs-gutter: 40px; /* folga à direita onde ficam as divisórias (0 quando há 3 colunas) */
+
+  /* Estrela de favorito e aviso "Salvo" dentro da folha */
+  --sheet-fav-top: 12px; /* distância do topo da folha */
+  --sheet-fav-left: 20px; /* distância da esquerda da folha */
+  --sheet-fav-size: 18px; /* tamanho da estrela */
+  --sheet-fav-hit: 0px; /* área mínima de toque da estrela (44px no celular) */
+  --sheet-status-size: 12px; /* tamanho do texto "Salvo" */
+
+  /* ---- 4. FICHÁRIO › MATÉRIAS (divisórias coloridas) ----------------------- */
+  --subject-tabs-w: 34px; /* largura da coluna de divisórias */
+  --subject-tabs-gap: 4px; /* distância entre divisórias */
+  --subject-tab-w: 28px; /* largura da divisória (repouso) */
+  --subject-tab-w-hover: 32px; /* largura ao passar o mouse */
+  --subject-tab-w-active: 34px; /* largura da matéria aberta */
+  --subject-tab-h: 92px; /* altura da divisória (auto no celular) */
+  --subject-tab-h-short: 72px; /* altura em janelas baixas (<= 760px de altura) */
+  --subject-tab-min-h: auto; /* altura mínima (celular: 54px) */
+  --subject-tab-max-h: none; /* altura máxima (celular) */
+  --subject-tab-pad-y: 8px; /* espaço vertical interno */
+  --subject-tab-pad-start: 6px; /* espaço do lado "enfiado" sob a folha */
+  --subject-tab-overlap: -6px; /* quanto a divisória entra por baixo da folha */
+  --subject-tab-radius: 0 9px 9px 0; /* formato dos cantos */
+  --subject-tab-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.16), 2px 2px 6px rgba(0, 0, 0, 0.28); /* sombra (repouso) */
+  --subject-tab-shadow-active: inset -1px 0 0 rgba(255, 255, 255, 0.35), 3px 3px 10px rgba(0, 0, 0, 0.38); /* sombra da aberta */
+  --subject-tab-font-size: 12px; /* tamanho do nome da matéria */
+  --subject-tab-label-max-h: 100%; /* comprimento máximo do nome (corta com …) */
+  --subject-tabs-bleed: 1px; /* folga p/ a aba ativa sair da coluna (0 no celular) */
+
+  /* ---- 5. FICHÁRIO › ATALHOS (Início, Todas as páginas, Favoritos) --------- */
+  --shortcut-h: 30px; /* altura do ícone de atalho */
+  --shortcut-icon-size: 15px; /* tamanho do desenho do ícone */
+  --shortcut-group-gap: 8px; /* distância entre os atalhos e as matérias */
+  --shortcut-bg: #232325; /* fundo (repouso) */
+  --shortcut-fg: var(--muted); /* cor do ícone (repouso) */
+  --shortcut-active-bg: var(--primary); /* fundo do atalho aberto */
+  --shortcut-border-w: 0px; /* contorno do atalho (celular: 1px) */
+  --shortcut-border-color: transparent;
+  --shortcut-active-shadow: var(--shadow-neon);
+  --shortcut-active-fg: #ffffff;
+
+  /* ---- 6. FICHÁRIO › TÓPICOS (abas acima da folha) ------------------------- */
+  --topic-strip-inset: 22px; /* recuo lateral da faixa de abas */
+  --topic-tab-height: 22px; /* altura da aba normal */
+  --topic-tab-active-height: 22px; /* altura da aba ativa */
+  --topic-tab-max-w: 190px; /* largura máxima de cada aba */
+  --topic-tab-pad-x: 16px; /* espaço horizontal dentro das abas */
+  --topic-tab-pad-top: 0px; /* espaço acima do texto (celular: 8px) */
+  --topic-tab-font-size: 12.5px; /* tamanho do texto das abas */
+  --topic-tab-radius: 8px; /* canto superior das abas */
+  --topic-tab-gap: 3px; /* distância entre abas */
+  --topic-tabs-pad-top: 4px; /* folga acima da faixa (realce da ativa) */
+  --topic-tabs-max-w: 62%; /* largura máxima do conjunto de abas */
+  --topic-tab-body-inset: 2px; /* celular: recuo lateral do corpo colorido */
+  --topic-tab-body-top: 12px; /* celular: início do corpo colorido (aba normal) */
+  --topic-tab-body-top-active: 7px; /* celular: início do corpo da aba ativa */
+
+  /* ---- 7. FICHÁRIO › NOME DA PÁGINA (só no computador) --------------------- */
+  --page-title-flex-basis: 140px; /* largura inicial do campo de título */
+  --page-title-max-w: 350px; /* largura máxima do campo de título */
+  --page-title-height: 22px; /* altura do campo de título */
+  --page-title-font-size: 13px; /* tamanho do texto do título */
+  --page-title-icon-size: 14px; /* tamanho do ícone ao lado do título */
+  --page-title-gap: 8px; /* distância entre ícone e texto */
+  --page-title-pad-x: 4px; /* espaço lateral interno */
+  --page-title-after-tabs: 14px; /* distância entre a última aba e o título */
+  --sheet-appearance-tab-radius: 9px 9px 0 0; /* aba com cantos superiores arredondados */
+  --sheet-appearance-offset-x: -22px;
+  --sheet-appearance-offset-y: 0px;
+  --sheet-appearance-trigger-size: 36px; /* largura da aba de edição da folha */
+  --sheet-appearance-panel-width: 320px; /* largura máxima da caixa de edição */
+  --sheet-appearance-panel-padding: 14px; /* respiro interno da caixa */
+  --sheet-appearance-group-gap: 12px; /* distância entre grupos de opções */
+  --sheet-appearance-options-gap: 6px; /* distância entre opções */
+  --sheet-appearance-option-height: 40px; /* altura das opções de papel e fundo */
+  --sheet-appearance-title-size: 14px; /* título da caixa de edição */
+  --sheet-appearance-label-size: 11px; /* rótulos dos grupos */
+  --sheet-appearance-option-size: 12px; /* texto das opções */
+
+  /* ---- 8. CABEÇALHO DA FOLHA (Matéria · Tópico · Data) --------------------- */
+  --page-header-label-size: 10px; /* rótulos MATÉRIA/TÓPICO/DATA */
+  --page-header-value-size: clamp(16px, 2vw, 20px); /* valores do cabeçalho */
+  --page-header-value-size-container: clamp(15px, 2.5cqi, 18px); /* acompanha a largura da folha */
+  --page-header-edit-size: 15px; /* largura/altura do lápis de edição */
+  --page-header-edit-icon-size: 11px; /* tamanho do desenho do lápis */
+  --page-header-touch-edit-size: 28px; /* lápis em telas sem mouse (qualquer largura) */
+  --page-header-touch-edit-icon-size: 13px;
+  --page-header-mobile-min-h: 30px; /* celular: altura mínima da linha do tópico */
+  --page-header-mobile-gap: 8px; /* celular: distância entre rótulo e valor */
+  --page-header-mobile-pad-left: 30px; /* celular: espaço da estrela */
+  --page-header-mobile-pad-right: 44px; /* celular: espaço do menu ⋯ */
+  --page-header-mobile-label-size: 15px; /* celular: "Tópico:" */
+  --page-header-mobile-value-size: 24px; /* celular: nome do tópico */
+  --page-header-mobile-edit-size: 30px; /* celular: lápis */
+  --page-header-mobile-edit-icon-size: 15px;
+  --page-menu-btn-w: var(--touch-min); /* celular: botão ⋯ da folha */
+  --page-menu-btn-h: 44px;
+  --page-menu-btn-size: 22px;
+
+  /* ---- 9. BARRA SUPERIOR --------------------------------------------------- */
+  --topbar-h: 45px; /* altura da barra superior */
+  --topbar-gap: 12px; /* distância geral entre grupos */
+  --topbar-padding-x: 14px; /* margem interna à esquerda */
+  --topbar-padding-end: var(--topbar-padding-x); /* margem interna à direita */
+  --topbar-side-gap: 12px; /* distância entre itens (lado esquerdo) */
+  --topbar-right-gap: var(--topbar-side-gap); /* distância entre itens (lado direito) */
+  --topbar-menu-btn-size: 34px; /* botão do menu ☰ */
+  --topbar-btn-size: 34px; /* botões de tema e modo escrita */
+  --topbar-btn-radius: var(--radius-sm);
+  --topbar-theme-icon-size: 17px;
+  --topbar-focus-icon-size: 19px; /* modo escrita (só celular) */
+  --topbar-action-height: 32px; /* botão "Salvar como" */
+  --topbar-action-w: auto; /* largura (celular: só ícone) */
+  --topbar-action-radius: 8px;
+  --topbar-action-pad-x: 12px; /* espaço lateral interno do botão Salvar como */
+  --topbar-action-gap: 8px; /* distância entre ícone e texto do botão Salvar como */
+  --topbar-action-font-size: 12px; /* tamanho do texto do botão Salvar como */
+  --topbar-text-size: 13px; /* tamanho do caminho/navegação da topbar */
+  --topbar-title-gap: 8px; /* distância entre itens do breadcrumb e marca */
+  --topbar-icon-size: 15px; /* tamanho dos ícones de navegação */
+  --topbar-separator-size: 11px; /* tamanho do separador do breadcrumb */
+  --topbar-export-menu-width: 260px; /* largura mínima do menu Salvar como */
+  --topbar-export-menu-padding: 6px; /* espaço interno do menu Salvar como */
+  --topbar-export-item-gap: 14px; /* distância entre ícone e texto dos itens de exportação */
+  --topbar-export-item-pad-y: 10px; /* espaço vertical dos itens de exportação */
+  --topbar-export-item-pad-x: 12px; /* espaço horizontal dos itens de exportação */
+  --topbar-export-icon-size: 22px; /* tamanho dos ícones de exportação */
+  --topbar-export-icon-width: 26px; /* coluna reservada aos ícones de exportação */
+  --topbar-export-title-size: 14.5px; /* tamanho do título de cada formato de exportação */
+  --topbar-export-subtitle-size: 12.5px; /* tamanho da descrição do formato de exportação */
+
+
+  /* ---- 10. MENU ESQUERDO (gaveta) ----------------------------------------- */
+  /* Menu esquerdo: cabeçalho, navegação e botões de modelo. */
+  --sidebar-logo-icon-size: 34px; /* largura/altura do bloco do logotipo */
+  --sidebar-logo-title-size: 16px; /* tamanho da fonte do título do menu esquerdo */
+  --sidebar-logo-subtitle-size: 0px; /* tamanho do subtítulo do menu esquerdo */
+  --sidebar-nav-pad-top: 14px; /* margem superior da navegação do menu */
+  --sidebar-nav-pad-x: 12px; /* margens laterais da navegação do menu */
+  --sidebar-nav-gap: 4px; /* distância vertical entre itens do menu */
+  --sidebar-nav-item-gap: 12px; /* distância entre ícone e texto do item */
+  --sidebar-nav-item-pad-y: 10px; /* espaço vertical interno dos itens do menu */
+  --sidebar-nav-item-pad-x: 12px; /* espaço horizontal interno dos itens do menu */
+  --sidebar-nav-font-size: 13px; /* tamanho dos rótulos de navegação */
+  --sidebar-nav-icon-size: 13px; /* tamanho dos ícones de navegação */
+  --sidebar-nav-icon-width: 12px; /* largura reservada aos ícones de navegação */
+  --sidebar-nav-badge-min-width: 24px; /* largura mínima dos contadores da navegação */
+  --sidebar-nav-badge-pad-y: 1px; /* espaço vertical interno dos contadores */
+  --sidebar-nav-badge-pad-x: 8px; /* espaço horizontal interno dos contadores */
+
+  /* Materiais: altere este grupo para redimensionar a lista e seus controles. */
+  --sidebar-section-top-gap: 8px; /* distância antes da seção Matérias */
+  --sidebar-section-pad-x: 14px; /* margem lateral da seção Matérias */
+  --sidebar-section-pad-top: 14px; /* margem superior da área de matérias */
+  --sidebar-section-min-height: 120px; /* altura mínima da lista de matérias */
+  --sidebar-logo-gap: 12px; /* distância entre logotipo e nome */
+  --sidebar-logo-pad-x-start: 14px; /* margem esquerda do cabeçalho do menu */
+  --sidebar-logo-pad-x-end: 14px; /* margem direita do cabeçalho do menu */
+  --sidebar-logo-icon-glyph-size: 20px; /* tamanho do símbolo dentro do logotipo */
+  --sidebar-section-title-gap: 8px; /* distância entre ícone e nome da seção */
+  --sidebar-section-header-pad-x: 4px; /* margem lateral do cabeçalho da seção */
+  --sidebar-add-button-font-size: 13px; /* tamanho do símbolo adicionar matéria */
+  --sidebar-section-header-pad-bottom: 10px; /* espaço abaixo do cabeçalho da seção */
+  --sidebar-section-header-font-size: 12px; /* tamanho dos rótulos do menu lateral */
+  --sidebar-section-icon-size: 14px; /* tamanho do ícone da seção Matérias */
+  --sidebar-section-button-size: 18px; /* largura/altura do botão de ação da seção */
+  --sidebar-new-subject-gap: 6px; /* distância entre campo e ações de nova matéria */
+  --sidebar-new-subject-pad-bottom: 10px; /* espaço abaixo do campo de nova matéria */
+
+
+  /* ---- 11. ÁRVORE DO MENU + BACKUP / RODAPÉ ------------------------------- */
+  /* Árvore do menu: fontes de matéria, tópico, página e ações de edição. */
+  --tree-row-font-size: 12px; /* fonte dos nomes de matérias e tópicos */
+  --tree-page-font-size: 12px; /* fonte dos nomes e números das páginas */
+  --tree-row-icon-size: 13px; /* tamanho dos ícones de matéria e tópico */
+  --tree-page-icon-size: 13px; /* tamanho do ícone de página */
+  --tree-row-chevron-size: 11px; /* tamanho das setas de abrir/fechar */
+  --tree-row-count-size: 12px; /* fonte da quantidade de páginas do tópico */
+  --tree-page-favorite-size: 12px; /* tamanho do ícone de página favorita */
+  --tree-action-size: 20px; /* largura/altura dos botões de editar e excluir */
+  --tree-action-font-size: 14px; /* tamanho dos ícones dos botões da árvore */
+  --tree-edit-input-font-size: 14px; /* fonte ao renomear matéria, tópico ou página */
+  --tree-action-mobile-font-size: 16px; /* fonte dos botões da árvore no celular */
+  --tree-edit-mobile-input-font-size: 16px; /* fonte dos campos de edição no celular */
+  --tree-error-font-size: 12px; /* fonte da mensagem de erro ao renomear */
+  --tree-empty-font-size: 13px; /* fonte do aviso de tópico sem páginas */
+
+  /* Backup: altere este grupo para redimensionar título, botões e aviso. */
+  --sidebar-backup-gap: 6px; /* distância entre controles do backup */
+  --sidebar-backup-pad-y: 10px; /* espaço vertical da área de backup */
+  --sidebar-backup-pad-x: 14px; /* espaço horizontal da área de backup */
+  --sidebar-backup-title-size: 13px; /* tamanho do título da área de backup */
+  --sidebar-backup-button-height: 36px; /* altura dos botões de backup */
+  --sidebar-backup-button-pad-y: 6px; /* espaço vertical interno dos botões de backup */
+  --sidebar-backup-button-pad-x: 10px; /* espaço horizontal interno dos botões de backup */
+  --sidebar-backup-button-columns: repeat(2, minmax(0, 1fr)); /* duas colunas lado a lado */
+  --sidebar-backup-note-size: 0px; /* tamanho da nota de privacidade do backup */
+  --sidebar-input-font-size: 14px; /* tamanho do texto do campo adicionar matéria */
+  --sidebar-input-pad-y: 0px; /* espaço vertical dos campos do menu */
+  --sidebar-input-pad-x: 10px; /* espaço horizontal dos campos do menu */
+  --sidebar-footer-padding-y: 12px; /* espaço vertical do rodapé do menu */
+  --sidebar-footer-padding-x: 14px; /* espaço horizontal do rodapé do menu */
+  --sidebar-footer-label-size: var(--font-helper-size); /* tamanho do rótulo do contador no rodapé */
+  --sidebar-footer-count-size: var(--font-helper-size); /* tamanho do número do contador no rodapé */
+  --sidebar-secondary-button-gap: 12px; /* distância entre ícone e texto dos botões inferiores */
+  --sidebar-secondary-button-padding-y: 10px; /* espaço vertical dos botões inferiores do menu */
+  --sidebar-secondary-button-padding-x: 10px; /* espaço horizontal dos botões inferiores do menu */
+  --sidebar-about-font-size: var(--font-helper-size); /* tamanho do texto Sobre e créditos */
+  --sidebar-install-width-inset: 32px; /* desconto lateral da largura do botão instalar */
+  --sidebar-install-margin-x: 16px; /* margem horizontal do botão instalar */
+  --sidebar-install-margin-bottom: 12px; /* margem inferior do botão instalar */
+  --sidebar-install-font-size: 13.5px; /* tamanho do texto do botão instalar */
+  --sidebar-install-icon-size: 18px; /* tamanho do ícone de instalar */
+  --sidebar-install-note-size: 11.5px; /* tamanho da descrição do botão instalar */
+  --sidebar-about-gap: 10px; /* distância entre ícone e texto de Sobre */
+  --sidebar-about-width-inset: 32px; /* desconto lateral da largura do botão Sobre */
+  --sidebar-about-margin-x: 16px; /* margem horizontal do botão Sobre */
+  --sidebar-about-margin-bottom: 10px; /* margem inferior do botão Sobre */
+  --sidebar-about-pad-x: 12px; /* espaço horizontal interno do botão Sobre */
+  --sidebar-about-icon-size: 15px; /* tamanho do ícone de Sobre */
+
+
+  /* ---- 12. CAIXA DE FERRAMENTAS DE TEXTO -----------------------------------
+   *  É a barra/painel que abre ao editar um texto (negrito, cor, marcadores,
+   *  Tamanho / Entre linhas). NÃO redimensiona o objeto de texto na folha.
+   *  Três formas, mesmas classes .rte-*:
+   *    flutuante (901–1180px) | encaixada à esquerda da folha (>= 901px) | doca (celular)
+   *  Arquivo: src/components/richtext/RichTextEditor.css + Stepper.css */
+  --rte-control-size: 32px; /* largura/altura dos botões (celular: 44px) */
+  --rte-btn-pad-x: 6px; /* espaço lateral dentro do botão */
+  --rte-btn-gap: 6px; /* distância entre ícone e texto do botão */
+  --rte-btn-radius: 8px; /* canto dos botões */
+  --rte-btn-font-size: 13px; /* tamanho do ícone/letra dos botões */
+  --rte-done-font-size: var(--font-control-size); /* texto do botão Concluir */
+  --rte-done-pad-x: 12px; /* espaço lateral do botão Concluir */
+  --rte-color-bar-w: 18px; /* barrinha de cor sob o "A" */
+  --rte-color-bar-h: 1px;
+  --rte-toolbar-max-width: 720px; /* largura máxima da barra flutuante */
+  --rte-toolbar-top-gap: 8px; /* distância da barra flutuante até a barra superior */
+  --rte-toolbar-gap: 6px; /* distância entre grupos da barra */
+  --rte-toolbar-padding: 6px; /* espaço interno da barra */
+  --rte-toolbar-radius: 12px; /* canto da barra flutuante */
+  --rte-toolbar-font-size: var(--font-control-size); /* texto base da barra */
+  --rte-group-gap: 2px; /* distância entre botões de um grupo ("pílula") */
+  --rte-group-pad: 2px; /* espaço interno da pílula */
+  --rte-group-radius: 9px; /* canto da pílula */
+  --rte-field-gap: 4px; /* distância entre ícone/rótulo e contador */
+  --rte-field-icon-size: 15px; /* ícone ao lado do contador */
+  --rte-field-label-size: 0px; /* rótulo "Tamanho" / "Entre linhas" */
+  --rte-menu-pad: 12px; /* espaço interno dos menus de cor e marcadores */
+  --rte-menu-radius: 12px;
+  --rte-menu-title-size: var(--font-helper-size); /* título dentro dos menus */
+  --rte-auto-h: 30px; /* botão "Automático" */
+  --rte-auto-font-size: 12px;
+  --rte-palette-cols: 13; /* quantidade de cores por linha */
+  --rte-palette-gap: 4px; /* distância entre cores */
+  --rte-swatch-size: 22px; /* quadradinho de cor */
+  --rte-swatch-radius: 5px;
+  --rte-marker-gap: 6px; /* distância entre marcadores */
+  --rte-marker-h: 40px; /* altura de cada marcador */
+  --rte-marker-font-size: 20px; /* tamanho do símbolo do marcador */
+  --rte-marker-wide-font-size: 12px; /* marcadores numerados (1. 2. 3.) */
+  --rte-marker-bullet-w: 44px; /* largura de cada marcador de bolinha */
+  --rte-marker-number-w: 84px; /* largura de cada marcador numerado */
+  /* Painel ENCAIXADO (coluna à esquerda da folha) */
+  --rte-panel-width: 200px; /* largura do painel */
+  --rte-panel-padding: 12px; /* espaço interno do painel */
+  --rte-panel-gap: 8px; /* distância entre grupos */
+  --rte-panel-radius: 8px;
+  --rte-panel-font-size: 12px;
+  --rte-panel-title-size: 13px; /* título "Texto" */
+  --rte-docked-top: 16px; /* distância do painel até o topo ao rolar */
+  --rte-docked-max-height-gap: 40px; /* reserva vertical abaixo da barra superior */
+  --rte-docked-section-gap: 4px; /* distância entre controles de cada grupo */
+  --rte-docked-section-padding: 6px; /* espaço interno dos grupos */
+  --rte-docked-stepper-gap: 8px; /* distância entre Tamanho e Entre linhas */
+  --rte-docked-stepper-padding: 8px; /* espaço interno do grupo de contadores */
+  --rte-group-label-size: var(--font-helper-size); /* rótulo de cada grupo */
+  --rte-float-panel-top-gap: 12px; /* 901–1279px: distância do painel flutuante à barra superior */
+  --rte-float-panel-left-gap: 12px; /* 901–1279px: distância da borda esquerda */
+  /* DOCA do celular */
+  --rte-dock-pad: 8px; /* espaço interno da doca */
+  --rte-dock-gap: 6px; /* distância entre grupos */
+  --rte-dock-done-pad-x: 14px; /* espaço lateral do botão Concluir na doca */
+  --rte-dock-radius: 16px 16px 0 0;
+  --rte-dock-sheet-max-h: min(42dvh, 360px); /* altura máx. da folha de cores/marcadores */
+  --rte-dock-swatch-size: 34px; /* quadradinho de cor na doca */
+  --rte-dock-marker-h: 48px; /* altura do marcador na doca */
+  /* Contador numérico (Tamanho / Entre linhas) — Stepper.css */
+  --rte-stepper-height: 34px; /* altura do contador */
+  --rte-stepper-button-width: 34px; /* largura dos botões − e + */
+  --rte-stepper-button-font-size: 18px; /* tamanho do − e + */
+  --rte-stepper-input-width: 46px; /* largura do número */
+  --rte-stepper-font-size: 14px; /* tamanho do número */
+  --rte-stepper-radius: 8px;
+
+  /* ---- 13. CAIXA DE FERRAMENTAS DE FORMAS (painel de propriedades) ---------
+   *  Aparece ao selecionar um objeto (retângulo, losango, elipse, seta, linha,
+   *  texto): contorno, preenchimento, traço, fonte… Classes .ecp-*.
+   *    >= 1280px  coluna à direita da folha | 901–1279px flutua | celular: gaveta
+   *  Arquivo: src/components/excalidraw/ElementContextPanel.css */
+  --ecp-panel-w: 264px; /* largura do painel flutuante (901–1279px) */
+  --ecp-panel-w-wide: 176px; /* largura da coluna ao lado da folha (>= 1280px) */
+  --ecp-panel-pad: 12px; /* espaço interno */
+  --ecp-panel-gap: 12px; /* distância entre seções */
+  --ecp-panel-radius: 8px 0 0 8px; /* canto do painel */
+  --ecp-panel-font-size: 12px; /* texto base */
+  --ecp-panel-top-gap: 12px; /* 901–1279px: distância até a barra superior */
+  --ecp-panel-side-gap: 12px; /* 901–1279px: distância da borda direita */
+  --ecp-panel-sticky-top: 16px; /* >= 1280px: distância ao topo ao rolar */
+  --ecp-label-size: 12px; /* título da seção ("Contorno", "Fundo"…) */
+  --ecp-sublabel-size: var(--font-helper-size); /* texto pequeno */
+  --ecp-row-gap: 6px; /* distância entre botões de uma linha */
+  --ecp-btn-size: 32px; /* botão de ícone (celular: 44px) */
+  --ecp-btn-font-size: 13px;
+  --ecp-btn-radius: 8px;
+  --ecp-swatch-size: 24px; /* quadradinho de cor (celular: 34px) */
+  --ecp-swatch-lg-size: 32px; /* quadrado de cor grande (celular: 44px) */
+  --ecp-slider-h: auto; /* altura do controle deslizante (celular: 28px) */
+  --ecp-fontlist-pad: 7px 10px; /* espaço de cada fonte da lista */
+  --ecp-fontlist-font-size: 14px;
+  --ecp-edit-text-h: 38px; /* botão "Editar texto" */
+  --ecp-edit-text-font-size: 13px;
+  --ecp-popover-pad: 12px; /* janelinha de cores */
+  --ecp-hex-h: 34px; /* campo do código da cor */
+  --ecp-mobile-bottom-gap: 8px; /* celular: distância acima da doca */
+  --ecp-mobile-max-h: min(48dvh, 440px); /* celular: altura máxima da gaveta */
+
+  /* ---- 14. BARRA DE DESENHO (seleção, retângulo, losango, elipse, seta…) ----
+   *  >= 1180px no centro da barra superior | <= 1179px doca no pé da tela.
+   *  Arquivo: src/components/excalidraw/DrawToolbar.css */
+  --draw-btn-size: 26px; /* botão de ferramenta (doca: 44px; celular: 38px) */
+  --draw-btn-radius: var(--radius-sm);
+  --draw-group-gap: 2px; /* distância entre botões */
+  --draw-group-pad: 2px; /* espaço interno da barra */
+  --draw-group-radius: var(--radius-md); /* canto da barra */
+  --draw-tool-active-size: 26px; /* botão da ferramenta em uso (doca: 52px; celular: 44px) */
+  --draw-tool-active-radius: var(--radius-sm);
+  --draw-tool-active-margin: 0px;
+  --draw-tool-active-bg: var(--selection-bg);
+  --draw-tool-active-shadow: none;
+  --draw-side-w: 96px; /* doca: largura das laterais fixas (desfazer/refazer) */
+  --draw-roulette-inset: 122px; /* doca: folga da "roleta" = metade da largura − isto */
+  --draw-handle-h: 24px; /* doca: altura da alça de recolher */
+  --draw-handle-w: 36px; /* doca: largura do puxador */
+  --draw-menu-item-h: 44px; /* doca: altura de cada item do menu "mais" */
+  --draw-dock-row-h: 50px; /* celular: altura da cápsula */
+  --draw-dock-radius: 25px; /* celular: canto da cápsula */
+
+  /* Papel (pautada / quadriculada): distância entre as linhas — paper.css */
+  --paper-line-gap: 36px;
+  --paper-grid-size: 28px;
+}
+
+/* Tema claro */
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #fdfdfd;
+  --bg-secondary: #f5f5f5;
+  --sidebar: #f5f8fb;
+  --panel: #fcfcfc;
+  --panel-raised: #fdfdfd;
+  --panel-hover: #f0f0f0;
+  --panel-border: #e7e7ee;
+  --panel-border-soft: #ebebeb;
+  --primary: #c93403;
+  --secondary: #c2410c;
+  --primary-pressed: #a83208;
+  --hover-bg: #c93403;
+  --hover-fg: #ffffff;
+  --primary-strong: #cb3706;
+  --primary-ink: #ffffff;
+  --selection-bg: #dfdfdf;
+  --selection-outline: rgba(242, 71, 12, 0.35);
+  --focus: #f2470c;
+  --text: #000000;
+  --muted: #525252;
+  --subtle: #777777;
+  --disabled: #879184;
+  --brand-caderno-color: #ffffff;
+  --brand-digital-color: #f2470c;
+  --tooltip-bg: #202020;
+  --tooltip-text: #ffffff;
+  --notebook: #ffffff;
+  --notebook-lines: #d8dfd2;
+  --notebook-grid: #d8dfd2;
+  --sheet-dark-bg: #121212;
+  --sheet-dark-ink: #f0f0f0;
+  --sheet-dark-lines: #33353a;
+  --sheet-light-bg: #ffffff;
+  --sheet-light-ink: #202020;
+  --sheet-light-lines: #d8dfd2;
+  --shadow-soft: 0 10px 28px rgba(32, 40, 32, 0.12);
+  --chip-bg: #ffffff;
+  --chip-border: #e3e8df;
+  --chip-fg: #202820;
+  --dock-bg: #ffffff;
+  --handle: rgba(32, 40, 32, 0.45);
+  --shortcut-bg: #e7e7ee;
+  --shortcut-fg: #525252;
+  --shortcut-active-bg: #f2470c;
+  --shortcut-active-fg: #ffffff;
+}
+
+/* ---- 15. VALORES QUE MUDAM POR TAMANHO DE TELA ---------------------------
+ *  Mesmos nomes dos tokens acima. Ordem importa: do corte mais largo para o
+ *  mais estreito — o último que combina vence. Não reordene. */
+
+/* Janelas baixas (computador): divisórias de matéria menores. */
+@media (max-height: 760px) {
+  :root {
+    --subject-tab-h: var(--subject-tab-h-short);
+  }
+}
+
+/* >= 1280px: 3 colunas — as laterais reservam o espaço, então não há "folga das divisórias". */
+@media (min-width: 1280px) {
+  :root {
+    --tabs-gutter: 0px;
+  }
+}
+
+/* <= 1179px: barra de desenho vira doca no pé da tela; a folha termina acima dela.
+   --mobile-toolbar-h é publicada em tempo real por DrawToolbar.tsx. */
+@media (max-width: 1179px) {
+  :root {
+    --layout-page-pad-bottom: calc(16px + var(--mobile-toolbar-h, 0px));
+    --draw-btn-size: var(--touch-min);
+    --draw-tool-active-size: 52px;
+    --draw-tool-active-radius: 16px;
+    --draw-tool-active-margin: 0 4px;
+    --draw-tool-active-bg: var(--selection-bg);
+    --draw-tool-active-shadow: var(--shadow-neon);
+  }
+}
+
+/* <= 900px: CELULAR. ---------------------------------------------------- */
+@media (max-width: 900px) {
+  :root {
+    /* Cores exclusivas do celular continuam ligadas aos tokens do tema. */
+    --chip-bg: var(--panel-raised);
+    --chip-border: var(--panel-border-soft);
+    --chip-fg: var(--text);
+    --dock-bg: var(--panel);
+    --handle: rgba(232, 236, 236, 0.72);
+    --accent-grad: linear-gradient(135deg, var(--primary), var(--secondary));
+
+    /* 3. Folha */
+    --sheet-aspect-ratio: auto;
+    --sheet-radius: 12px;
+    --sheet-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+    --sheet-content-pad-top: 6px;
+    --sheet-content-pad-x: 8px;
+    --sheet-content-pad-bottom: 8px;
+    --layout-page-pad-top: 14px;
+    --layout-page-pad-left: 10px;
+    --layout-page-pad-right: 4px;
+    --layout-page-pad-bottom: calc(4px + var(--mobile-toolbar-h, 0px));
+    --tabs-gutter: 0px;
+    --sheet-fav-top: 6px;
+    --sheet-fav-left: 8px;
+    --sheet-fav-size: 21px;
+    --sheet-fav-hit: 44px;
+    --paper-line-gap: 30px;
+
+    /* 4. Matérias */
+    --subject-tabs-w: 40px;
+    --subject-tabs-gap: 6px;
+    --subject-tab-w: 34px;
+    --subject-tab-w-hover: 34px;
+    --subject-tab-w-active: 34px;
+    --subject-tab-h: auto;
+    --subject-tab-min-h: 54px;
+    --subject-tab-max-h: 128px;
+    --subject-tab-pad-y: 10px;
+    --subject-tab-pad-start: 0px;
+    --subject-tab-overlap: 2px;
+    --subject-tab-radius: 13px;
+    --subject-tab-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --subject-tab-shadow-active: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --subject-tab-font-size: 12.5px;
+    --subject-tab-label-max-h: 104px;
+    --subject-tabs-bleed: 0px;
+
+    /* 5. Atalhos */
+    --shortcut-h: var(--touch-min);
+    --shortcut-icon-size: 18px;
+    --shortcut-group-gap: 6px;
+    --shortcut-bg: var(--chip-bg);
+    --shortcut-fg: var(--chip-fg);
+    --shortcut-active-bg: var(--primary);
+    --shortcut-border-w: 1px;
+    --shortcut-border-color: var(--chip-border);
+    --shortcut-active-shadow: var(--shadow-neon);
+
+    /* 6. Tópicos */
+    --topic-tab-height: var(--touch-min);
+    --topic-tab-active-height: var(--touch-min);
+    --topic-tab-max-w: 170px;
+    --topic-tab-pad-x: 18px;
+    --topic-tab-pad-top: 8px;
+    --topic-tab-gap: 0px;
+    --topic-tabs-pad-top: 0px;
+    --topic-tabs-max-w: 70%;
+    --sheet-appearance-trigger-size: var(--touch-min);
+    --sheet-appearance-option-height: var(--touch-min);
+
+    /* 9. Barra superior */
+    --topbar-h: 50px;
+    --topbar-gap: 4px;
+    --topbar-padding-x: 6px;
+    --topbar-padding-end: 10px;
+    --topbar-side-gap: 6px;
+    --topbar-right-gap: 0px;
+    --topbar-menu-btn-size: 40px;
+    --topbar-btn-size: var(--touch-min);
+    --topbar-btn-radius: 12px;
+    --topbar-theme-icon-size: 21px;
+    --topbar-action-height: var(--touch-min);
+    --topbar-action-w: 38px;
+    --topbar-action-radius: 11px;
+    /* 10–11. Menu esquerdo */
+    --sidebar-add-button-font-size: 16px;
+    --sidebar-section-button-size: var(--touch-min);
+    --sidebar-input-pad-y: 10px;
+    --sidebar-input-pad-x: 12px;
+    --sidebar-nav-item-pad-y: 10px;
+    --sidebar-backup-button-height: var(--touch-min);
+
+    /* 12. Caixa de texto: alvos de toque */
+    --rte-control-size: var(--touch-min);
+    --rte-stepper-height: var(--touch-min);
+    --rte-stepper-button-width: var(--touch-min);
+    --rte-stepper-input-width: 52px;
+    --rte-stepper-font-size: 16px;
+
+    /* 13. Caixa de formas: gaveta acima da doca */
+    --ecp-panel-pad: 0 12px 14px;
+    --ecp-panel-gap: 14px;
+    --ecp-panel-radius: 14px;
+    --ecp-row-gap: 8px;
+    --ecp-btn-size: var(--touch-min);
+    --ecp-swatch-size: 34px;
+    --ecp-swatch-lg-size: var(--touch-min);
+    --ecp-slider-h: 28px;
+    --ecp-fontlist-pad: 12px;
+
+    /* 14. Barra de desenho: cápsula flutuante */
+    --draw-btn-size: 38px;
+    --draw-btn-icon-size: 18px;
+    --draw-tool-active-size: 44px;
+    --draw-tool-active-radius: 14px;
+    --draw-tool-active-margin: 0 3px;
+    --draw-tool-active-bg: var(--selection-bg);
+    --draw-tool-active-shadow: var(--shadow-neon);
+    --draw-side-w: 104px;
+    --draw-roulette-inset: 22px;
+    --draw-handle-h: 16px;
+    --draw-handle-w: 92px;
+  }
+
+  :root[data-theme='light'] {
+    --chip-bg: #ffffff;
+    --chip-border: #e3e8df;
+    --chip-fg: #202820;
+    --dock-bg: #ffffff;
+    --handle: rgba(32, 40, 32, 0.45);
+    --sheet-shadow: 0 8px 24px rgba(32, 40, 32, 0.14);
+  }
+}
+
+/* Celular deitado (pouca altura). Valor = mesmo do celular em pé: troque para
+   46px se quiser a barra mais baixa (o mobile.css antigo tentava, mas nunca valeu). */
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 520px) {
+  :root {
+    --topbar-h: 50px;
+  }
+}

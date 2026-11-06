@@ -1,0 +1,533 @@
+/* ==========================================================================
+ *  BARRA DE DESENHO (seleção, mão, retângulo, losango, elipse, seta, linha,
+ *  lápis, texto, borracha…) — Medidas: theme.css, seção 14. Ordem do arquivo:
+ *  base (no centro da barra superior) → doca (<= 1179px) → cápsula (<= 900px).
+ * ========================================================================== */
+/*
+ * Barra de ferramentas do desenho. Em telas largas (>= 1180px) ela fica no
+ * CENTRO da TopBar: o ExcalidrawLayer a encaixa, via portal, no espaço
+ * `.topbar__tools` (ver TopBar.tsx). Em telas menores não cabe ali e ela
+ * desce, fixa, para o pé da tela (regras no fim do arquivo).
+ */
+.draw-toolbar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.draw-toolbar__group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--draw-group-gap);
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--draw-group-radius);
+  padding: var(--draw-group-pad);
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.draw-toolbar__group::-webkit-scrollbar {
+  display: none;
+}
+
+.draw-toolbar__divider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--panel-border);
+  margin: 2px 4px;
+}
+
+.draw-toolbar__btn {
+  width: var(--draw-btn-size);
+  height: var(--draw-btn-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: var(--draw-btn-radius);
+  color: var(--text);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.draw-toolbar__btn svg {
+  display: block;
+}
+
+.draw-toolbar__btn:hover {
+  background: var(--hover-bg);
+  color: var(--hover-fg);
+}
+
+.draw-toolbar__btn.is-active {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Ferramenta em uso: no computador é do tamanho dos outros botões; na doca/celular
+   fica grande, em destaque (tokens --draw-tool-active-*). */
+.draw-toolbar__btn--tool.is-active {
+  width: var(--draw-tool-active-size);
+  height: var(--draw-tool-active-size);
+  margin: var(--draw-tool-active-margin);
+  border-radius: var(--draw-tool-active-radius);
+  background: var(--draw-tool-active-bg);
+  box-shadow: var(--draw-tool-active-shadow);
+}
+
+.draw-toolbar__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.draw-toolbar__spacing-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: var(--z-topbar);
+  display: grid;
+  gap: 9px;
+  width: min(260px, calc(100vw - 16px));
+  padding: 12px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-md);
+  background: var(--panel);
+  color: var(--text);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+.draw-toolbar__spacing-heading,
+.draw-toolbar__spacing-range-labels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.draw-toolbar__spacing-heading label {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.draw-toolbar__spacing-heading output {
+  color: var(--secondary);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.draw-toolbar__spacing-panel input[type='range'] {
+  width: 100%;
+  margin: 0;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.draw-toolbar__spacing-range-labels {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+/* Menu "três pontinhos" (imagem, quadro, laser, travar tela). Fica fora do
+   grupo de botões (que tem overflow) para não ser cortado. */
+.draw-toolbar__menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 190px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-md);
+  padding: 6px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+.draw-toolbar__menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 13px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.draw-toolbar__menu-item:hover {
+  background: var(--hover-bg);
+  color: var(--hover-fg);
+}
+
+.draw-toolbar__menu-item.is-active {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Cadeado: cheio no computador, de contorno no celular. */
+.draw-toolbar__ico {
+  display: flex;
+}
+
+.draw-toolbar__ico--outline {
+  display: none;
+}
+
+/* Desfazer/refazer: só na doca (<= 1179px). */
+.draw-toolbar__btn--mobile {
+  display: none;
+}
+
+/* Alça de recolher: só existe na doca (com a barra no topo, é escondida). */
+.draw-toolbar__handle {
+  display: none;
+}
+
+/*
+ * DOCA INFERIOR (<= 1179px): abaixo disso a barra não cabe no centro da barra
+ * superior e desce para o pé da tela — celular, tablet e também o modo "site
+ * para computador" do celular (viewport ~980px). Antes ela virava um cartão
+ * flutuante e centralizado, solto sobre a folha; agora é uma barra de ponta a
+ * ponta, ancorada na borda da tela, e a folha termina acima dela.
+ *
+ * Camadas: a barra mora dentro da .topbar (z-index: var(--z-topbar)), então o
+ * z-index daqui só vale DENTRO dela — por isso a doca fica sempre acima da
+ * folha e dos painéis (--z-panel) e abaixo da gaveta e do fundo escurecido.
+ * Isso é igual em qualquer resolução/zoom, porque não depende de a barra
+ * estar ou não na altura do topo.
+ *
+ * (era: MOBILE <= 900px)
+ *  - fixa no pé da tela, de ponta a ponta, respeitando a barra de gestos;
+ *  - uma única fileira de botões de 44px que rola com o dedo (snap suave), com
+ *    desfazer/refazer na frente e a ferramenta ativa sempre trazida para a vista;
+ *  - uma alça fina no topo recolhe a doca e devolve a altura à folha.
+ * A doca publica a sua altura em --mobile-toolbar-h (ver DrawToolbar.tsx), que a
+ * folha e o painel de propriedades usam para ficar logo acima dela.
+ */
+@media (max-width: 1179px) {
+  .draw-toolbar {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+    width: auto;
+    max-width: none;
+    gap: 0;
+    z-index: var(--z-dock);
+    align-items: stretch;
+    background: var(--panel);
+    border-top: 1px solid var(--panel-border);
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.35);
+    padding: 0 var(--safe-right) var(--safe-bottom) var(--safe-left);
+  }
+
+  /* Alça: faixa fina de largura total com um "puxador" no meio. */
+  .draw-toolbar__handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: var(--draw-handle-h);
+    padding: 0;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 0;
+  }
+
+  .draw-toolbar__handle::before {
+    content: '';
+    width: var(--draw-handle-w);
+    height: 4px;
+    border-radius: 999px;
+    background: var(--panel-border);
+    filter: brightness(1.8);
+  }
+
+  .draw-toolbar__handle i {
+    display: none;
+  }
+
+  .draw-toolbar.is-collapsed .draw-toolbar__group {
+    display: none;
+  }
+
+  .draw-toolbar__btn--mobile {
+    display: inline-flex;
+  }
+
+  .draw-toolbar__group {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2px;
+    width: 100%;
+    max-width: none;
+    max-height: none;
+    padding: 4px 32px 8px 8px;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    scroll-padding: 0 48px;
+    /* Esmaece a borda direita para indicar que há mais botões. */
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+  }
+
+  .draw-toolbar__btn {
+    flex: 0 0 auto;
+    min-width: var(--draw-btn-size);
+    scroll-snap-align: center;
+  }
+
+  /* Ordem no celular: desfazer, refazer | travar | ferramentas | mais. */
+  .draw-toolbar__btn--mobile {
+    order: -3;
+  }
+
+  .draw-toolbar__btn[aria-label='Refazer'] {
+    order: -2;
+    margin-right: 4px;
+  }
+
+  .draw-toolbar__divider {
+    display: block;
+    flex: 0 0 1px;
+    width: 1px;
+    height: 24px;
+    align-self: center;
+    margin: 0 6px;
+  }
+
+  /* Menu "mais": sobe da doca, alinhado à direita. */
+  .draw-toolbar__menu {
+    top: auto;
+    bottom: calc(100% + 8px);
+    left: auto;
+    right: 8px;
+    transform: none;
+    min-width: 230px;
+  }
+
+  .draw-toolbar__spacing-panel {
+    top: auto;
+    right: 8px;
+    bottom: calc(100% + 8px);
+  }
+
+  .draw-toolbar__menu-item {
+    min-height: var(--draw-menu-item-h);
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+}
+
+/* Fileira da doca: no computador (barra no topo) ela some do layout; as laterais ficam escondidas. */
+.draw-toolbar__row {
+  display: contents;
+}
+
+.draw-toolbar__side {
+  display: none;
+}
+
+/*
+ * DOCA — posições (<= 1179px): a ferramenta em uso fica grande no CENTRO e as
+ * outras rolam em volta dela (efeito de "roleta"). Dos lados, FORA da área que
+ * rola, ficam fixos: desfazer/refazer (esquerda) e voltar/avançar de página
+ * (direita). As duas laterais têm a mesma largura, então o centro é o centro.
+ *   lateral = 8px + 2 botões de 44px = 96px  ->  folga da roleta = 50% - 122px
+ */
+@media (max-width: 1179px) {
+  .draw-toolbar.is-collapsed .draw-toolbar__row {
+    display: none;
+  }
+
+  .draw-toolbar__row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .draw-toolbar__side {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    width: var(--draw-side-w);
+    padding: 4px 0 8px;
+    background: var(--panel);
+    position: relative;
+    z-index: 2;
+  }
+
+  .draw-toolbar__side--left {
+    padding-left: 8px;
+  }
+
+  .draw-toolbar__side--right {
+    padding-right: 8px;
+    justify-content: flex-end;
+  }
+
+  .draw-toolbar__btn--page:disabled {
+    opacity: 0.35;
+  }
+
+  .draw-toolbar__group {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    padding-left: calc(50% - var(--draw-roulette-inset));
+    padding-right: calc(50% - var(--draw-roulette-inset));
+    scroll-padding: 0;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  /* Ferramenta em uso: botão grande, em destaque (medidas em --draw-tool-active-*). */
+  .draw-toolbar__btn--tool.is-active {
+    min-width: var(--draw-tool-active-size);
+  }
+}
+
+/* Acabamento: as ferramentas que rolam por baixo das laterais esmaecem em vez de aparecerem cortadas. */
+@media (max-width: 1179px) {
+  .draw-toolbar__side--left::after,
+  .draw-toolbar__side--right::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 14px;
+    pointer-events: none;
+  }
+
+  .draw-toolbar__side--left::after {
+    left: 100%;
+    background: linear-gradient(to right, var(--panel), transparent);
+  }
+
+  .draw-toolbar__side--right::after {
+    right: 100%;
+    background: linear-gradient(to left, var(--panel), transparent);
+  }
+}
+
+/* ==========================================================================
+ *  CELULAR (<= 900px): cápsula flutuante
+ *    [↶ ↷ |]     (ferramenta em uso, grande, no centro)     [ferramentas…]
+ *  (Substitui o que antes ficava em styles/mobile-ui.css.)
+ * ========================================================================== */
+@media (max-width: 900px) {
+  .draw-toolbar {
+    padding: 0 10px calc(var(--safe-bottom) + 6px);
+    background: none;
+    border-top: none;
+    box-shadow: none;
+  }
+
+  .draw-toolbar__row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: var(--draw-dock-row-h);
+    border: 1px solid var(--chip-border);
+    border-radius: var(--draw-dock-radius);
+    background: var(--dock-bg);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Desfazer / refazer fixos à esquerda, com a divisória. */
+  .draw-toolbar__side--left {
+    position: absolute;
+    inset: 0 auto 0 0;
+    z-index: 3;
+    width: var(--draw-side-w);
+    padding: 0 0 0 8px;
+    border-radius: var(--draw-dock-radius) 0 0 var(--draw-dock-radius);
+    background: var(--dock-bg);
+  }
+
+  .draw-toolbar__side--left::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    width: 1px;
+    height: 20px;
+    transform: translateY(-50%);
+    background: var(--chip-border);
+  }
+
+  .draw-toolbar__side--left::after {
+    background: linear-gradient(to right, var(--dock-bg), transparent);
+  }
+
+  /* Voltar / avançar de página saíram da doca (agora no "⋯" da folha). */
+  .draw-toolbar__side--right {
+    display: none;
+  }
+
+  /* A "roleta" de ferramentas ocupa a cápsula inteira; a em uso fica no centro. */
+  .draw-toolbar__group {
+    flex: 1 1 0;
+    width: 100%;
+    padding: 0 calc(50% - var(--draw-roulette-inset));
+    border-radius: var(--draw-dock-radius);
+  }
+
+  .draw-toolbar__btn {
+    color: var(--chip-fg);
+  }
+
+  .draw-toolbar__btn svg {
+    width: var(--draw-btn-icon-size);
+    height: var(--draw-btn-icon-size);
+  }
+
+  .draw-toolbar__btn--tool.is-active {
+    color: #fff;
+  }
+
+  /* Cadeado de contorno (o do computador é cheio). */
+  .draw-toolbar__ico--solid {
+    display: none;
+  }
+
+  .draw-toolbar__ico--outline {
+    display: flex;
+  }
+
+  /* Alça embaixo da cápsula: toque para recolher/mostrar a doca. */
+  .draw-toolbar__handle {
+    order: 2;
+    margin-top: 0;
+  }
+
+  .draw-toolbar__handle::before {
+    height: 4px;
+    background: var(--handle);
+    filter: none;
+  }
+}

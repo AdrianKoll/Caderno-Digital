@@ -1,0 +1,307 @@
+.list-view {
+  padding: 40px 32px 56px;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+/* ---------- Cabeçalho ---------- */
+.list-view__header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.list-view__header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  font-size: 24px;
+  color: #fff;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow: 0 10px 24px rgba(99, 102, 241, 0.3);
+}
+
+.list-view__header-icon--favorites {
+  background: linear-gradient(135deg, #f59e0b, var(--favorite));
+  box-shadow: 0 10px 24px rgba(251, 191, 36, 0.25);
+}
+
+.list-view__header-icon--trash {
+  background: linear-gradient(135deg, #ef4444, var(--danger));
+  box-shadow: 0 10px 24px rgba(248, 113, 113, 0.25);
+}
+
+.list-view__header-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.list-view__header-text h2 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.list-view__header-text p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 14.5px;
+}
+
+.list-view__count {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ---------- Estado vazio ---------- */
+.list-view__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 64px 24px;
+  border: 1px dashed var(--panel-border);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.list-view__empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: var(--panel);
+  color: var(--secondary);
+  font-size: 34px;
+  margin-bottom: 18px;
+}
+
+.list-view__empty h3 {
+  margin: 0 0 8px;
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.list-view__empty p {
+  margin: 0;
+  max-width: 420px;
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+/* ---------- Estado vazio: botão ---------- */
+.list-view__empty-btn {
+  margin-top: 18px;
+  min-height: 42px;
+  padding: 0 20px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.list-view__empty-btn:hover {
+  background: var(--secondary);
+}
+
+/* ---------- Cartões de página ---------- */
+.list-view__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.page-card {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+  color: var(--text);
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+/* O cartão inteiro abre a página; o lápis (renomear) é um botão separado, no canto. */
+.page-card__main {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  padding: 18px;
+  background: none;
+  border: none;
+  border-radius: inherit;
+  color: inherit;
+  text-align: left;
+}
+
+.page-card__rename,
+.page-card__delete {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.15s, background 0.15s;
+}
+
+.page-card:hover .page-card__rename,
+.page-card:focus-within .page-card__rename,
+.page-card:hover .page-card__delete,
+.page-card:focus-within .page-card__delete {
+  opacity: 1;
+}
+
+.page-card__rename:hover {
+  background: var(--panel-border);
+  color: var(--text);
+}
+
+.page-card__delete {
+  right: 48px;
+  color: var(--danger);
+}
+
+.page-card__delete:hover {
+  background: var(--danger);
+  color: #fff;
+}
+
+.page-card--deletable .page-card__top {
+  padding-right: 72px;
+}
+
+/* Toque: não existe hover, então o lápis fica sempre visível e com alvo de 44px. */
+@media (hover: none) {
+  .page-card__rename,
+  .page-card__delete {
+    opacity: 1;
+    width: var(--touch-min);
+    height: var(--touch-min);
+    top: 4px;
+  }
+
+  .page-card__rename { right: 4px; }
+  .page-card__delete { right: calc(4px + var(--touch-min)); }
+}
+
+.page-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+}
+
+.page-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Deixa espaço para o lápis de renomear, no canto. */
+  padding-right: 36px;
+}
+
+.page-card__number {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(99, 102, 241, 0.16);
+  color: var(--secondary);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.page-card__fav {
+  color: var(--favorite);
+  font-size: 16px;
+}
+
+.page-card__title {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.page-card__path,
+.page-card__date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13.5px;
+}
+
+.page-card__sep {
+  font-size: 10px;
+  margin: 0 6px;
+}
+
+.page-card__trash-main { height: auto; }
+.page-card__trash-actions { display: flex; gap: 8px; padding: 0 18px 16px; }
+.page-card__trash-actions button {
+  min-height: 40px;
+  padding: 6px 12px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text);
+}
+.page-card__trash-actions button:last-child { color: var(--danger); }
+.page-card__trash-actions button:focus-visible { outline: 2px solid var(--secondary); outline-offset: 2px; }
+
+@media (max-width: 640px) {
+  .list-view {
+    padding: 24px 16px 40px;
+  }
+
+  /* Uma coluna que nunca estoura a largura da tela (o mínimo de 280px
+     forçava rolagem lateral em celulares estreitos). */
+  .list-view__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .page-card__main {
+    padding: 16px;
+  }
+  .page-card__trash-actions button { min-height: var(--touch-min); }
+
+  .page-card__top {
+    padding-right: 40px;
+  }
+
+  .page-card--deletable .page-card__top {
+    padding-right: calc(40px + var(--touch-min));
+  }
+
+  .list-view__header-text h2 {
+    font-size: 22px;
+  }
+
+  .list-view__count {
+    display: none;
+  }
+}

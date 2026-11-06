@@ -1,0 +1,69 @@
+/* ==========================================================================
+ *  FICHÁRIO › NOME DA PÁGINA
+ * ==========================================================================
+ *  Fica na faixa das abas de tópico, logo à direita da última aba, sobre o
+ *  fundo escuro (fora da folha). Parece texto e vira campo ao clicar.
+ *  Só existe no COMPUTADOR (NotebookPage.tsx não o desenha em <= 900px; no
+ *  celular o título se edita pela lista). Medidas: theme.css, seção 7.
+ * ========================================================================== */
+.page-title {
+  flex: 1 1 var(--page-title-flex-basis);
+  min-width: 0;
+  max-width: var(--page-title-max-w);
+  height: var(--page-title-height);
+  margin: 0 0 1px 2px;
+  padding: 0 var(--page-title-pad-x);
+  display: flex;
+  align-items: center;
+  gap: var(--page-title-gap);
+  color: var(--muted);
+  cursor: text;
+}
+
+/* Com abas de tópico antes, um respiro maior separa a última aba do título. */
+.topic-tabs + .page-title {
+  margin-left: var(--page-title-after-tabs);
+}
+
+.page-title__icon {
+  flex: 0 0 auto;
+  font-size: var(--page-title-icon-size);
+  opacity: 0.8;
+}
+
+.page-title__input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0 2px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed transparent;
+  border-radius: 0;
+  outline: none;
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: var(--page-title-font-size);
+  font-weight: 600;
+  text-overflow: ellipsis;
+}
+
+.page-title__input::placeholder {
+  color: var(--muted);
+  font-weight: 500;
+  opacity: 0.75;
+}
+
+.page-title:hover .page-title__input,
+.page-title__input:focus {
+  border-bottom-color: var(--muted);
+}
+
+.page-title:focus-within {
+  color: var(--secondary);
+}
+
+.page-title__input:focus {
+  border-bottom-style: solid;
+  border-bottom-color: var(--primary);
+}

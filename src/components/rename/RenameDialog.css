@@ -1,0 +1,160 @@
+.rename-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  /* Mais para cima que o centro: o teclado do celular não cobre o campo. */
+  padding: min(18vh, 140px) 16px 16px;
+  background: rgba(5, 8, 20, 0.62);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  animation: rename-fade 0.15s ease-out;
+}
+
+.rename-card {
+  width: min(440px, 100%);
+  padding: 20px;
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
+  animation: rename-pop 0.18s var(--ease);
+}
+
+.rename-card__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.rename-card__context {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.rename-card__label {
+  display: block;
+  margin: 16px 0 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.rename-card__input {
+  width: 100%;
+  min-height: var(--touch-min);
+  padding: 10px 12px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-md);
+  /* 16px: abaixo disso o iOS dá zoom ao focar. */
+  font-size: 16px;
+}
+
+.rename-card__input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.28);
+}
+
+.rename-card__input.has-error {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.2);
+}
+
+.rename-card__meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 20px;
+  margin-top: 6px;
+  font-size: 12.5px;
+}
+
+.rename-card__hint,
+.rename-card__count {
+  color: var(--muted);
+}
+
+.rename-card__error {
+  color: var(--danger);
+}
+
+.rename-card__count {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.rename-card__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.rename-card__btn {
+  min-width: 96px;
+  min-height: var(--touch-min);
+  padding: 0 18px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-md);
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.rename-card__btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.rename-card__btn--primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.rename-card__btn--primary:hover {
+  background: var(--secondary);
+}
+
+.rename-card__btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+@keyframes rename-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes rename-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+
+@media (max-width: 480px) {
+  .rename-backdrop {
+    padding-top: 12vh;
+    padding-bottom: calc(16px + var(--safe-bottom));
+  }
+
+  .rename-card__actions {
+    flex-direction: column-reverse;
+  }
+
+  .rename-card__btn {
+    width: 100%;
+  }
+}

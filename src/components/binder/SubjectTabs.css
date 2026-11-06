@@ -1,0 +1,184 @@
+/* ==========================================================================
+ *  FICHÁRIO › MATÉRIAS (divisórias) e ATALHOS (Início / Todas / Favoritos)
+ * ==========================================================================
+ *  Tamanhos, formatos e espaços: theme.css, seções 4 (matérias) e 5 (atalhos).
+ *  Aqui só ficam posição, comportamento e aparência. Ordem do arquivo:
+ *  base (computador) → celular (<= 900px). Nada mais sobrescreve estas classes.
+ *
+ *  No computador as divisórias ficam coladas na borda direita da folha (posição
+ *  absoluta dentro de .notebook-page__book); no celular formam uma coluna ao
+ *  lado da folha, em botões arredondados.
+ * ========================================================================== */
+
+/* ---- Coluna que reúne atalhos + matérias ---------------------------------- */
+.subject-tabs {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--subject-tabs-gap);
+  width: var(--subject-tabs-w);
+  min-height: 0;
+  max-height: 100%;
+}
+
+/* Atalhos no topo da coluna. */
+.subject-tabs__shortcuts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--subject-tabs-gap);
+  margin-bottom: var(--shortcut-group-gap);
+  flex-shrink: 0;
+}
+
+/* Matérias: rolam quando são muitas. */
+.subject-tabs__subjects {
+  display: flex;
+  flex-direction: column;
+  gap: var(--subject-tabs-gap);
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: visible;
+  scrollbar-width: none;
+  /* Folga para a aba ativa, que sai um pouco mais para fora. */
+  padding-right: var(--subject-tabs-bleed);
+  margin-right: calc(var(--subject-tabs-bleed) * -1);
+}
+
+.subject-tabs__subjects::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---- Divisória (base comum a atalhos e matérias) -------------------------- */
+.subject-tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: var(--subject-tab-w);
+  margin-left: var(--subject-tab-overlap); /* aba "enfiada" por baixo da folha */
+  padding: 0 0 0 var(--subject-tab-pad-start);
+  border: none;
+  border-radius: var(--subject-tab-radius);
+  background: var(--tab, #3a4560);
+  color: var(--tab-fg, #fff);
+  box-shadow: var(--subject-tab-shadow);
+  transition: width 0.16s ease, filter 0.16s ease, transform 0.16s ease;
+  touch-action: manipulation;
+}
+
+.subject-tab:hover {
+  width: var(--subject-tab-w-hover);
+  filter: brightness(1.08);
+}
+.subject-tab--icon:hover,
+.subject-tab--icon.is-active {
+  --tab: var(--shortcut-active-bg);
+  --tab-fg: var(--shortcut-active-fg);
+  filter: none;
+}
+
+.subject-tab:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.subject-tab.is-active {
+  width: var(--subject-tab-w-active);
+  z-index: 2;
+  filter: none;
+  box-shadow: var(--subject-tab-shadow-active);
+}
+
+/* ---- ATALHOS (ícones) ------------------------------------------------------ */
+.subject-tab--icon {
+  --tab: var(--shortcut-bg);
+  --tab-fg: var(--shortcut-fg);
+  height: var(--shortcut-h);
+  font-size: var(--shortcut-icon-size);
+  border: var(--shortcut-border-w) solid var(--shortcut-border-color);
+}
+
+.subject-tab--icon.is-active {
+  --tab: var(--shortcut-active-bg);
+  --tab-fg: var(--shortcut-active-fg);
+  border-color: transparent;
+  box-shadow: var(--shortcut-active-shadow);
+}
+
+/* ---- MATÉRIAS (a cor vem da própria matéria: --tab / --tab-fg inline) ----- */
+.subject-tab--subject {
+  height: var(--subject-tab-h);
+  min-height: var(--subject-tab-min-h);
+  max-height: var(--subject-tab-max-h);
+  padding-top: var(--subject-tab-pad-y);
+  padding-bottom: var(--subject-tab-pad-y);
+}
+
+.subject-tab--subject.is-empty {
+  opacity: 0.55;
+}
+
+.subject-tab__label {
+  display: block;
+  max-height: var(--subject-tab-label-max-h);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  font-size: var(--subject-tab-font-size);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+ *  CELULAR (<= 900px): botões arredondados e separados, ao lado da folha.
+ *  Medidas vêm dos MESMOS tokens (valores do celular na seção 15 do theme.css).
+ * ========================================================================== */
+@media (max-width: 900px) {
+  .subject-tabs {
+    height: 100%;
+  }
+
+  .subject-tabs__subjects {
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: y proximity;
+  }
+
+  /* Sem animação de largura e sem "brilho" ao tocar. */
+  .subject-tab,
+  .subject-tab:hover,
+  .subject-tab.is-active {
+    transition: none;
+    filter: none;
+  }
+
+  /* Atalhos: escuros; o aberto fica azul (cores em --shortcut-*). */
+  .subject-tab--icon {
+    background: var(--shortcut-bg);
+    color: var(--shortcut-fg);
+  }
+
+  .subject-tab--icon.is-active {
+    background: var(--shortcut-active-bg);
+    color: var(--shortcut-active-fg);
+  }
+
+  /* Matéria: a cor dela, com o nome na vertical (lido de baixo para cima). */
+  .subject-tab--subject {
+    border: none;
+    background: linear-gradient(160deg, color-mix(in srgb, var(--tab) 88%, #fff), var(--tab));
+    color: var(--tab-fg);
+    scroll-snap-align: start;
+  }
+
+  .subject-tab--subject:not(.is-active) {
+    filter: saturate(0.8) brightness(0.92);
+  }
+
+  .subject-tab__label {
+    transform: rotate(180deg);
+  }
+}

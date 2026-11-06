@@ -1,0 +1,329 @@
+.topbar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--topbar-gap);
+  padding: 0 var(--topbar-padding-end) 0 var(--topbar-padding-x);
+  border-bottom: 1px solid var(--panel-border);
+  background: var(--bg);
+  /* Acima da barra de ferramentas e do painel de propriedades (fixos), para
+     o menu "Salvar como" não ficar escondido atrás deles. */
+  position: relative;
+  z-index: var(--z-topbar);
+  /* Em tela cheia (PWA) a barra começa abaixo do entalhe / barra de status. */
+  padding-top: var(--safe-top);
+}
+
+.topbar__left,
+.topbar__right {
+  display: flex;
+  align-items: center;
+  gap: var(--topbar-side-gap);
+  /* Mesma base (0) nos dois lados: o centro fica exatamente no meio da barra. */
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.topbar__right {
+  justify-content: flex-end;
+  gap: var(--topbar-right-gap);
+}
+
+/* Centro da barra: recebe a barra de ferramentas do desenho (portal). */
+.topbar__tools {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.topbar__menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--topbar-menu-btn-size);
+  height: var(--topbar-menu-btn-size);
+  border-radius: var(--radius-sm);
+  background: none;
+  border: none;
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+.topbar__site-icon {
+  display: block;
+  width: min(30px, calc(var(--topbar-menu-btn-size) - 8px));
+  height: min(30px, calc(var(--topbar-menu-btn-size) - 8px));
+  object-fit: contain;
+}
+
+.topbar__menu-btn:hover {
+  background: var(--panel);
+}
+
+/* ---------- Caminho da página ---------- */
+.topbar__crumb {
+  display: flex;
+  align-items: center;
+  gap: var(--topbar-title-gap);
+  min-width: 0;
+  font-size: var(--topbar-text-size);
+  font-weight: 500;
+  color: var(--text);
+}
+
+.topbar__crumb > i:first-child {
+  color: var(--secondary);
+  font-size: var(--topbar-icon-size);
+}
+
+.topbar__crumb span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.topbar__crumb-sep {
+  color: var(--muted);
+  font-size: var(--topbar-separator-size);
+  flex-shrink: 0;
+}
+
+/* ---------- Salvar como ---------- */
+.topbar__export {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.topbar__export-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--topbar-action-gap);
+  width: var(--topbar-action-w);
+  height: var(--topbar-action-height);
+  padding: 0 var(--topbar-action-pad-x);
+  border-radius: var(--topbar-action-radius);
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  font-size: var(--topbar-action-font-size);
+  font-weight: 600;
+  transition: background 0.15s;
+}
+
+.topbar__export-btn:hover:not(:disabled) {
+  background: var(--secondary);
+}
+
+.topbar__export-btn:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+.topbar__export-btn > i:first-child {
+  font-size: 14px;
+}
+
+.topbar__export-caret {
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+.topbar__export-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: var(--topbar-export-menu-width);
+  padding: var(--topbar-export-menu-padding);
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+.topbar__export-item {
+  display: flex;
+  align-items: center;
+  gap: var(--topbar-export-item-gap);
+  width: 100%;
+  padding: var(--topbar-export-item-pad-y) var(--topbar-export-item-pad-x);
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: var(--text);
+  text-align: left;
+}
+
+.topbar__export-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.topbar__export-item > i {
+  font-size: var(--topbar-export-icon-size);
+  color: var(--secondary);
+  width: var(--topbar-export-icon-width);
+  text-align: center;
+}
+
+.topbar__export-item strong {
+  display: block;
+  font-size: var(--topbar-export-title-size);
+  font-weight: 600;
+}
+
+.topbar__export-item small {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: var(--topbar-export-subtitle-size);
+}
+
+/* Abaixo de 1180px não há largura para a barra de ferramentas no centro
+   (ela desce para o pé da tela — ver DrawToolbar.css): o caminho da página
+   some para dar lugar ao resto. */
+@media (max-width: 1179px) {
+  .topbar__crumb {
+    display: none;
+  }
+
+  .topbar__right {
+    flex: 0 0 auto;
+  }
+
+  .topbar__left {
+    flex: 1 1 0;
+  }
+}
+
+/* Celular: alvos de toque de 44px; o menu "Salvar como" vira uma folha que sobe da base da barra. */
+@media (max-width: 900px) {
+  .topbar__export-menu {
+    position: fixed;
+    top: calc(var(--topbar-h) + var(--safe-top) + 4px);
+    right: 8px;
+    left: 8px;
+    min-width: 0;
+  }
+
+  .topbar__export-item {
+    min-height: var(--topbar-btn-size);
+    padding: var(--topbar-export-item-pad-y) var(--topbar-export-item-pad-x);
+  }
+}
+
+/* Botão do modo escrita: existe só no celular (no computador há espaço de sobra). */
+.topbar__focus-btn {
+  display: none;
+}
+
+.topbar__theme-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--topbar-btn-size);
+  height: var(--topbar-btn-size);
+  padding: 0;
+  border: none;
+  border-radius: var(--topbar-btn-radius);
+  background: none;
+  color: var(--text);
+  font-size: var(--topbar-theme-icon-size);
+  flex-shrink: 0;
+}
+
+.topbar__theme-btn:hover {
+  background: var(--panel);
+}
+
+@media (max-width: 900px) {
+  .topbar__focus-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--topbar-btn-size);
+    height: var(--topbar-btn-size);
+    padding: 0;
+    border: none;
+    border-radius: var(--topbar-btn-radius);
+    background: none;
+    color: var(--text);
+    font-size: var(--topbar-focus-icon-size);
+    flex-shrink: 0;
+  }
+}
+
+/* Elementos que só existem no celular: escondidos fora dele. */
+.topbar__sep {
+  display: none;
+}
+
+/* ==========================================================================
+ *  CELULAR (<= 900px) — visual da barra superior: [ícone do site] [ações]
+ *  Medidas: theme.css, seção 9 (valores do celular na seção 15).
+ *  (Este bloco substitui o que antes ficava em styles/mobile-ui.css.)
+ * ========================================================================== */
+@media (max-width: 900px) {
+  .topbar {
+    border-bottom-color: var(--panel-border);
+  }
+
+  .topbar .page-nav {
+    display: none; /* trocar de página fica no "⋯" da folha */
+  }
+
+  /* Tema e modo escrita: botões de toque. */
+  .topbar__focus-btn,
+  .topbar__theme-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--topbar-btn-size);
+    min-height: var(--topbar-btn-size);
+    flex-shrink: 0;
+  }
+
+  .topbar__sep {
+    display: block;
+    flex-shrink: 0;
+    width: 1px;
+    height: 24px;
+    margin: 0 6px;
+    background: var(--panel-border);
+  }
+
+  /* Salvar como: um botão quadrado só com a seta para baixo. */
+  .topbar .topbar__export {
+    margin: 0 0 0 4px;
+  }
+
+  .topbar__export-btn {
+    justify-content: center;
+    gap: 0;
+    min-width: var(--topbar-action-w);
+    min-height: var(--topbar-action-height);
+    padding: 0;
+    border: 1px solid var(--chip-border);
+    background: var(--chip-bg);
+    color: var(--chip-fg);
+  }
+
+  .topbar__export-btn:hover:not(:disabled) {
+    background: var(--chip-bg);
+  }
+
+  .topbar__export-btn > i:first-child,
+  .topbar__export-label {
+    display: none;
+  }
+
+  .topbar__export-caret {
+    display: inline;
+    font-size: 15px;
+    opacity: 1;
+  }
+
+  .topbar__export-btn:disabled .topbar__export-caret {
+    opacity: 0.45;
+  }
+}

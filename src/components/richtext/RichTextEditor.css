@@ -1,0 +1,570 @@
+/* ==========================================================================
+ *  CAIXA DE FERRAMENTAS DE TEXTO (editor de texto formatado)
+ * ==========================================================================
+ *  MAPA DESTE ARQUIVO (procure pelo título em maiúsculas):
+ *    1. FUNDO ESCURECIDO ............ .rte-backdrop
+ *    2. BARRA FLUTUANTE ............. .rte-toolbar (telas médias; mesma base das outras formas)
+ *    3. GRUPOS E BOTÕES ............. .rte-group, .rte-btn, .rte-field (negrito, itálico, cor…)
+ *    4. MENUS (cor / marcadores) .... .rte-menu, .rte-palette, .rte-markers
+ *    5. CAIXA DE EDIÇÃO ............. .rte-box (retângulo tracejado sobre a folha)
+ *    6. PAINEL ENCAIXADO ............ .rte-toolbar--docked (coluna à esquerda da folha)
+ *    7. DOCA DO CELULAR ............. .rte-toolbar--dock (pé da tela, acima do teclado)
+ *
+ *  TAMANHOS, FONTES E ESPAÇOS: theme.css, seção 12 (tokens --rte-*). Aqui só
+ *  ficam posição, comportamento e cores. As cores são fixas e claras de propósito,
+ *  iguais às do painel de propriedades de formas (ElementContextPanel.css).
+ *
+ *  IMPORTANTE: o retângulo tracejado (.rte-box) NÃO é o painel de formatação: é o
+ *  próprio objeto de texto. Seu tamanho de letra vem do controle "Tamanho" e sua
+ *  posição/largura vêm do canvas (variáveis --fs, --lh, --pad definidas em
+ *  RichTextEditor.tsx). A caixa usa as mesmas proporções do desenho final
+ *  (ver render.ts): recuo, coluna do marcador, altura de linha.
+ * ========================================================================== */
+
+/* ---- 1. FUNDO ESCURECIDO --------------------------------------------------- */
+.rte-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(15, 23, 42, 0.18);
+}
+
+/* ---- 2. BARRA FLUTUANTE ---------------------------------------------------- */
+.rte-toolbar {
+  --rte-bg: #ffffff;
+  --rte-text: #1b1b1f;
+  --rte-border: #dcdce3;
+  --rte-hover: #f1f0ff;
+  --rte-active-bg: #e0dfff;
+  --rte-accent: #6965db;
+  --rte-group-bg: #f6f6fa;
+  --rte-btn: var(--rte-control-size);
+
+  position: fixed;
+  z-index: 93;
+  top: calc(var(--topbar-h, 68px) + var(--rte-toolbar-top-gap) + var(--vv-top, 0px));
+  /* Centralizada sem `left: 50% + translateX`: aquele truque limita a largura
+     da barra à metade da tela e a fazia quebrar em linhas estreitas. */
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: fit-content;
+  max-width: calc(100vw - 16px);
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--rte-toolbar-gap);
+  padding: var(--rte-toolbar-padding);
+  background: var(--rte-bg);
+  color: var(--rte-text);
+  border-radius: var(--rte-toolbar-radius);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 8px 28px rgba(0, 0, 0, 0.3);
+  font-size: var(--rte-toolbar-font-size);
+}
+
+/* ---- 3. GRUPOS E BOTÕES ---------------------------------------------------- */
+/* Cada grupo é uma "pílula": quando a barra quebra em várias linhas, os grupos
+   se rearranjam inteiros (nada de divisória sobrando no começo de linha). */
+.rte-group {
+  display: flex;
+  align-items: center;
+  gap: var(--rte-group-gap);
+  padding: var(--rte-group-pad);
+  background: var(--rte-group-bg);
+  border-radius: var(--rte-group-radius);
+}
+
+/* Ações (cancelar / concluir): no computador ficam no fim da barra. */
+.rte-group--actions {
+  order: 99;
+  background: transparent;
+  gap: 4px;
+  padding: 2px 0 2px 2px;
+}
+
+.rte-group--steppers {
+  gap: 8px;
+  padding: 2px 6px;
+}
+
+.rte-field {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--rte-field-gap);
+  color: #5c5c66;
+  cursor: default;
+}
+
+.rte-field > i {
+  font-size: var(--rte-field-icon-size);
+}
+
+.rte-field__label {
+  display: none;
+  font-size: var(--rte-field-label-size);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.rte-btn {
+  min-width: var(--rte-btn);
+  height: var(--rte-btn);
+  padding: 0 var(--rte-btn-pad-x);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--rte-btn-gap);
+  background: transparent;
+  color: var(--rte-text);
+  border: 1px solid transparent;
+  border-radius: var(--rte-btn-radius);
+  font-size: var(--rte-btn-font-size);
+  touch-action: manipulation;
+}
+
+.rte-btn:hover {
+  background: var(--rte-hover);
+}
+
+.rte-btn.is-active {
+  background: var(--rte-active-bg);
+  border-color: var(--rte-accent);
+  color: #4a47b1;
+}
+
+.rte-btn--color {
+  flex-direction: column;
+  gap: 1px;
+  padding-top: 3px;
+}
+
+.rte-color-a {
+  font-weight: 700;
+  line-height: 1;
+  font-size: var(--rte-btn-font-size);
+}
+
+.rte-color-bar {
+  width: var(--rte-color-bar-w);
+  height: var(--rte-color-bar-h);
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.rte-btn--done {
+  background: var(--rte-accent);
+  color: #fff;
+  font-size: var(--rte-done-font-size);
+  font-weight: 600;
+  padding: 0 var(--rte-done-pad-x);
+}
+
+.rte-btn--done:hover {
+  background: #5753c7;
+}
+
+.rte-btn--ghost {
+  color: #5c5c66;
+}
+
+/* ---- 4. MENUS (cor / marcadores) ------------------------------------------ */
+.rte-menu {
+  position: fixed;
+  z-index: 94;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: fit-content;
+  box-sizing: border-box;
+  max-width: calc(100vw - 16px);
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  padding: var(--rte-menu-pad);
+  background: #fff;
+  color: #1b1b1f;
+  border-radius: var(--rte-menu-radius);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 12px 32px rgba(0, 0, 0, 0.32);
+}
+
+.rte-menu__title {
+  font-size: var(--rte-menu-title-size);
+  font-weight: 600;
+  color: #5c5c66;
+  margin: 10px 0 6px;
+}
+
+.rte-menu__title:first-child {
+  margin-top: 0;
+}
+
+.rte-menu__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.rte-auto {
+  height: var(--rte-auto-h);
+  padding: 0 12px;
+  background: #f4f4f8;
+  border: 1px solid #dcdce3;
+  border-radius: 8px;
+  color: inherit;
+  font-size: var(--rte-auto-font-size);
+  font-weight: 600;
+}
+
+.rte-auto--block {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.rte-palette {
+  display: grid;
+  grid-template-columns: repeat(var(--rte-palette-cols), var(--rte-swatch-size));
+  gap: var(--rte-palette-gap);
+}
+
+.rte-swatch {
+  width: var(--rte-swatch-size);
+  height: var(--rte-swatch-size);
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: var(--rte-swatch-radius);
+}
+
+.rte-swatch.is-active {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--rte-accent, #6965db);
+}
+
+.rte-markers {
+  display: grid;
+  gap: var(--rte-marker-gap);
+}
+
+.rte-markers--bullets {
+  grid-template-columns: repeat(5, var(--rte-marker-bullet-w));
+}
+
+.rte-markers--numbers {
+  grid-template-columns: repeat(3, var(--rte-marker-number-w));
+}
+
+.rte-marker {
+  height: var(--rte-marker-h);
+  background: #f8f8fb;
+  border: 1px solid #dcdce3;
+  border-radius: 8px;
+  color: inherit;
+  font-size: var(--rte-marker-font-size);
+}
+
+.rte-marker--wide {
+  font-size: var(--rte-marker-wide-font-size);
+  font-weight: 600;
+}
+
+.rte-marker:hover {
+  background: #f1f0ff;
+  border-color: #6965db;
+}
+
+/* ---- 5. CAIXA DE EDIÇÃO (o objeto de texto na folha) ------------------------ */
+.rte-box {
+  position: fixed;
+  z-index: 92;
+  box-sizing: border-box;
+  min-height: calc(var(--fs) * var(--lh) + var(--pad) * 2);
+  padding: var(--pad);
+  font-size: var(--fs);
+  line-height: var(--lh);
+  background: rgba(255, 255, 255, 0.92);
+  outline: 2px dashed #6965db;
+  outline-offset: 2px;
+  border-radius: 2px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  caret-color: #6965db;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+.rte-box > div {
+  position: relative;
+  min-height: calc(var(--fs) * var(--lh));
+  padding-left: calc((var(--i, 0) * var(--indent) + var(--mk, 0) * var(--mcol)) * var(--fs));
+}
+
+/* Marcador desenhado por fora do texto editável (não entra no conteúdo). */
+.rte-box > div[data-m]:not([data-m='none'])::before {
+  content: attr(data-label);
+  position: absolute;
+  left: calc(var(--i, 0) * var(--indent) * var(--fs));
+  top: 0;
+  color: var(--mc, inherit);
+  font-family: var(--sym);
+  font-style: normal;
+  font-weight: 400;
+  text-decoration: none;
+  text-align: left;
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.rte-box > div[data-m^='num']::before,
+.rte-box > div[data-m^='alpha']::before,
+.rte-box > div[data-m^='roman']::before {
+  font-family: inherit;
+}
+
+/* ---- 6. PAINEL ENCAIXADO (coluna à esquerda da folha, telas largas) ------
+   Mesmo cartão do painel de propriedades (à direita): coluna de seções com
+   rótulo. Fica acima do fundo escurecido (z-index 90) para continuar clicável. */
+.rte-toolbar--docked {
+  position: sticky;
+  top: var(--rte-docked-top);
+  left: auto;
+  right: auto;
+  z-index: 93;
+  margin: 0;
+  width: var(--rte-panel-width);
+  max-width: 100%;
+  max-height: calc(100vh - var(--topbar-h, 48px) - var(--rte-docked-max-height-gap));
+  overflow-y: auto;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: var(--rte-panel-gap);
+  padding: var(--rte-panel-padding);
+  border-radius: var(--rte-panel-radius);
+  font-size: var(--rte-panel-font-size);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 2px 12px rgba(0, 0, 0, 0.18);
+}
+
+/* 901–1279px: a folha usa a largura toda, então o painel FLUTUA sobre a margem
+   esquerda dela (fixo, abaixo da barra superior) em vez de ocupar uma coluna. */
+@media (min-width: 901px) and (max-width: 1279px) {
+  .rte-toolbar--docked {
+    position: fixed;
+    top: calc(var(--topbar-h, 48px) + var(--safe-top, 0px) + var(--rte-float-panel-top-gap));
+    left: calc(var(--rte-float-panel-left-gap) + var(--safe-left, 0px));
+    max-height: calc(100dvh - var(--topbar-h, 48px) - var(--safe-top, 0px) - var(--mobile-toolbar-h, 0px) - 36px);
+  }
+}
+
+.rte-panel-title {
+  order: -2;
+  font-size: var(--rte-panel-title-size);
+  font-weight: 700;
+  color: var(--rte-text);
+}
+
+.rte-toolbar--docked .rte-group {
+  flex-wrap: wrap;
+  gap: var(--rte-docked-section-gap);
+  padding: var(--rte-docked-section-padding);
+}
+
+.rte-group__label {
+  flex: 0 0 100%;
+  margin: 0 0 2px 2px;
+  font-size: var(--rte-group-label-size);
+  font-weight: 600;
+  color: #5c5c66;
+}
+
+/* Cancelar / Concluir ficam no topo do painel. */
+.rte-toolbar--docked .rte-group--actions {
+  order: -1;
+  flex-wrap: nowrap;
+  padding: 0;
+  background: transparent;
+}
+
+.rte-toolbar--docked .rte-btn--done {
+  flex: 1;
+}
+
+/* Tamanho e espaço entre linhas: uma linha cada, com o nome à esquerda. */
+.rte-toolbar--docked .rte-group--steppers {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--rte-docked-stepper-gap);
+  padding: var(--rte-docked-stepper-padding);
+}
+
+.rte-toolbar--docked .rte-field {
+  justify-content: space-between;
+}
+
+.rte-toolbar--docked .rte-field__label {
+  display: inline;
+  flex: 1;
+}
+
+/* Cor e marcadores abrem aqui mesmo, embaixo do botão (sem janela por cima). */
+.rte-menu--inline {
+  position: static;
+  width: auto;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 10px;
+  overflow: visible;
+  background: #fbfbfd;
+  border: 1px solid var(--rte-border, #dcdce3);
+  border-radius: var(--rte-panel-radius);
+  box-shadow: none;
+}
+
+.rte-menu--inline .rte-palette {
+  grid-template-columns: repeat(13, 1fr);
+  gap: 3px;
+}
+
+.rte-menu--inline .rte-swatch {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: 4px;
+}
+
+.rte-menu--inline .rte-markers--bullets {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.rte-menu--inline .rte-markers--numbers {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* ---- Telas médias: os nomes dos campos cabem, a barra pode ocupar duas linhas ---- */
+@media (min-width: 901px) and (max-width: 1180px) {
+  .rte-toolbar {
+    max-width: min(var(--rte-toolbar-max-width), calc(100vw - 16px));
+  }
+}
+
+/* ---- 7. DOCA DO CELULAR: no pé da tela, acima do teclado -----------------------------
+   Uma fileira de botões de 44px que rola com o dedo; Cancelar/Concluir ficam
+   fixos à esquerda. Cor e marcadores abrem numa folha logo acima da doca.
+   (--vv-bottom = altura do teclado virtual, medida pelo visualViewport.) */
+@media (max-width: 900px) {
+  .rte-toolbar--dock {
+    --rte-btn: var(--rte-control-size);
+    top: auto;
+    bottom: var(--vv-bottom, 0px);
+    left: 0;
+    right: 0;
+    width: auto;
+    max-width: none;
+    margin: 0;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--rte-dock-gap);
+    padding: var(--rte-dock-pad) var(--rte-dock-pad) calc(var(--rte-dock-pad) + var(--dock-pad-b, 0px)) calc(var(--rte-dock-pad) + var(--safe-left, 0px));
+    border-radius: var(--rte-dock-radius);
+    max-height: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.35);
+    scrollbar-width: none;
+  }
+
+  .rte-toolbar--dock::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rte-toolbar--dock .rte-group {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  /* Cancelar / Concluir: sempre à vista, à esquerda, mesmo rolando a doca. */
+  .rte-toolbar--dock .rte-group--actions {
+    order: -1;
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    width: auto;
+    padding: 0 8px 0 0;
+    background: var(--rte-bg);
+    box-shadow: 10px 0 10px -8px rgba(0, 0, 0, 0.18);
+  }
+
+  .rte-toolbar--dock .rte-btn--done {
+    flex: 0 0 auto;
+    max-width: none;
+    padding: 0 var(--rte-dock-done-pad-x);
+  }
+
+  .rte-toolbar--dock .rte-group--steppers {
+    flex-direction: row;
+    gap: 12px;
+    padding: 2px 8px;
+  }
+
+  .rte-toolbar--dock .rte-field__label {
+    display: none;
+  }
+
+  /* Cor / marcadores: folha logo acima da doca. */
+  .rte-menu--sheet {
+    top: auto;
+    left: 8px;
+    right: 8px;
+    margin: 0;
+    width: auto;
+    max-width: none;
+    max-height: var(--rte-dock-sheet-max-h);
+    padding: 12px;
+    border-radius: 16px;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Paleta: quadrados de 34px; a grade rola para o lado em vez de encolher. */
+  .rte-menu--sheet .rte-palette {
+    grid-template-columns: repeat(var(--rte-palette-cols), var(--rte-dock-swatch-size));
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+  }
+
+  .rte-menu--sheet .rte-swatch {
+    width: var(--rte-dock-swatch-size);
+    height: var(--rte-dock-swatch-size);
+  }
+
+  .rte-menu--sheet .rte-auto {
+    min-height: var(--touch-min);
+  }
+
+  .rte-menu--sheet .rte-markers--bullets {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .rte-menu--sheet .rte-markers--numbers {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .rte-menu--sheet .rte-marker {
+    height: var(--rte-dock-marker-h);
+  }
+}
+
+/* Celular estreito: "Concluir" vira só o ✓, para sobrar mais doca. */
+@media (max-width: 360px) {
+  .rte-toolbar--dock .rte-btn--done span {
+    display: none;
+  }
+}

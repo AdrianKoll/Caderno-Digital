@@ -1,0 +1,244 @@
+.page-nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  flex-shrink: 0;
+  color: var(--muted);
+}
+
+.page-nav__arrow {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 13px;
+  touch-action: manipulation;
+}
+
+.page-nav__arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.page-nav__arrow:not(:disabled):hover {
+  border-color: var(--primary);
+}
+
+.page-nav__add {
+  margin-left: 4px;
+  color: var(--secondary);
+}
+
+/* Faixa de folhas */
+.page-nav__strip {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0 2px;
+}
+
+.page-nav__chip {
+  position: relative;
+  min-width: 28px;
+  height: 30px;
+  padding: 0 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 7px;
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  touch-action: manipulation;
+}
+
+.page-nav__chip:hover:not(.is-active) {
+  color: var(--text);
+  border-color: var(--secondary);
+}
+
+.page-nav__chip.is-active {
+  background: var(--notebook, #fafaf8);
+  border-color: var(--notebook, #fafaf8);
+  color: #1b1b1f;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.page-nav__fav {
+  position: absolute;
+  top: -4px;
+  right: -3px;
+  font-size: 8px;
+  color: var(--favorite);
+}
+
+.page-nav__more {
+  padding: 0 2px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* Botão "2/5" (só no celular) */
+.page-nav__count {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 10px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.page-nav__count i {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+/* Lista completa (celular) */
+.page-nav__list {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 70;
+  width: min(300px, calc(100vw - 16px));
+  max-height: min(60vh, 420px);
+  overflow-y: auto;
+  padding: 6px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+.page-nav__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 10px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  color: var(--text);
+  text-align: left;
+}
+
+.page-nav__item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.page-nav__item.is-active {
+  background: rgba(99, 102, 241, 0.22);
+}
+
+.page-nav__item-num {
+  flex: 0 0 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.page-nav__item-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.page-nav__item-text strong {
+  font-size: 13.5px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.page-nav__item-text small {
+  color: var(--muted);
+  font-size: 11.5px;
+}
+
+.page-nav__item .page-nav__fav {
+  position: static;
+  margin-left: auto;
+  font-size: 11px;
+}
+
+/* Celular: sem a faixa; só setas + "2/5" + "+" */
+@media (max-width: 900px) {
+  .page-nav {
+    gap: 2px;
+  }
+
+  .page-nav__strip {
+    display: none;
+  }
+
+  .page-nav__count {
+    display: flex;
+    height: var(--touch-min);
+    min-width: var(--touch-min);
+    justify-content: center;
+  }
+
+  .page-nav__arrow {
+    width: var(--touch-min);
+    height: var(--touch-min);
+    font-size: 15px;
+  }
+
+  .page-nav__add {
+    margin-left: 0;
+  }
+
+  /* Lista de páginas: ocupa a largura da tela, itens de 48px, rolagem suave. */
+  .page-nav__list {
+    position: fixed;
+    top: calc(var(--topbar-h) + var(--safe-top) + 4px);
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-height: calc(100dvh - var(--topbar-h) - var(--safe-top) - var(--safe-bottom) - 24px);
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .page-nav__item {
+    min-height: 48px;
+  }
+}
+
+/* Celular estreito: a seta de "abrir lista" some para os 4 botões caberem em 320px. */
+@media (max-width: 380px) {
+  .page-nav__count i {
+    display: none;
+  }
+}
+
+/* Celular: voltar/avançar de página moraram na doca de ferramentas; aqui ficam só "2/5" (lista) e "+". */
+@media (max-width: 900px) {
+  .page-nav__arrow:not(.page-nav__add) {
+    display: none;
+  }
+}

@@ -1,0 +1,55 @@
+/* ==========================================================================
+ *  CONTADOR NUMÉRICO (− 20 +): "Tamanho" e "Entre linhas" da caixa de texto
+ * ==========================================================================
+ *  Medidas: theme.css, seção 12 (--rte-stepper-*; no celular viram 44px).
+ *  Cores fixas e claras: aparece tanto no painel de propriedades (claro) quanto
+ *  na barra do editor de texto (também clara). */
+.stepper {
+  display: inline-flex;
+  align-items: stretch;
+  height: var(--rte-stepper-height);
+  border: 1px solid #dcdce3;
+  border-radius: var(--rte-stepper-radius);
+  overflow: hidden;
+  background: #fff;
+  color: #1b1b1f;
+}
+
+.stepper__btn {
+  width: var(--rte-stepper-button-width);
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: var(--rte-stepper-button-font-size);
+  line-height: 1;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.stepper__btn:hover {
+  background: #f1f0ff;
+}
+
+.stepper__btn:active {
+  background: #e0dfff;
+}
+
+.stepper__input {
+  width: var(--rte-stepper-input-width);
+  min-width: 0;
+  border: none;
+  border-left: 1px solid #ececf1;
+  border-right: 1px solid #ececf1;
+  background: transparent;
+  color: inherit;
+  text-align: center;
+  font-size: var(--rte-stepper-font-size);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  outline: none;
+  padding: 0;
+}
+
+.stepper__input:focus {
+  background: #f8f8ff;
+}

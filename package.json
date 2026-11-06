@@ -1,0 +1,38 @@
+{
+  "name": "caderno-digital",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Caderno digital offline-first (matérias, tópicos e páginas) com escrita e desenho, feito com React, Dexie e Excalidraw.",
+  "type": "module",
+  "engines": {
+    "node": ">=18.18"
+  },
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc --noEmit",
+    "prebuild": "node scripts/generate-licenses.mjs",
+    "build": "npm run typecheck && npm run check:css && vite build",
+    "preview": "vite preview",
+    "licenses": "node scripts/generate-licenses.mjs",
+    "check:css": "node scripts/check-css.mjs",
+    "docs:tokens": "node scripts/gen-token-map.mjs"
+  },
+  "dependencies": {
+    "@excalidraw/excalidraw": "^0.18.1",
+    "bootstrap-icons": "^1.11.3",
+    "dexie": "^4.0.8",
+    "dexie-react-hooks": "^1.1.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "uuid": "^9.0.1",
+    "zustand": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@types/uuid": "^9.0.8",
+    "@vitejs/plugin-react": "^4.3.1",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.2"
+  }
+}
