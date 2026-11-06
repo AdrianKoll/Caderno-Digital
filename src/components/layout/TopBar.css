@@ -2,13 +2,8 @@
   height: 100%;
   display: flex;
   align-items: center;
-<<<<<<< HEAD
   gap: var(--topbar-gap);
   padding: 0 var(--topbar-padding-end) 0 var(--topbar-padding-x);
-=======
-  gap: 12px;
-  padding: 0 14px;
->>>>>>> origin/main
   border-bottom: 1px solid var(--panel-border);
   background: var(--bg);
   /* Acima da barra de ferramentas e do painel de propriedades (fixos), para
@@ -23,11 +18,7 @@
 .topbar__right {
   display: flex;
   align-items: center;
-<<<<<<< HEAD
   gap: var(--topbar-side-gap);
-=======
-  gap: 12px;
->>>>>>> origin/main
   /* Mesma base (0) nos dois lados: o centro fica exatamente no meio da barra. */
   flex: 1 1 0;
   min-width: 0;
@@ -35,10 +26,7 @@
 
 .topbar__right {
   justify-content: flex-end;
-<<<<<<< HEAD
   gap: var(--topbar-right-gap);
-=======
->>>>>>> origin/main
 }
 
 /* Centro da barra: recebe a barra de ferramentas do desenho (portal). */
@@ -54,18 +42,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-<<<<<<< HEAD
   width: var(--topbar-menu-btn-size);
   height: var(--topbar-menu-btn-size);
-=======
-  width: 34px;
-  height: 34px;
->>>>>>> origin/main
   border-radius: var(--radius-sm);
   background: none;
   border: none;
   color: var(--text);
-<<<<<<< HEAD
   flex-shrink: 0;
 }
 
@@ -76,17 +58,10 @@
   object-fit: contain;
 }
 
-=======
-  font-size: 21px;
-  flex-shrink: 0;
-}
-
->>>>>>> origin/main
 .topbar__menu-btn:hover {
   background: var(--panel);
 }
 
-<<<<<<< HEAD
 /* ---------- Caminho da página ---------- */
 .topbar__crumb {
   display: flex;
@@ -101,32 +76,6 @@
 .topbar__crumb > i:first-child {
   color: var(--secondary);
   font-size: var(--topbar-icon-size);
-=======
-/* ---------- Título / caminho da página ---------- */
-.topbar__crumb,
-.topbar__brand {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.topbar__crumb {
-  color: var(--text);
-}
-
-.topbar__crumb > i:first-child,
-.topbar__brand > i {
-  color: var(--secondary);
-  font-size: 15px;
-}
-
-.topbar__brand {
-  font-weight: 600;
-  font-size: 14px;
->>>>>>> origin/main
 }
 
 .topbar__crumb span {
@@ -137,11 +86,7 @@
 
 .topbar__crumb-sep {
   color: var(--muted);
-<<<<<<< HEAD
   font-size: var(--topbar-separator-size);
-=======
-  font-size: 11px;
->>>>>>> origin/main
   flex-shrink: 0;
 }
 
@@ -154,7 +99,6 @@
 .topbar__export-btn {
   display: flex;
   align-items: center;
-<<<<<<< HEAD
   gap: var(--topbar-action-gap);
   width: var(--topbar-action-w);
   height: var(--topbar-action-height);
@@ -164,16 +108,6 @@
   background: var(--primary);
   color: #fff;
   font-size: var(--topbar-action-font-size);
-=======
-  gap: 8px;
-  height: 32px;
-  padding: 0 12px;
-  border-radius: 8px;
-  border: none;
-  background: var(--primary);
-  color: #fff;
-  font-size: 13px;
->>>>>>> origin/main
   font-weight: 600;
   transition: background 0.15s;
 }
@@ -200,13 +134,8 @@
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-<<<<<<< HEAD
   min-width: var(--topbar-export-menu-width);
   padding: var(--topbar-export-menu-padding);
-=======
-  min-width: 260px;
-  padding: 6px;
->>>>>>> origin/main
   background: var(--panel);
   border: 1px solid var(--panel-border);
   border-radius: var(--radius-md);
@@ -216,15 +145,9 @@
 .topbar__export-item {
   display: flex;
   align-items: center;
-<<<<<<< HEAD
   gap: var(--topbar-export-item-gap);
   width: 100%;
   padding: var(--topbar-export-item-pad-y) var(--topbar-export-item-pad-x);
-=======
-  gap: 14px;
-  width: 100%;
-  padding: 10px 12px;
->>>>>>> origin/main
   border: none;
   border-radius: 8px;
   background: none;
@@ -237,25 +160,15 @@
 }
 
 .topbar__export-item > i {
-<<<<<<< HEAD
   font-size: var(--topbar-export-icon-size);
   color: var(--secondary);
   width: var(--topbar-export-icon-width);
-=======
-  font-size: 22px;
-  color: var(--secondary);
-  width: 26px;
->>>>>>> origin/main
   text-align: center;
 }
 
 .topbar__export-item strong {
   display: block;
-<<<<<<< HEAD
   font-size: var(--topbar-export-title-size);
-=======
-  font-size: 14.5px;
->>>>>>> origin/main
   font-weight: 600;
 }
 
@@ -263,11 +176,7 @@
   display: block;
   margin-top: 2px;
   color: var(--muted);
-<<<<<<< HEAD
   font-size: var(--topbar-export-subtitle-size);
-=======
-  font-size: 12.5px;
->>>>>>> origin/main
 }
 
 /* Abaixo de 1180px não há largura para a barra de ferramentas no centro
@@ -287,50 +196,8 @@
   }
 }
 
-<<<<<<< HEAD
 /* Celular: alvos de toque de 44px; o menu "Salvar como" vira uma folha que sobe da base da barra. */
 @media (max-width: 900px) {
-=======
-@media (max-width: 900px) {
-  .topbar {
-    gap: 6px;
-    padding-left: 8px;
-    padding-right: 8px;
-  }
-
-  .topbar__left,
-  .topbar__right {
-    gap: 10px;
-  }
-}
-
-@media (max-width: 640px) {
-  .topbar__export-label,
-  .topbar__export-caret {
-    display: none;
-  }
-
-  .topbar__export-btn {
-    width: var(--touch-min);
-    padding: 0;
-    justify-content: center;
-  }
-}
-
-/* Celular: alvos de toque de 44px; o menu "Salvar como" vira uma folha que sobe da base da barra. */
-@media (max-width: 900px) {
-  .topbar__menu-btn {
-    width: var(--touch-min);
-    height: var(--touch-min);
-    font-size: 24px;
-  }
-
-  .topbar__export-btn {
-    height: var(--touch-min);
-    min-width: var(--touch-min);
-  }
-
->>>>>>> origin/main
   .topbar__export-menu {
     position: fixed;
     top: calc(var(--topbar-h) + var(--safe-top) + 4px);
@@ -340,7 +207,6 @@
   }
 
   .topbar__export-item {
-<<<<<<< HEAD
     min-height: var(--topbar-btn-size);
     padding: var(--topbar-export-item-pad-y) var(--topbar-export-item-pad-x);
   }
@@ -459,60 +325,5 @@
 
   .topbar__export-btn:disabled .topbar__export-caret {
     opacity: 0.45;
-=======
-    min-height: var(--touch-min);
-    padding: 12px;
-  }
-}
-
-/* Telas muito estreitas: o título compacto some para o resto caber. */
-@media (max-width: 380px) {
-  .topbar {
-    gap: 4px;
-    padding-left: 4px;
-    padding-right: 4px;
-  }
-}
-
-/* Título compacto (logo + nome), como no cabeçalho do Excalidraw: só em telas
-   médias do celular/tablet, onde sobra espaço e o caminho da página some. */
-.topbar__title {
-  display: none;
-}
-
-@media (min-width: 560px) and (max-width: 900px) {
-  .topbar__title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-width: 0;
-    color: var(--text);
-  }
-
-  .topbar__title > i {
-    font-size: 22px;
-    color: var(--secondary);
-  }
-
-  .topbar__title span {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.2;
-    min-width: 0;
-  }
-
-  .topbar__title strong {
-    font-size: 14px;
-    font-weight: 600;
-    white-space: nowrap;
-  }
-
-  .topbar__title small {
-    font-size: 11px;
-    color: var(--muted);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
->>>>>>> origin/main
   }
 }

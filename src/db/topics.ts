@@ -4,7 +4,6 @@ import { Topic } from '../types';
 import { NAME_MAX, normalizeName, sameName } from '../utils/names';
 
 export async function createTopic(subjectId: string, name: string): Promise<Topic> {
-<<<<<<< HEAD
   const clean = normalizeName(name).slice(0, NAME_MAX);
   if (!clean) throw new Error('Escreva um nome para o tópico.');
   const now = Date.now();
@@ -17,12 +16,6 @@ export async function createTopic(subjectId: string, name: string): Promise<Topi
     await db.topics.add(topic);
     return topic;
   });
-=======
-  const now = Date.now();
-  const topic: Topic = { id: generateId(), subjectId, name: name.trim(), createdAt: now, updatedAt: now };
-  await db.topics.add(topic);
-  return topic;
->>>>>>> origin/main
 }
 
 /** Já existe outro tópico com esse nome dentro da mesma matéria? */

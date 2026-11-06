@@ -11,15 +11,9 @@ export async function pageForTopic(topicId: string): Promise<Page | undefined> {
   const last = useNotebookStore.getState().lastPageByTopic[topicId];
   if (last) {
     const p = await db.pages.get(last);
-<<<<<<< HEAD
     if (p && !p.deletedAt && p.topicId === topicId) return p;
   }
   const pages = await db.pages.where('topicId').equals(topicId).sortBy('number').then((rows) => rows.filter((p) => !p.deletedAt));
-=======
-    if (p && p.topicId === topicId) return p;
-  }
-  const pages = await db.pages.where('topicId').equals(topicId).sortBy('number');
->>>>>>> origin/main
   return pages[0];
 }
 
@@ -27,19 +21,11 @@ export async function pageForSubject(subjectId: string): Promise<Page | undefine
   const last = useNotebookStore.getState().lastPageBySubject[subjectId];
   if (last) {
     const p = await db.pages.get(last);
-<<<<<<< HEAD
     if (p && !p.deletedAt && p.subjectId === subjectId) return p;
   }
   const topics = (await db.topics.where('subjectId').equals(subjectId).toArray()).sort((a, b) => a.createdAt - b.createdAt);
   for (const t of topics) {
     const pages = await db.pages.where('topicId').equals(t.id).sortBy('number').then((rows) => rows.filter((p) => !p.deletedAt));
-=======
-    if (p && p.subjectId === subjectId) return p;
-  }
-  const topics = (await db.topics.where('subjectId').equals(subjectId).toArray()).sort((a, b) => a.createdAt - b.createdAt);
-  for (const t of topics) {
-    const pages = await db.pages.where('topicId').equals(t.id).sortBy('number');
->>>>>>> origin/main
     if (pages[0]) return pages[0];
   }
   return undefined;

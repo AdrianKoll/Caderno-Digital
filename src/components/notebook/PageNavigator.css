@@ -235,7 +235,6 @@
     display: none;
   }
 }
-<<<<<<< HEAD
 
 /* Celular: voltar/avançar de página moraram na doca de ferramentas; aqui ficam só "2/5" (lista) e "+". */
 @media (max-width: 900px) {
@@ -243,5 +242,3 @@
     display: none;
   }
 }
-=======
->>>>>>> origin/main

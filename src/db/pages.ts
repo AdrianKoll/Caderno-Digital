@@ -35,7 +35,6 @@ export async function renamePage(id: string, title: string): Promise<void> {
 }
 
 export async function deletePage(id: string): Promise<void> {
-<<<<<<< HEAD
   await db.pages.update(id, { deletedAt: Date.now(), updatedAt: Date.now() });
 }
 
@@ -44,8 +43,6 @@ export async function restorePage(id: string): Promise<void> {
 }
 
 export async function permanentlyDeletePage(id: string): Promise<void> {
-=======
->>>>>>> origin/main
   await db.pages.delete(id);
 }
 

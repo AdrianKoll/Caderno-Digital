@@ -29,11 +29,7 @@ export function PageNavigator({ page }: { page: Page }) {
   const rootRef = useRef<HTMLDivElement>(null);
 
   const siblings = useLiveQuery(async () => {
-<<<<<<< HEAD
     const pages = await db.pages.where('topicId').equals(page.topicId).sortBy('number').then((rows) => rows.filter((p) => !p.deletedAt));
-=======
-    const pages = await db.pages.where('topicId').equals(page.topicId).sortBy('number');
->>>>>>> origin/main
     return pages.map<PageInfo>((p) => ({
       id: p.id,
       number: p.number,
@@ -106,11 +102,7 @@ export function PageNavigator({ page }: { page: Page }) {
       </button>
 
       {/* Faixa de folhas (computador/tablet) */}
-<<<<<<< HEAD
       <div className="page-nav__strip" role="group" aria-label="Páginas do tópico">
-=======
-      <div className="page-nav__strip" role="tablist" aria-label="Páginas do tópico">
->>>>>>> origin/main
         {hiddenBefore && <span className="page-nav__more" aria-hidden="true">…</span>}
         {visible.map((p) => {
           const i = siblings.indexOf(p);
@@ -119,12 +111,7 @@ export function PageNavigator({ page }: { page: Page }) {
             <button
               key={p.id}
               type="button"
-<<<<<<< HEAD
               aria-current={active ? 'page' : undefined}
-=======
-              role="tab"
-              aria-selected={active}
->>>>>>> origin/main
               className={`page-nav__chip ${active ? 'is-active' : ''}`}
               title={label(p)}
               onClick={() => !active && goTo(p)}

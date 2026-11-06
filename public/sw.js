@@ -9,11 +9,7 @@
  *
  * Para publicar uma versão nova do app, troque VERSION (descarta os caches antigos).
  */
-<<<<<<< HEAD
 const VERSION = 'v3';
-=======
-const VERSION = 'v2';
->>>>>>> origin/main
 const SHELL = `cd-shell-${VERSION}`;
 const STATIC = `cd-static-${VERSION}`;
 const RUNTIME = `cd-runtime-${VERSION}`;
@@ -23,11 +19,7 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
       .open(SHELL)
-<<<<<<< HEAD
       .then((cache) => cache.addAll(['/', '/manifest.webmanifest', '/icons/icon-192.png', '/icons/icon-512.png', '/icons/favicon.svg', '/icons/brand-256.png']))
-=======
-      .then((cache) => cache.addAll(['/', '/manifest.webmanifest', '/icons/icon-192.png', '/icons/icon-512.png', '/icons/favicon.svg']))
->>>>>>> origin/main
       .then(() => self.skipWaiting()),
   );
 });

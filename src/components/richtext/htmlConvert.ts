@@ -1,9 +1,5 @@
 import { MarkerKind, MAX_INDENT, Para, RichDoc, Run } from './types';
-<<<<<<< HEAD
 import { markerLabels, MARKERS } from './markers';
-=======
-import { markerLabels } from './markers';
->>>>>>> origin/main
 
 /** Conversão entre o modelo (RichDoc) e o HTML do editor (contentEditable). */
 
@@ -11,7 +7,6 @@ function esc(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-<<<<<<< HEAD
 function escAttr(s: string): string {
   return esc(s).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
@@ -23,29 +18,21 @@ function safeColor(value: unknown): string | undefined {
   return typeof value === 'string' && SAFE_HEX_COLOR.test(value) ? value : undefined;
 }
 
-=======
->>>>>>> origin/main
 export function docToHtml(doc: RichDoc): string {
   return doc.paras
     .map((p) => {
       const inner = p.runs.length
         ? p.runs
             .map((r) => {
-<<<<<<< HEAD
               const color = safeColor(r.color);
               const style = [
                 color ? `color:${color}` : '',
-=======
-              const style = [
-                r.color ? `color:${r.color}` : '',
->>>>>>> origin/main
                 r.bold ? 'font-weight:700' : '',
                 r.italic ? 'font-style:italic' : '',
                 r.underline ? 'text-decoration:underline' : '',
               ]
                 .filter(Boolean)
                 .join(';');
-<<<<<<< HEAD
               return style ? `<span style="${escAttr(style)}">${esc(String(r.text ?? ''))}</span>` : esc(String(r.text ?? ''));
             })
             .join('')
@@ -53,13 +40,6 @@ export function docToHtml(doc: RichDoc): string {
       const marker = VALID_MARKERS.has(p.marker) ? p.marker : 'none';
       const indent = Number.isInteger(p.indent) ? Math.min(MAX_INDENT, Math.max(0, p.indent)) : 0;
       return `<div data-m="${escAttr(marker)}" data-i="${indent}">${inner}</div>`;
-=======
-              return style ? `<span style="${style}">${esc(r.text)}</span>` : esc(r.text);
-            })
-            .join('')
-        : '<br>';
-      return `<div data-m="${p.marker}" data-i="${p.indent}">${inner}</div>`;
->>>>>>> origin/main
     })
     .join('');
 }

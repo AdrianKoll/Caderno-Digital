@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* ==========================================================================
  *  FICHÁRIO › MATÉRIAS (divisórias) e ATALHOS (Início / Todas / Favoritos)
  * ==========================================================================
@@ -18,26 +17,10 @@
   align-items: flex-start;
   gap: var(--subject-tabs-gap);
   width: var(--subject-tabs-w);
-=======
-/*
- * Divisórias do fichário (matérias). No computador ficam coladas na borda
- * direita da folha (posição absoluta, dentro de .notebook-page__book); no
- * celular formam uma faixa fina ao lado da folha (ver NotebookPage.css).
- */
-.subject-tabs {
-  --tab-w: 34px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-  width: var(--tab-w);
->>>>>>> origin/main
   min-height: 0;
   max-height: 100%;
 }
 
-<<<<<<< HEAD
 /* Atalhos no topo da coluna. */
 .subject-tabs__shortcuts {
   display: flex;
@@ -52,42 +35,20 @@
   display: flex;
   flex-direction: column;
   gap: var(--subject-tabs-gap);
-=======
-.subject-tabs__shortcuts {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-bottom: 8px;
-  flex-shrink: 0;
-}
-
-.subject-tabs__subjects {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
->>>>>>> origin/main
   min-height: 0;
   overflow-y: auto;
   overflow-x: visible;
   scrollbar-width: none;
   /* Folga para a aba ativa, que sai um pouco mais para fora. */
-<<<<<<< HEAD
   padding-right: var(--subject-tabs-bleed);
   margin-right: calc(var(--subject-tabs-bleed) * -1);
-=======
-  padding-right: 8px;
-  margin-right: -8px;
->>>>>>> origin/main
 }
 
 .subject-tabs__subjects::-webkit-scrollbar {
   display: none;
 }
 
-<<<<<<< HEAD
 /* ---- Divisória (base comum a atalhos e matérias) -------------------------- */
-=======
->>>>>>> origin/main
 .subject-tab {
   position: relative;
   display: flex;
@@ -95,7 +56,6 @@
   justify-content: center;
   flex-shrink: 0;
   box-sizing: border-box;
-<<<<<<< HEAD
   width: var(--subject-tab-w);
   margin-left: var(--subject-tab-overlap); /* aba "enfiada" por baixo da folha */
   padding: 0 0 0 var(--subject-tab-pad-start);
@@ -104,22 +64,11 @@
   background: var(--tab, #3a4560);
   color: var(--tab-fg, #fff);
   box-shadow: var(--subject-tab-shadow);
-=======
-  width: 28px;
-  margin-left: -6px; /* aba "enfiada" por baixo da folha */
-  padding: 0 0 0 6px;
-  border: none;
-  border-radius: 0 9px 9px 0;
-  background: var(--tab, #3a4560);
-  color: var(--tab-fg, #fff);
-  box-shadow: inset -2px 0 0 rgba(0, 0, 0, 0.16), 2px 2px 6px rgba(0, 0, 0, 0.28);
->>>>>>> origin/main
   transition: width 0.16s ease, filter 0.16s ease, transform 0.16s ease;
   touch-action: manipulation;
 }
 
 .subject-tab:hover {
-<<<<<<< HEAD
   width: var(--subject-tab-w-hover);
   filter: brightness(1.08);
 }
@@ -129,11 +78,6 @@
   --tab-fg: var(--shortcut-active-fg);
   filter: none;
 }
-=======
-  width: 32px;
-  filter: brightness(1.08);
-}
->>>>>>> origin/main
 
 .subject-tab:focus-visible {
   outline: 2px solid #fff;
@@ -141,7 +85,6 @@
 }
 
 .subject-tab.is-active {
-<<<<<<< HEAD
   width: var(--subject-tab-w-active);
   z-index: 2;
   filter: none;
@@ -171,31 +114,6 @@
   max-height: var(--subject-tab-max-h);
   padding-top: var(--subject-tab-pad-y);
   padding-bottom: var(--subject-tab-pad-y);
-=======
-  width: 36px;
-  z-index: 2;
-  filter: none;
-  box-shadow: inset -2px 0 0 rgba(255, 255, 255, 0.35), 3px 3px 10px rgba(0, 0, 0, 0.38);
-}
-
-/* Atalhos (início, todas, favoritos): pequenos, em tom neutro. */
-.subject-tab--icon {
-  --tab: #2a3452;
-  --tab-fg: #cdd6f4;
-  height: 30px;
-  font-size: 15px;
-}
-
-.subject-tab--icon.is-active {
-  --tab: var(--primary, #6366f1);
-  --tab-fg: #fff;
-}
-
-.subject-tab--subject {
-  height: 92px;
-  padding-top: 8px;
-  padding-bottom: 8px;
->>>>>>> origin/main
 }
 
 .subject-tab--subject.is-empty {
@@ -204,25 +122,16 @@
 
 .subject-tab__label {
   display: block;
-<<<<<<< HEAD
   max-height: var(--subject-tab-label-max-h);
-=======
-  max-height: 100%;
->>>>>>> origin/main
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   writing-mode: vertical-rl;
-<<<<<<< HEAD
   font-size: var(--subject-tab-font-size);
-=======
-  font-size: 12px;
->>>>>>> origin/main
   font-weight: 600;
   letter-spacing: 0.02em;
 }
 
-<<<<<<< HEAD
 /* ==========================================================================
  *  CELULAR (<= 900px): botões arredondados e separados, ao lado da folha.
  *  Medidas vêm dos MESMOS tokens (valores do celular na seção 15 do theme.css).
@@ -233,42 +142,11 @@
   }
 
   .subject-tabs__subjects {
-=======
-/* Muitas matérias: as abas encolhem e a lista rola. */
-@media (max-height: 760px) {
-  .subject-tab--subject {
-    height: 72px;
-  }
-}
-
-/*
- * Celular: faixa ao lado da folha. Cada divisória tem 44px de largura de TOQUE,
- * mas só ~32px aparecem coloridas: o corpo colorido é o ::before, e os 12px
- * da direita são área de toque transparente.
- */
-@media (max-width: 900px) {
-  .subject-tabs {
-    --tab-w: var(--touch-min);
-    height: 100%;
-    gap: 2px;
-  }
-
-  .subject-tabs__shortcuts {
-    gap: 2px;
-    margin-bottom: 6px;
-  }
-
-  .subject-tabs__subjects {
-    gap: 2px;
-    padding-right: 0;
-    margin-right: 0;
->>>>>>> origin/main
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: y proximity;
   }
 
-<<<<<<< HEAD
   /* Sem animação de largura e sem "brilho" ao tocar. */
   .subject-tab,
   .subject-tab:hover,
@@ -302,49 +180,5 @@
 
   .subject-tab__label {
     transform: rotate(180deg);
-=======
-  .subject-tab,
-  .subject-tab:hover,
-  .subject-tab.is-active {
-    isolation: isolate;
-    width: var(--touch-min);
-    margin-left: -5px;
-    padding: 0 12px 0 5px;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-    filter: none;
-    transition: none;
-  }
-
-  .subject-tab::before {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    inset: 0 12px 0 0;
-    border-radius: 0 9px 9px 0;
-    background: var(--tab, #3a4560);
-    box-shadow: inset -2px 0 0 rgba(0, 0, 0, 0.16), 2px 2px 6px rgba(0, 0, 0, 0.28);
-    transition: right 0.16s ease;
-  }
-
-  .subject-tab.is-active::before {
-    right: 6px;
-    box-shadow: inset -2px 0 0 rgba(255, 255, 255, 0.35), 3px 3px 10px rgba(0, 0, 0, 0.38);
-  }
-
-  .subject-tab--icon {
-    height: var(--touch-min);
-    font-size: 17px;
-  }
-
-  .subject-tab--subject {
-    height: 88px;
-    scroll-snap-align: start;
-  }
-
-  .subject-tab__label {
-    font-size: 11.5px;
->>>>>>> origin/main
   }
 }

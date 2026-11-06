@@ -1,10 +1,7 @@
 @import './theme.css';
 @import './paper.css';
 @import './mobile.css';
-<<<<<<< HEAD
 @import './palette.css';
-=======
->>>>>>> origin/main
 
 * {
   box-sizing: border-box;
@@ -27,35 +24,22 @@ body {
 
 button {
   font-family: inherit;
-<<<<<<< HEAD
   font-size: var(--font-control-size);
-=======
->>>>>>> origin/main
   cursor: pointer;
 }
 
 /* Foco visível para quem navega por teclado (e some no clique com mouse/toque). */
 :focus-visible {
-<<<<<<< HEAD
   outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
 
 /* Respeita a preferência de movimento reduzido (antes duplicada em accessibility.css). */
-=======
-  outline: 2px solid var(--secondary);
-  outline-offset: 2px;
-}
-
->>>>>>> origin/main
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
-<<<<<<< HEAD
     scroll-behavior: auto !important;
-=======
->>>>>>> origin/main
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

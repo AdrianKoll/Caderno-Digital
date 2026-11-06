@@ -91,7 +91,6 @@ function RenameForm({ target, entity }: { target: RenameTarget; entity: Entity }
     const name = normalizeName(value).slice(0, copy.max);
     if (name === normalizeName(entity.name)) return close(); // nada mudou
     setSaving(true);
-<<<<<<< HEAD
     setError(null);
     try {
       const problem = await validate(name);
@@ -111,19 +110,6 @@ function RenameForm({ target, entity }: { target: RenameTarget; entity: Entity }
     } finally {
       setSaving(false);
     }
-=======
-    const problem = await validate(name);
-    if (problem) {
-      setError(problem);
-      setSaving(false);
-      inputRef.current?.focus();
-      return;
-    }
-    if (target.kind === 'subject') await renameSubject(target.id, name);
-    else if (target.kind === 'topic') await renameTopic(target.id, name);
-    else await renamePage(target.id, name);
-    close();
->>>>>>> origin/main
   }
 
   // Esc fecha; Tab fica preso dentro da janela.
@@ -192,11 +178,7 @@ function RenameForm({ target, entity }: { target: RenameTarget; entity: Entity }
           </div>
 
           <div className="rename-card__actions">
-<<<<<<< HEAD
             <button type="button" className="rename-card__btn" onClick={close} disabled={saving}>
-=======
-            <button type="button" className="rename-card__btn" onClick={close}>
->>>>>>> origin/main
               Cancelar
             </button>
             <button type="submit" className="rename-card__btn rename-card__btn--primary" disabled={saving}>

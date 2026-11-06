@@ -1,11 +1,8 @@
-<<<<<<< HEAD
 /* ==========================================================================
  *  BARRA DE DESENHO (seleção, mão, retângulo, losango, elipse, seta, linha,
  *  lápis, texto, borracha…) — Medidas: theme.css, seção 14. Ordem do arquivo:
  *  base (no centro da barra superior) → doca (<= 1179px) → cápsula (<= 900px).
  * ========================================================================== */
-=======
->>>>>>> origin/main
 /*
  * Barra de ferramentas do desenho. Em telas largas (>= 1180px) ela fica no
  * CENTRO da TopBar: o ExcalidrawLayer a encaixa, via portal, no espaço
@@ -24,19 +21,11 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-<<<<<<< HEAD
   gap: var(--draw-group-gap);
   background: var(--panel);
   border: 1px solid var(--panel-border);
   border-radius: var(--draw-group-radius);
   padding: var(--draw-group-pad);
-=======
-  gap: 2px;
-  background: var(--panel);
-  border: 1px solid var(--panel-border);
-  border-radius: var(--radius-md);
-  padding: 3px;
->>>>>>> origin/main
   max-width: 100%;
   overflow-x: auto;
   scrollbar-width: none;
@@ -54,23 +43,14 @@
 }
 
 .draw-toolbar__btn {
-<<<<<<< HEAD
   width: var(--draw-btn-size);
   height: var(--draw-btn-size);
-=======
-  width: 30px;
-  height: 30px;
->>>>>>> origin/main
   display: flex;
   align-items: center;
   justify-content: center;
   background: none;
   border: none;
-<<<<<<< HEAD
   border-radius: var(--draw-btn-radius);
-=======
-  border-radius: var(--radius-sm);
->>>>>>> origin/main
   color: var(--text);
   line-height: 1;
   flex-shrink: 0;
@@ -81,12 +61,8 @@
 }
 
 .draw-toolbar__btn:hover {
-<<<<<<< HEAD
   background: var(--hover-bg);
   color: var(--hover-fg);
-=======
-  background: rgba(255, 255, 255, 0.06);
->>>>>>> origin/main
 }
 
 .draw-toolbar__btn.is-active {
@@ -94,7 +70,6 @@
   color: #fff;
 }
 
-<<<<<<< HEAD
 /* Ferramenta em uso: no computador é do tamanho dos outros botões; na doca/celular
    fica grande, em destaque (tokens --draw-tool-active-*). */
 .draw-toolbar__btn--tool.is-active {
@@ -158,8 +133,6 @@
   font-size: 10px;
 }
 
-=======
->>>>>>> origin/main
 /* Menu "três pontinhos" (imagem, quadro, laser, travar tela). Fica fora do
    grupo de botões (que tem overflow) para não ser cortado. */
 .draw-toolbar__menu {
@@ -192,12 +165,8 @@
 }
 
 .draw-toolbar__menu-item:hover {
-<<<<<<< HEAD
   background: var(--hover-bg);
   color: var(--hover-fg);
-=======
-  background: rgba(255, 255, 255, 0.06);
->>>>>>> origin/main
 }
 
 .draw-toolbar__menu-item.is-active {
@@ -205,7 +174,6 @@
   color: #fff;
 }
 
-<<<<<<< HEAD
 /* Cadeado: cheio no computador, de contorno no celular. */
 .draw-toolbar__ico {
   display: flex;
@@ -215,8 +183,6 @@
   display: none;
 }
 
-=======
->>>>>>> origin/main
 /* Desfazer/refazer: só na doca (<= 1179px). */
 .draw-toolbar__btn--mobile {
   display: none;
@@ -273,11 +239,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-<<<<<<< HEAD
     height: var(--draw-handle-h);
-=======
-    height: 24px;
->>>>>>> origin/main
     padding: 0;
     background: none;
     border: none;
@@ -287,11 +249,7 @@
 
   .draw-toolbar__handle::before {
     content: '';
-<<<<<<< HEAD
     width: var(--draw-handle-w);
-=======
-    width: 36px;
->>>>>>> origin/main
     height: 4px;
     border-radius: 999px;
     background: var(--panel-border);
@@ -337,13 +295,7 @@
 
   .draw-toolbar__btn {
     flex: 0 0 auto;
-<<<<<<< HEAD
     min-width: var(--draw-btn-size);
-=======
-    width: var(--touch-min);
-    min-width: var(--touch-min);
-    height: var(--touch-min);
->>>>>>> origin/main
     scroll-snap-align: center;
   }
 
@@ -376,7 +328,6 @@
     min-width: 230px;
   }
 
-<<<<<<< HEAD
   .draw-toolbar__spacing-panel {
     top: auto;
     right: 8px;
@@ -385,15 +336,10 @@
 
   .draw-toolbar__menu-item {
     min-height: var(--draw-menu-item-h);
-=======
-  .draw-toolbar__menu-item {
-    min-height: var(--touch-min);
->>>>>>> origin/main
     padding: 10px 14px;
     font-size: 14px;
   }
 }
-<<<<<<< HEAD
 
 /* Fileira da doca: no computador (barra no topo) ela some do layout; as laterais ficam escondidas. */
 .draw-toolbar__row {
@@ -585,5 +531,3 @@
     filter: none;
   }
 }
-=======
->>>>>>> origin/main

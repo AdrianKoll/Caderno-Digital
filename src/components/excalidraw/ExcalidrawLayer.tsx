@@ -1,17 +1,8 @@
 import { PointerEvent as ReactPointerEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Excalidraw, convertToExcalidrawElements } from '@excalidraw/excalidraw';
-<<<<<<< HEAD
 // CSS publicado pelo pacote Excalidraw.
 import '@excalidraw/excalidraw/index.css';
-=======
-// A partir da 0.18.x o pacote é ESM e expõe o CSS via exports — o import
-// abaixo é a forma oficial e documentada de trazer os estilos.
-import '@excalidraw/excalidraw/index.css';
-// Essa versão também reorganizou os subcaminhos de tipos internos (ver
-// changelog), então continuamos usando `any` para a API imperativa em vez
-// de depender de um caminho de tipos que muda entre versões.
->>>>>>> origin/main
 import './ExcalidrawLayer.css';
 import { DrawToolbar } from './DrawToolbar';
 import { ElementContextPanel } from './ElementContextPanel';
@@ -31,20 +22,13 @@ import {
 } from './propertyModel';
 import { generateId } from '../../utils/id';
 import { useNotebookStore } from '../../store/notebookStore';
-<<<<<<< HEAD
 import { PaperStyle } from '../../types';
 import { PaperTone } from '../../hooks/usePaperTone';
-=======
->>>>>>> origin/main
 import { clampChangedElements, clampResizedSelection, viewportFromAppState } from './canvasBounds';
 import { RichTextEditor, EditorAnchor } from '../richtext/RichTextEditor';
 import { NativeBuild, buildNative } from '../richtext/native';
 import { bump, deleteElements } from '../richtext/elements';
-<<<<<<< HEAD
 import { EditTarget, findBoxOfPart, findContainer, isRichBox, isRichHolder, isRichPart, resolveEditTarget, richPartsOf } from '../richtext/targets';
-=======
-import { EditTarget, findContainer, isRichBox, isRichHolder, resolveEditTarget, richPartsOf } from '../richtext/targets';
->>>>>>> origin/main
 import {
   DEFAULT_WIDTH,
   RichCustomData,
@@ -57,16 +41,7 @@ import {
 type ExcalidrawAPI = any;
 type ExcalidrawElement = any;
 
-<<<<<<< HEAD
 /** Estado da câmera usado para sincronizar desenho e escrita. */
-=======
-/**
- * Câmera interna do Excalidraw. É o único estado responsável por converter
- * coordenadas de "cena" (onde os elementos realmente vivem) em pixels de
- * tela. Antes, apenas o Excalidraw conhecia esses valores; a camada de
- * escrita não recebia nada e por isso "descolava" ao dar pan/zoom.
- */
->>>>>>> origin/main
 export interface ExcalidrawCamera {
   scrollX: number;
   scrollY: number;
@@ -74,15 +49,10 @@ export interface ExcalidrawCamera {
 }
 
 const DEFAULT_CAMERA: ExcalidrawCamera = { scrollX: 0, scrollY: 0, zoom: 1 };
-<<<<<<< HEAD
 const LIGHT_PAPER_INK = '#202820';
 const DARK_PAPER_INK = '#e8ecec';
 
 /** Intervalo do debounce de gravação. */
-=======
-
-/** Espera antes de gravar no banco: evita gravar a cada movimento do mouse (agora o JSON inclui as imagens). */
->>>>>>> origin/main
 const SAVE_DELAY_MS = 400;
 
 interface StoredScene {
@@ -100,16 +70,12 @@ interface Props {
   panelContainer?: HTMLElement | null;
   /** Coluna à esquerda da folha, onde o editor de texto formatado se encaixa (telas largas). */
   editorContainer?: HTMLElement | null;
-<<<<<<< HEAD
   paperStyle: PaperStyle;
   paperTone: PaperTone;
   paperLineSpacing: number;
   onPaperLineSpacingChange: (spacing: number) => void;
   onChange: (pageId: string, serialized: string) => void;
   onSaveStatus: (status: 'saving' | 'saved' | 'error') => void;
-=======
-  onChange: (pageId: string, serialized: string) => void;
->>>>>>> origin/main
 }
 
 /** Sessão do editor de texto formatado aberto sobre a folha. */
@@ -129,46 +95,16 @@ interface EditorSession {
 
 const LAYOUT_TOLERANCE = 1.5;
 
-<<<<<<< HEAD
 /** Camada de desenho persistente, com toolbar e editor de texto integrados. */
 export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorContainer, paperStyle, paperTone, paperLineSpacing, onPaperLineSpacingChange, onChange, onSaveStatus }: Props) {
-=======
-/**
- * Camada de desenho sobre a folha (seções 7-9 da especificação).
- *
- * Fica sempre montada (para não perder o estado do canvas ao trocar de
- * modo), mas só recebe interação quando `active` é true. Cada página tem
- * seu próprio JSON de elementos + câmera + arquivos (imagens): ao trocar de
- * `pageId`, a cena é recarregada via `updateScene`, incluindo a câmera salva.
- *
- * ---------------------------------------------------------------------
- * Sobre a UI (barra + caixa de ferramentas adicionais)
- * ---------------------------------------------------------------------
- * A UI nativa do Excalidraw é escondida via CSS (ver ExcalidrawLayer.css).
- * No lugar dela:
- *  - `<DrawToolbar>`: nossa barra de ferramentas, no centro da TopBar;
- *  - `<ElementContextPanel>`: a "caixa de edição de objetos";
- *  - `<RichTextEditor>`: o editor de texto formatado (cores por letra,
- *    sublinhado, marcadores...), que o Excalidraw não oferece. O texto
- *    formatado vive na folha como um grupo de elementos de texto nativos
- *    (ver richtext/types.ts e richtext/native.ts).
- *
- * Tudo conversa com o Excalidraw só pela API pública dele (`setActiveTool`,
- * `getSceneElements`, `getAppState`, `updateScene`, `addFiles`).
- */
-export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorContainer, onChange }: Props) {
->>>>>>> origin/main
   const apiRef = useRef<ExcalidrawAPI | null>(null);
   const layerRef = useRef<HTMLDivElement>(null);
   // Centro da TopBar, onde a barra de ferramentas é encaixada.
   const toolbarSlot = useNotebookStore((s) => s.toolbarSlot);
   const loadedPageId = useRef<string | null>(null);
   const apiReadyRef = useRef(false);
-<<<<<<< HEAD
   const autoInkRef = useRef(true);
   const autoInkColorRef = useRef(paperTone === 'dark' ? DARK_PAPER_INK : LIGHT_PAPER_INK);
-=======
->>>>>>> origin/main
 
   const [activeTool, setActiveToolState] = useState('selection');
   const [toolLocked, setToolLocked] = useState(false);
@@ -195,17 +131,13 @@ export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorCo
   // Textos formatados sendo refeitos (layout) e os que falharam (não repetir para sempre).
   const richBusy = useRef<Set<string>>(new Set());
   const richFailed = useRef<Set<string>>(new Set());
-<<<<<<< HEAD
   // Peças de texto formatado escondidas durante o resize (id -> opacidade original).
   // Ver bloco "Texto formatado no resize" logo abaixo.
   const richResizeHiddenRef = useRef<Map<string, number>>(new Map());
-=======
->>>>>>> origin/main
 
   // Salvamento com atraso: guarda o último estado e grava depois de SAVE_DELAY_MS.
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
-<<<<<<< HEAD
   const onSaveStatusRef = useRef(onSaveStatus);
   onSaveStatusRef.current = onSaveStatus;
   const saveTimer = useRef<number | undefined>(undefined);
@@ -213,17 +145,12 @@ export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorCo
   // (percorre todos os elementos e copia as imagens) e antes rodava a cada movimento do
   // dedo/caneta. Agora só roda quando o salvamento realmente dispara.
   const pendingSave = useRef<{ pageId: string; build: () => string } | null>(null);
-=======
-  const saveTimer = useRef<number | undefined>(undefined);
-  const pendingSave = useRef<{ pageId: string; serialized: string } | null>(null);
->>>>>>> origin/main
 
   const flushSave = useCallback(() => {
     window.clearTimeout(saveTimer.current);
     const pending = pendingSave.current;
     if (pending) {
       pendingSave.current = null;
-<<<<<<< HEAD
       try {
         void Promise.resolve(onChangeRef.current(pending.pageId, pending.build())).then(
           () => onSaveStatusRef.current('saved'),
@@ -233,23 +160,14 @@ export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorCo
         console.error('Falha ao serializar a cena:', error);
         onSaveStatusRef.current('error');
       }
-=======
-      onChangeRef.current(pending.pageId, pending.serialized);
->>>>>>> origin/main
     }
   }, []);
 
   const queueSave = useCallback(
-<<<<<<< HEAD
     (build: () => string) => {
       if (!loadedPageId.current) return;
       pendingSave.current = { pageId: loadedPageId.current, build };
       onSaveStatusRef.current('saving');
-=======
-    (serialized: string) => {
-      if (!loadedPageId.current) return;
-      pendingSave.current = { pageId: loadedPageId.current, serialized };
->>>>>>> origin/main
       window.clearTimeout(saveTimer.current);
       saveTimer.current = window.setTimeout(flushSave, SAVE_DELAY_MS);
     },
@@ -281,13 +199,10 @@ export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorCo
         }
       }
       const camera = scene.camera ?? DEFAULT_CAMERA;
-<<<<<<< HEAD
       const storedInk = scene.appState?.currentItemStrokeColor;
       const defaultInk = paperTone === 'dark' ? DARK_PAPER_INK : LIGHT_PAPER_INK;
       autoInkRef.current = typeof storedInk !== 'string';
       autoInkColorRef.current = typeof storedInk === 'string' ? storedInk : defaultInk;
-=======
->>>>>>> origin/main
       // Arquivos (imagens, texto formatado) antes dos elementos que os usam.
       const files = scene.files ? Object.values(scene.files) : [];
       if (files.length) api.addFiles(files);
@@ -295,10 +210,7 @@ export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorCo
         elements: scene.elements ?? [],
         appState: {
           ...scene.appState,
-<<<<<<< HEAD
           currentItemStrokeColor: typeof storedInk === 'string' ? storedInk : defaultInk,
-=======
->>>>>>> origin/main
           viewBackgroundColor: 'transparent',
           scrollX: camera.scrollX,
           scrollY: camera.scrollY,
@@ -306,7 +218,6 @@ export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorCo
         },
       });
     },
-<<<<<<< HEAD
     [data, paperTone],
   );
 
@@ -319,11 +230,6 @@ export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorCo
     }
   }, [paperTone]);
 
-=======
-    [data],
-  );
-
->>>>>>> origin/main
   // Troca de página: recarrega elementos + câmera daquela página específica.
   useEffect(() => {
     const api = apiRef.current;
@@ -398,11 +304,7 @@ export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorCo
     return {
       fontFamily: st.currentItemFontFamily ?? 5,
       fontSize: st.currentItemFontSize ?? 20,
-<<<<<<< HEAD
       color: st.currentItemStrokeColor ?? (paperTone === 'dark' ? '#e8ecec' : '#202820'),
-=======
-      color: st.currentItemStrokeColor ?? '#1e1e1e',
->>>>>>> origin/main
       align: st.currentItemTextAlign ?? 'left',
     };
   }
@@ -685,23 +587,17 @@ export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorCo
     const container = findContainer(el, elements);
 
     let doc = mutate ? mutate(data.rich) : data.rich;
-<<<<<<< HEAD
     const resizedBox = !container && !mutate && isRichBox(el);
     const wChanged = resizedBox && Math.abs(el.width - (data.lay?.w ?? el.width)) > LAYOUT_TOLERANCE;
     const hChanged = resizedBox && Math.abs(el.height - (data.lay?.h ?? el.height)) > LAYOUT_TOLERANCE;
     if (wChanged) {
       // Redimensionou na horizontal: a nova largura passa a valer (largura fixa).
-=======
-    if (!container && !mutate && isRichBox(el) && Math.abs(el.width - (data.lay?.w ?? el.width)) > LAYOUT_TOLERANCE) {
-      // Redimensionou o bloco: a nova largura passa a valer (fixa).
->>>>>>> origin/main
       doc = { ...doc, fixedWidth: true, width: el.width };
     }
     const wasSelected = getSelectedIds().has(el.id);
     const { groupIds, newGroupId } = richGroupIds(el, container);
     const built = await buildRich(doc, container, { x: el.x, y: el.y }, groupIds, el.opacity ?? 100);
 
-<<<<<<< HEAD
     // Redimensionou na vertical (ou no canto): preserva a altura escolhida pelo
     // usuário. A fonte NÃO muda — a caixa só fica mais alta/mais baixa, com
     // espaço em branco no rodapé (como num textarea). O `lay.h` é atualizado
@@ -715,8 +611,6 @@ export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorCo
       };
     }
 
-=======
->>>>>>> origin/main
     const oldHolder = api.getSceneElements().find((e: ExcalidrawElement) => e.id === id);
     if (!oldHolder) return;
     writeRich({
@@ -739,7 +633,6 @@ export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorCo
       if (needsRelayout(el, elements)) ids.push(el.id);
     }
     if (ids.length === 0) return;
-<<<<<<< HEAD
     // Em resize, falhas anteriores não podem bloquear o rebuild — senão as peças
     // de texto continuam com o tamanho esticado pelo grupo do Excalidraw.
     ids.forEach((id) => {
@@ -747,8 +640,6 @@ export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorCo
         if (key.startsWith(`${id}:`)) richFailed.current.delete(key);
       }
     });
-=======
->>>>>>> origin/main
     ids.forEach((id) => richBusy.current.add(id));
     window.setTimeout(() => {
       Promise.all(
@@ -772,13 +663,10 @@ export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorCo
   const handleChange = useCallback(
     (elements: readonly unknown[], appState: Record<string, any>, files?: Record<string, any>) => {
       if (!apiReadyRef.current) return;
-<<<<<<< HEAD
       if (autoInkRef.current && typeof appState?.currentItemStrokeColor === 'string'
         && appState.currentItemStrokeColor !== autoInkColorRef.current) {
         autoInkRef.current = false;
       }
-=======
->>>>>>> origin/main
 
       const zoomValue = appState?.zoom?.value ?? 1;
       const camera: ExcalidrawCamera = {
@@ -834,7 +722,6 @@ export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorCo
       let elementsToSave: readonly unknown[] = elements;
 
       const resizing = !!(appState?.isResizing || appState?.resizingElement);
-<<<<<<< HEAD
 
       // Texto formatado no resize: o bloco é um GRUPO (caixa invisível + vários
       // trechos de texto). O Excalidraw escala o grupo inteiro ao redimensionar,
@@ -889,8 +776,6 @@ export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorCo
         }
       }
 
-=======
->>>>>>> origin/main
       if (interacting && resizing && canvasLockedRef.current && !appState?.editingTextElement) {
         const viewport = viewportFromAppState(appState);
         if (viewport) {
@@ -936,7 +821,6 @@ export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorCo
         );
         // Texto formatado que foi redimensionado (ou cuja forma mudou) é redesenhado.
         scheduleRichCheck(elementsToSave as ExcalidrawElement[]);
-<<<<<<< HEAD
 
         // Fim do resize: restaura a opacidade das peças de texto escondidas.
         // Se o rebuild precisou rodar, as peças antigas já foram substituídas
@@ -954,8 +838,6 @@ export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorCo
             });
           }
         }
-=======
->>>>>>> origin/main
       }
 
       // Mantém nossa barra própria sincronizada com o estado real do
@@ -979,7 +861,6 @@ export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorCo
 
       // Persistimos elementos + câmera + os arquivos (imagens) que ainda são
       // usados por algum elemento, para o texto formatado sobreviver a um reload.
-<<<<<<< HEAD
       // A montagem do JSON é adiada para a hora de gravar (ver queueSave).
       const sceneElements = elementsToSave as ExcalidrawElement[];
       queueSave(() => {
@@ -1006,25 +887,6 @@ export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorCo
           files: keptFiles,
         });
       });
-=======
-      const used = new Set<string>();
-      for (const el of elementsToSave as ExcalidrawElement[]) {
-        if (!el.isDeleted && el.type === 'image' && el.fileId) used.add(el.fileId);
-      }
-      const keptFiles: Record<string, unknown> = {};
-      for (const id of used) if (files?.[id]) keptFiles[id] = files[id];
-
-      queueSave(
-        JSON.stringify({
-          // Elementos apagados só servem ao desfazer desta sessão; não vão para o banco
-          // (senão cada edição de texto deixaria dezenas de peças antigas no JSON).
-          elements: (elementsToSave as ExcalidrawElement[]).filter((el) => !el.isDeleted),
-          appState: { viewBackgroundColor: 'transparent' },
-          camera,
-          files: keptFiles,
-        }),
-      );
->>>>>>> origin/main
     },
     [queueSave, activeTool, toolLocked],
   );
@@ -1434,12 +1296,9 @@ export function ExcalidrawLayer({ pageId, data, active, panelContainer, editorCo
             onAddStickyNote={handleAddStickyNote}
             onUndo={() => sendUndoShortcut(false)}
             onRedo={() => sendUndoShortcut(true)}
-<<<<<<< HEAD
             paperStyle={paperStyle}
             paperLineSpacing={paperLineSpacing}
             onPaperLineSpacingChange={onPaperLineSpacingChange}
-=======
->>>>>>> origin/main
           />,
           toolbarSlot,
         )}

@@ -13,15 +13,9 @@
 .sidebar__logo {
   display: flex;
   align-items: center;
-<<<<<<< HEAD
   gap: var(--sidebar-logo-gap);
   height: var(--topbar-h);
   padding: 0 var(--sidebar-logo-pad-x-end) 0 var(--sidebar-logo-pad-x-start);
-=======
-  gap: 12px;
-  height: var(--topbar-h);
-  padding: 0 14px 0 18px;
->>>>>>> origin/main
   border-bottom: 1px solid var(--panel-border);
   flex-shrink: 0;
 }
@@ -30,7 +24,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-<<<<<<< HEAD
   width: var(--sidebar-logo-icon-size);
   height: var(--sidebar-logo-icon-size);
   border-radius: 12px;
@@ -61,16 +54,6 @@
 .sidebar__logo-icon:focus-visible {
   outline: 2px solid var(--secondary);
   outline-offset: 3px;
-=======
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: #fff;
-  font-size: 20px;
-  flex-shrink: 0;
-  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
->>>>>>> origin/main
 }
 
 .sidebar__logo-text {
@@ -82,7 +65,6 @@
 }
 
 .sidebar__logo-text strong {
-<<<<<<< HEAD
   font-size: var(--sidebar-logo-title-size);
   font-weight: 700;
 }
@@ -93,83 +75,35 @@
 .sidebar__logo-text small {
   color: var(--muted);
   font-size: var(--sidebar-logo-subtitle-size);
-=======
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.sidebar__logo-text small {
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.sidebar__close {
-  width: 34px;
-  height: 34px;
-  border-radius: var(--radius-sm);
-  background: none;
-  border: none;
-  color: var(--muted);
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.sidebar__close:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text);
->>>>>>> origin/main
 }
 
 /* ---------- Navegação ---------- */
 .sidebar__nav {
-<<<<<<< HEAD
   padding: var(--sidebar-nav-pad-top) var(--sidebar-nav-pad-x) 0;
   display: flex;
   flex-direction: column;
   gap: var(--sidebar-nav-gap);
-=======
-  padding: 14px 12px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
->>>>>>> origin/main
   flex-shrink: 0;
 }
 
 .sidebar__nav-item {
   display: flex;
   align-items: center;
-<<<<<<< HEAD
   gap: var(--sidebar-nav-item-gap);
   padding: var(--sidebar-nav-item-pad-y) var(--sidebar-nav-item-pad-x);
-=======
-  gap: 12px;
-  padding: 11px 12px;
->>>>>>> origin/main
   border-radius: var(--radius-md);
   background: none;
   border: none;
   color: var(--muted);
-<<<<<<< HEAD
   font-size: var(--sidebar-nav-font-size);
-=======
-  font-size: 15px;
->>>>>>> origin/main
   font-weight: 500;
   text-align: left;
   transition: background 0.15s, color 0.15s;
 }
 
 .sidebar__nav-item > i {
-<<<<<<< HEAD
   font-size: var(--sidebar-nav-icon-size);
   width: var(--sidebar-nav-icon-width);
-=======
-  font-size: 18px;
-  width: 22px;
->>>>>>> origin/main
   text-align: center;
 }
 
@@ -178,36 +112,22 @@
 }
 
 .sidebar__nav-badge {
-<<<<<<< HEAD
   min-width: var(--sidebar-nav-badge-min-width);
   padding: var(--sidebar-nav-badge-pad-y) var(--sidebar-nav-badge-pad-x);
   border-radius: 999px;
   background: var(--panel-raised);
   color: var(--muted);
   font-size: var(--sidebar-section-header-font-size);
-=======
-  min-width: 24px;
-  padding: 1px 8px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--muted);
-  font-size: 12px;
->>>>>>> origin/main
   font-weight: 600;
   text-align: center;
 }
 
 .sidebar__nav-item:hover {
-<<<<<<< HEAD
   background: var(--panel-hover);
-=======
-  background: rgba(255, 255, 255, 0.05);
->>>>>>> origin/main
   color: var(--text);
 }
 
 .sidebar__nav-item.is-active {
-<<<<<<< HEAD
   background: var(--selection-bg);
   color: var(--text);
   box-shadow: none;
@@ -251,37 +171,15 @@
   color: var(--muted);
   font-size: var(--sidebar-backup-note-size);
   line-height: 1.4;
-=======
-  background: rgba(99, 102, 241, 0.18);
-  color: var(--text);
-  box-shadow: inset 3px 0 0 var(--primary);
-}
-
-.sidebar__nav-item.is-active > i {
-  color: var(--secondary);
-}
-
-.sidebar__nav-item.is-active .sidebar__nav-badge {
-  background: rgba(99, 102, 241, 0.35);
-  color: #fff;
->>>>>>> origin/main
 }
 
 /* ---------- Matérias ---------- */
 .sidebar__section {
-<<<<<<< HEAD
   margin-top: var(--sidebar-section-top-gap);
   padding: var(--sidebar-section-pad-top) var(--sidebar-section-pad-x) 0;
   border-top: 1px solid var(--panel-border);
   flex: 1;
   min-height: var(--sidebar-section-min-height);
-=======
-  margin-top: 18px;
-  padding: 14px 14px 0;
-  border-top: 1px solid var(--panel-border);
-  flex: 1;
-  min-height: 120px;
->>>>>>> origin/main
   overflow-y: auto;
 }
 
@@ -290,52 +188,30 @@
   align-items: center;
   justify-content: space-between;
   color: var(--muted);
-<<<<<<< HEAD
   font-size: var(--sidebar-section-header-font-size);
   font-weight: 600;
   letter-spacing: 0.06em;
   padding: 0 var(--sidebar-section-header-pad-x) var(--sidebar-section-header-pad-bottom);
-=======
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  padding: 0 4px 10px;
->>>>>>> origin/main
 }
 
 .sidebar__section-title {
   display: flex;
   align-items: center;
-<<<<<<< HEAD
   gap: var(--sidebar-section-title-gap);
 }
 
 .sidebar__section-title i {
   font-size: var(--sidebar-section-icon-size);
-=======
-  gap: 8px;
-}
-
-.sidebar__section-title i {
-  font-size: 14px;
->>>>>>> origin/main
 }
 
 .sidebar__section-header button {
   background: rgba(255, 255, 255, 0.05);
   border: none;
   color: var(--muted);
-<<<<<<< HEAD
   width: var(--sidebar-section-button-size);
   height: var(--sidebar-section-button-size);
   border-radius: 8px;
   font-size: var(--sidebar-add-button-font-size);
-=======
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  font-size: 13px;
->>>>>>> origin/main
   display: flex;
   align-items: center;
   justify-content: center;
@@ -348,13 +224,8 @@
 
 .sidebar__new-subject {
   display: flex;
-<<<<<<< HEAD
   gap: var(--sidebar-new-subject-gap);
   padding: 0 var(--sidebar-section-header-pad-x) var(--sidebar-new-subject-pad-bottom);
-=======
-  gap: 6px;
-  padding: 0 4px 10px;
->>>>>>> origin/main
 }
 
 .sidebar__new-subject input {
@@ -363,130 +234,18 @@
   border: 1px solid var(--primary);
   border-radius: 8px;
   color: var(--text);
-<<<<<<< HEAD
   font-size: var(--sidebar-input-font-size);
   padding: var(--sidebar-input-pad-y) var(--sidebar-input-pad-x);
-=======
-  font-size: 14px;
-  padding: 8px 10px;
->>>>>>> origin/main
 }
 
 .sidebar__new-subject input:focus {
   outline: none;
 }
 
-<<<<<<< HEAD
 /* ---------- Rodapé ---------- */
 .sidebar__footer {
   border-top: 1px solid var(--panel-border);
   padding: var(--sidebar-footer-padding-y) var(--sidebar-footer-padding-x);
-=======
-/* ---------- Modelos de página ---------- */
-.sidebar__papers {
-  border-top: 1px solid var(--panel-border);
-  padding: 14px 16px 16px;
-  flex-shrink: 0;
-}
-
-.sidebar__papers-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-
-.sidebar__papers-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.sidebar__papers-hint {
-  margin: 10px 0 0;
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.paper-thumb {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 6px 6px 8px;
-  border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.03);
-  border: 2px solid transparent;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 500;
-  transition: border-color 0.15s, background 0.15s, color 0.15s;
-}
-
-.paper-thumb:not(:disabled):hover {
-  background: rgba(255, 255, 255, 0.07);
-  color: var(--text);
-}
-
-.paper-thumb:disabled {
-  opacity: 0.5;
-  cursor: default;
-}
-
-.paper-thumb.is-active {
-  border-color: var(--primary);
-  background: rgba(99, 102, 241, 0.16);
-  color: var(--text);
-}
-
-.paper-thumb__preview {
-  --paper-gap: 9px;
-  --paper-grid: 9px;
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  border-radius: 6px;
-  background-color: var(--notebook);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-/*
- * Os desenhos das miniaturas (linhas da pauta, quadrinhos) começavam no canto
- * superior esquerdo e terminavam cortados, então pareciam descentralizados.
- * Aqui o desenho é centralizado e a folha ganha um respiro interno igual nos
- * quatro lados. (Só as miniaturas: a folha real não muda.)
- */
-.paper-thumb__preview {
-  background-origin: content-box;
-  background-clip: content-box;
-  padding: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.paper-thumb__preview.paper--ruled {
-  background-size: 100% 9px;
-  background-repeat: repeat-y;
-  background-position: center;
-}
-
-.paper-thumb__preview.paper--grid {
-  background-size: 9px 9px;
-  background-position: center;
-}
-
-.paper-thumb__label {
-  text-align: center;
-}
-
-/* ---------- Rodapé ---------- */
-.sidebar__footer {
-  border-top: 1px solid var(--panel-border);
-  padding: 12px 18px;
->>>>>>> origin/main
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -495,19 +254,11 @@
 
 .sidebar__footer-label {
   color: var(--muted);
-<<<<<<< HEAD
   font-size: var(--sidebar-footer-label-size);
 }
 
 .sidebar__footer-count {
   font-size: var(--sidebar-footer-count-size);
-=======
-  font-size: 13px;
-}
-
-.sidebar__footer-count {
-  font-size: 22px;
->>>>>>> origin/main
   font-weight: 700;
 }
 
@@ -515,47 +266,28 @@
 .sidebar__install {
   display: flex;
   align-items: center;
-<<<<<<< HEAD
   gap: var(--sidebar-secondary-button-gap);
   width: calc(100% - var(--sidebar-install-width-inset));
   margin: 0 var(--sidebar-install-margin-x) var(--sidebar-install-margin-bottom);
   padding: var(--sidebar-secondary-button-padding-y) var(--sidebar-secondary-button-padding-x);
-=======
-  gap: 12px;
-  width: calc(100% - 32px);
-  margin: 0 16px 12px;
-  padding: 10px 14px;
->>>>>>> origin/main
   border: 1px dashed var(--primary);
   border-radius: var(--radius-md);
   background: rgba(99, 102, 241, 0.1);
   color: var(--text);
-<<<<<<< HEAD
   font-size: var(--sidebar-install-font-size);
-=======
-  font-size: 13.5px;
->>>>>>> origin/main
   font-weight: 600;
   text-align: left;
 }
 
 .sidebar__install i {
   color: var(--secondary);
-<<<<<<< HEAD
   font-size: var(--sidebar-install-icon-size);
-=======
-  font-size: 18px;
->>>>>>> origin/main
 }
 
 .sidebar__install small {
   display: block;
   color: var(--muted);
-<<<<<<< HEAD
   font-size: var(--sidebar-install-note-size);
-=======
-  font-size: 11.5px;
->>>>>>> origin/main
   font-weight: 400;
 }
 
@@ -567,35 +299,20 @@
 .sidebar__about {
   display: flex;
   align-items: center;
-<<<<<<< HEAD
   gap: var(--sidebar-about-gap);
   width: calc(100% - var(--sidebar-about-width-inset));
   margin: 0 var(--sidebar-about-margin-x) var(--sidebar-about-margin-bottom);
   padding: var(--sidebar-input-pad-y) var(--sidebar-about-pad-x);
-=======
-  gap: 10px;
-  width: calc(100% - 32px);
-  margin: 0 16px 10px;
-  padding: 8px 12px;
->>>>>>> origin/main
   background: transparent;
   color: var(--muted);
   border: 0;
   border-radius: var(--radius-md);
-<<<<<<< HEAD
   font-size: var(--sidebar-about-font-size);
-=======
-  font-size: 13px;
->>>>>>> origin/main
   text-align: left;
 }
 
 .sidebar__about i {
-<<<<<<< HEAD
   font-size: var(--sidebar-about-icon-size);
-=======
-  font-size: 15px;
->>>>>>> origin/main
 }
 
 .sidebar__about:hover {
@@ -609,21 +326,9 @@
     height: var(--topbar-h);
   }
 
-<<<<<<< HEAD
   .sidebar__nav-item {
     min-height: var(--touch-min);
     padding: var(--sidebar-nav-item-pad-y) var(--sidebar-nav-item-pad-x);
-=======
-  .sidebar__close {
-    width: var(--touch-min);
-    height: var(--touch-min);
-    font-size: 18px;
-  }
-
-  .sidebar__nav-item {
-    min-height: var(--touch-min);
-    padding: 10px 12px;
->>>>>>> origin/main
   }
 
   .sidebar__section {
@@ -633,32 +338,19 @@
   }
 
   .sidebar__section-header button {
-<<<<<<< HEAD
     width: var(--sidebar-section-button-size);
     height: var(--sidebar-section-button-size);
-=======
-    width: var(--touch-min);
-    height: var(--touch-min);
->>>>>>> origin/main
     font-size: 16px;
   }
 
   .sidebar__new-subject input {
     min-height: var(--touch-min);
-<<<<<<< HEAD
     padding: var(--sidebar-input-pad-y) var(--sidebar-input-pad-x);
   }
 
   .sidebar__backup button {
     min-height: var(--sidebar-backup-button-height);
     padding: var(--sidebar-backup-button-pad-y) var(--sidebar-backup-button-pad-x);
-=======
-    padding: 10px 12px;
-  }
-
-  .paper-thumb {
-    min-height: var(--touch-min);
->>>>>>> origin/main
   }
 
   .sidebar__install,
@@ -668,10 +360,6 @@
 
   /* Rodapé da gaveta acima da barra de gestos do celular. */
   .sidebar__footer {
-<<<<<<< HEAD
     padding-bottom: calc(var(--sidebar-footer-padding-y) + var(--safe-bottom));
-=======
-    padding-bottom: calc(12px + var(--safe-bottom));
->>>>>>> origin/main
   }
 }

@@ -27,14 +27,10 @@ export interface Page {
   contentMigrated?: boolean; // true depois que `content` foi convertido para elemento de texto do Excalidraw
   excalidrawData: string | null; // JSON serializado (elements + appState + files)
   isFavorite: boolean;
-<<<<<<< HEAD
   /** Timestamp de exclusão reversível; ausente/null significa página ativa. */
   deletedAt?: number | null;
   paperStyle?: PaperStyle; // ausente em páginas antigas => tratada como 'ruled'
   paperLineSpacing?: number; // espaçamento das linhas pautadas, em px (18–60)
-=======
-  paperStyle?: PaperStyle; // ausente em páginas antigas => tratada como 'ruled'
->>>>>>> origin/main
   createdAt: number;
   updatedAt: number;
 }

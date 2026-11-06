@@ -4,10 +4,7 @@ import { db } from '../../db/db';
 import { PageNavigator } from '../notebook/PageNavigator';
 import { useNotebookStore } from '../../store/notebookStore';
 import { exportPage, ExportKind } from '../../utils/exportPage';
-<<<<<<< HEAD
 import { useTheme } from '../../hooks/useTheme';
-=======
->>>>>>> origin/main
 import './TopBar.css';
 
 const EXPORT_OPTIONS: { kind: ExportKind; label: string; hint: string; icon: string }[] = [
@@ -25,24 +22,15 @@ function slug(text: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
-<<<<<<< HEAD
 export function TopBar({ sidebarOpen, onToggleSidebar }: { sidebarOpen: boolean; onToggleSidebar: () => void }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const { theme, toggle: toggleTheme } = useTheme();
-=======
-export function TopBar({ onToggleSidebar }: { onToggleSidebar: () => void }) {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [busy, setBusy] = useState(false);
->>>>>>> origin/main
   const exportRef = useRef<HTMLDivElement>(null);
   const selectedPageId = useNotebookStore((s) => s.selectedPageId);
   const view = useNotebookStore((s) => s.view);
   const setToolbarSlot = useNotebookStore((s) => s.setToolbarSlot);
-<<<<<<< HEAD
   const setFocusMode = useNotebookStore((s) => s.setFocusMode);
-=======
->>>>>>> origin/main
   const currentPage = useLiveQuery(
     () => (selectedPageId ? db.pages.get(selectedPageId) : undefined),
     [selectedPageId],
@@ -94,7 +82,6 @@ export function TopBar({ onToggleSidebar }: { onToggleSidebar: () => void }) {
   return (
     <div className="topbar">
       <div className="topbar__left">
-<<<<<<< HEAD
         <button
           className="topbar__menu-btn"
           onClick={onToggleSidebar}
@@ -107,36 +94,12 @@ export function TopBar({ onToggleSidebar }: { onToggleSidebar: () => void }) {
         </button>
 
         {showPageTools && (
-=======
-        <button className="topbar__menu-btn" onClick={onToggleSidebar} aria-label="Abrir menu" title="Menu">
-          <i className="bi bi-list" />
-        </button>
-
-        {showPageTools ? (
->>>>>>> origin/main
           <div className="topbar__crumb" title={`${subject?.name ?? ''} › ${topic?.name ?? ''}`}>
             <i className="bi bi-folder2-open" />
             <span>{subject?.name ?? '—'}</span>
             <i className="bi bi-chevron-right topbar__crumb-sep" />
             <span>{topic?.name ?? '—'}</span>
           </div>
-<<<<<<< HEAD
-=======
-        ) : (
-          <div className="topbar__brand">
-            <i className="bi bi-journal-bookmark-fill" />
-            <span>Caderno Digital</span>
-          </div>
-        )}
-        {showPageTools && (
-          <div className="topbar__title">
-            <i className="bi bi-journal-bookmark-fill" />
-            <span>
-              <strong>Caderno Digital</strong>
-              <small>Suas ideias, do seu jeito</small>
-            </span>
-          </div>
->>>>>>> origin/main
         )}
       </div>
 
@@ -144,7 +107,6 @@ export function TopBar({ onToggleSidebar }: { onToggleSidebar: () => void }) {
           (portal feito pelo ExcalidrawLayer; ver DrawToolbar.css). */}
       {showPageTools && <div className="topbar__tools" ref={setToolbarSlot} />}
 
-<<<<<<< HEAD
       <div className="topbar__right">
         {showPageTools && currentPage && <PageNavigator page={currentPage} />}
 
@@ -177,23 +139,14 @@ export function TopBar({ onToggleSidebar }: { onToggleSidebar: () => void }) {
         </button>
 
         {showPageTools && (
-=======
-      {showPageTools && (
-      <div className="topbar__right">
-      {currentPage && <PageNavigator page={currentPage} />}
-
->>>>>>> origin/main
         <div className="topbar__export" ref={exportRef}>
           <button
             type="button"
             className="topbar__export-btn"
             aria-haspopup="menu"
             aria-expanded={menuOpen}
-<<<<<<< HEAD
             aria-label="Salvar como"
             title="Salvar como"
-=======
->>>>>>> origin/main
             disabled={busy}
             onClick={() => setMenuOpen((v) => !v)}
           >
@@ -222,13 +175,8 @@ export function TopBar({ onToggleSidebar }: { onToggleSidebar: () => void }) {
             </div>
           )}
         </div>
-<<<<<<< HEAD
         )}
       </div>
-=======
-      </div>
-      )}
->>>>>>> origin/main
     </div>
   );
 }

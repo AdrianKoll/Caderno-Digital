@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* ==========================================================================
  *  CAIXA DE FERRAMENTAS DE FORMAS (painel de propriedades do objeto)
  * ==========================================================================
@@ -20,14 +19,6 @@
  *  (--ecp-bg, --ecp-text… abaixo são as CORES do painel; são locais de propósito.)
  * ========================================================================== */
 /* ---- 1. O PAINEL ------------------------------------------------------------ */
-=======
-/*
- * Caixa de edição de objetos — visual do painel de propriedades do Excalidraw
- * (tema claro): cartão branco, rótulos pequenos, botões de ícone com o
- * estado ativo em lilás (#e0dfff / #6965db). As cores são fixas de propósito
- * (não usam as variáveis do tema escuro do app) para ficar idêntico ao original.
- */
->>>>>>> origin/main
 .element-context-panel {
   --ecp-bg: #ffffff;
   --ecp-text: #1b1b1f;
@@ -45,7 +36,6 @@
   right: 0;
   bottom: 130px;
   z-index: var(--z-panel);
-<<<<<<< HEAD
   width: var(--ecp-panel-w);
   max-width: 100%;
   box-sizing: border-box;
@@ -62,33 +52,12 @@
 }
 
 /* 901–1279px: painel contextual temporário, fora da coluna lateral fixa.
-=======
-  width: 264px;
-  background: var(--ecp-bg);
-  color: var(--ecp-text);
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  overflow-y: auto;
-  font-size: 12px;
-  border-radius: 8px 0 0 8px;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 2px 12px rgba(0, 0, 0, 0.18);
-}
-
-/* 901–1279px: o painel FLUTUA sobre a folha, no canto direito (a folha usa a
->>>>>>> origin/main
    largura toda). É `fixed`, então não depende de rolagem nem de coluna. */
 @media (min-width: 901px) and (max-width: 1279px) {
   .element-context-panel {
     position: fixed;
-<<<<<<< HEAD
     top: calc(var(--topbar-h) + var(--safe-top) + var(--ecp-panel-top-gap));
     right: calc(var(--ecp-panel-side-gap) + var(--safe-right));
-=======
-    top: calc(var(--topbar-h) + var(--safe-top) + 12px);
-    right: calc(12px + var(--safe-right));
->>>>>>> origin/main
     bottom: auto;
     left: auto;
     z-index: var(--z-panel);
@@ -104,13 +73,9 @@
 @media (min-width: 1280px) {
   .element-context-panel {
     position: sticky;
-<<<<<<< HEAD
     width: var(--ecp-panel-w-wide);
     max-width: 100%;
     top: var(--ecp-panel-sticky-top);
-=======
-    top: 16px;
->>>>>>> origin/main
     right: auto;
     bottom: auto;
     z-index: auto;
@@ -119,32 +84,21 @@
   }
 }
 
-<<<<<<< HEAD
 /* ---- 2. SEÇÕES E LINHAS ------------------------------------------------------ */
-=======
->>>>>>> origin/main
 .ecp-section {
   display: flex;
   flex-direction: column;
 }
 
 .ecp-label {
-<<<<<<< HEAD
   font-size: var(--ecp-label-size);
-=======
-  font-size: 12px;
->>>>>>> origin/main
   font-weight: 500;
   color: var(--ecp-text);
   margin-bottom: 6px;
 }
 
 .ecp-sublabel {
-<<<<<<< HEAD
   font-size: var(--ecp-sublabel-size);
-=======
-  font-size: 10.5px;
->>>>>>> origin/main
   color: var(--ecp-muted);
   margin: 6px 0 4px;
 }
@@ -152,11 +106,7 @@
 .ecp-row {
   display: flex;
   align-items: center;
-<<<<<<< HEAD
   gap: var(--ecp-row-gap);
-=======
-  gap: 6px;
->>>>>>> origin/main
   flex-wrap: wrap;
 }
 
@@ -173,21 +123,13 @@
   align-items: center;
   gap: 8px;
   width: 100%;
-<<<<<<< HEAD
   min-height: var(--ecp-edit-text-h);
-=======
-  min-height: 38px;
->>>>>>> origin/main
   padding: 6px 10px;
   background: var(--ecp-active-bg);
   border: 1px solid var(--ecp-accent);
   border-radius: 8px;
   color: var(--ecp-accent-strong);
-<<<<<<< HEAD
   font-size: var(--ecp-edit-text-font-size);
-=======
-  font-size: 13px;
->>>>>>> origin/main
   font-weight: 600;
   text-align: left;
 }
@@ -208,34 +150,20 @@
   display: none;
 }
 
-<<<<<<< HEAD
 /* ---- 3. BOTÕES DE ÍCONE ------------------------------------------------------ */
 
 .ecp-btn {
   width: var(--ecp-btn-size);
   height: var(--ecp-btn-size);
-=======
-/* ---- Botões de ícone -------------------------------------------------- */
-
-.ecp-btn {
-  width: 32px;
-  height: 32px;
->>>>>>> origin/main
   padding: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: transparent;
   border: 1px solid var(--ecp-border);
-<<<<<<< HEAD
   border-radius: var(--ecp-btn-radius);
   color: var(--ecp-text);
   font-size: var(--ecp-btn-font-size);
-=======
-  border-radius: 8px;
-  color: var(--ecp-text);
-  font-size: 13px;
->>>>>>> origin/main
 }
 
 .ecp-btn:hover:not(:disabled) {
@@ -273,19 +201,11 @@
 
 .ecp-fontlist__item {
   text-align: left;
-<<<<<<< HEAD
   padding: var(--ecp-fontlist-pad);
   background: transparent;
   border: none;
   color: var(--ecp-text);
   font-size: var(--ecp-fontlist-font-size);
-=======
-  padding: 7px 10px;
-  background: transparent;
-  border: none;
-  color: var(--ecp-text);
-  font-size: 14px;
->>>>>>> origin/main
 }
 
 .ecp-fontlist__item:hover {
@@ -299,7 +219,6 @@
 
 .ecp-slider {
   width: 100%;
-<<<<<<< HEAD
   height: var(--ecp-slider-h);
   accent-color: var(--ecp-accent);
 }
@@ -308,15 +227,6 @@
 
 .ecp-row--picks {
   gap: var(--ecp-row-gap);
-=======
-  accent-color: var(--ecp-accent);
-}
-
-/* ---- Cores ------------------------------------------------------------ */
-
-.ecp-row--picks {
-  gap: 6px;
->>>>>>> origin/main
 }
 
 .ecp-divider {
@@ -327,13 +237,8 @@
 }
 
 .ecp-swatch {
-<<<<<<< HEAD
   width: var(--ecp-swatch-size);
   height: var(--ecp-swatch-size);
-=======
-  width: 24px;
-  height: 24px;
->>>>>>> origin/main
   padding: 0;
   border: 1px solid rgba(0, 0, 0, 0.14);
   border-radius: 6px;
@@ -341,13 +246,8 @@
 }
 
 .ecp-swatch--lg {
-<<<<<<< HEAD
   width: var(--ecp-swatch-lg-size);
   height: var(--ecp-swatch-lg-size);
-=======
-  width: 32px;
-  height: 32px;
->>>>>>> origin/main
   border-radius: 8px;
 }
 
@@ -368,11 +268,7 @@
   background-position: 0 0, 4px 4px;
 }
 
-<<<<<<< HEAD
 /* ---- 5. JANELINHA DE CORES (renderizada no <body>) --------------------------- */
-=======
-/* ---- Popover de cores (renderizado no <body>) --------------------------- */
->>>>>>> origin/main
 
 .ecp-popover {
   position: fixed;
@@ -380,11 +276,7 @@
   background: #fff;
   color: #1b1b1f;
   border-radius: 8px;
-<<<<<<< HEAD
   padding: var(--ecp-popover-pad);
-=======
-  padding: 12px;
->>>>>>> origin/main
   font-size: 12px;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 8px 28px rgba(0, 0, 0, 0.28);
 }
@@ -416,11 +308,7 @@
 .ecp-hex {
   display: flex;
   align-items: center;
-<<<<<<< HEAD
   height: var(--ecp-hex-h);
-=======
-  height: 34px;
->>>>>>> origin/main
   border: 1px solid #dcdce3;
   border-radius: 8px;
   overflow: hidden;
@@ -465,13 +353,8 @@
   background: #f1f0ff;
 }
 
-<<<<<<< HEAD
 /* ---- 6. CELULAR (<= 900px) --------------------------------------------------
  * Em vez de uma coluna de 264px que cobria ~70% da tela, o
-=======
-/*
- * MOBILE (<= 900px): em vez de uma coluna de 264px que cobria ~70% da tela, o
->>>>>>> origin/main
  * painel vira uma gaveta acima da barra de ferramentas. Começa recolhido (só
  * uma pastilha "Propriedades"), abre com um toque e rola por dentro.
  */
@@ -481,20 +364,10 @@
     top: auto;
     right: 8px;
     left: 8px;
-<<<<<<< HEAD
     bottom: calc(var(--mobile-toolbar-h, 120px) + var(--ecp-mobile-bottom-gap));
     width: auto;
     max-height: var(--ecp-mobile-max-h);
     z-index: var(--z-panel);
-=======
-    bottom: calc(var(--mobile-toolbar-h, 120px) + 8px);
-    width: auto;
-    max-height: min(48dvh, 440px);
-    z-index: var(--z-panel);
-    padding: 0 12px 14px;
-    gap: 14px;
-    border-radius: 14px;
->>>>>>> origin/main
     overscroll-behavior: contain;
   }
 
@@ -532,37 +405,7 @@
     margin: 0;
   }
 
-<<<<<<< HEAD
   /* Botões, cores, espaços e fontes do celular: tokens --ecp-* (theme.css, seção 15). */
-=======
-  /* Alvos de toque de 44px (as cores das paletas são menores só porque são muitas, lado a lado). */
-  .ecp-btn {
-    width: var(--touch-min);
-    height: var(--touch-min);
-  }
-
-  .ecp-row {
-    gap: 8px;
-  }
-
-  .ecp-swatch {
-    width: 34px;
-    height: 34px;
-  }
-
-  .ecp-swatch--lg {
-    width: var(--touch-min);
-    height: var(--touch-min);
-  }
-
-  .ecp-slider {
-    height: 28px;
-  }
-
-  .ecp-fontlist__item {
-    padding: 12px;
-  }
->>>>>>> origin/main
 
   .ecp-hex__input {
     font-size: 16px;

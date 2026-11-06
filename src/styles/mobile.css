@@ -69,13 +69,3 @@
     user-select: text;
   }
 }
-<<<<<<< HEAD
-=======
-
-/* Celular deitado: a barra superior e o respiro ficam mais baixos para sobrar altura para a folha. */
-@media (max-width: 900px) and (orientation: landscape) and (max-height: 520px) {
-  :root {
-    --topbar-h: 46px;
-  }
-}
->>>>>>> origin/main

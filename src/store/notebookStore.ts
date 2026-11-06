@@ -37,13 +37,10 @@ interface NotebookState {
   openAbout: () => void;
   closeAbout: () => void;
 
-<<<<<<< HEAD
   /** Modo escrita (celular): esconde barra superior, abas e cabeçalho para a folha ocupar a tela toda. Só em memória. */
   focusMode: boolean;
   setFocusMode: (on: boolean) => void;
 
-=======
->>>>>>> origin/main
   /** Espaço no centro da TopBar onde a barra de ferramentas do desenho é encaixada (portal). */
   toolbarSlot: HTMLElement | null;
 
@@ -64,10 +61,7 @@ export const useNotebookStore = create<NotebookState>((set) => ({
   view: 'notebook',
   recentColors: [],
   toolbarSlot: null,
-<<<<<<< HEAD
   focusMode: false,
-=======
->>>>>>> origin/main
   lastPageBySubject: {},
   lastPageByTopic: {},
   listFilters: DEFAULT_FILTERS,
@@ -91,10 +85,7 @@ export const useNotebookStore = create<NotebookState>((set) => ({
       recentColors: [color, ...s.recentColors.filter((c) => c !== color)].slice(0, MAX_RECENT_COLORS),
     })),
   setToolbarSlot: (toolbarSlot) => set({ toolbarSlot }),
-<<<<<<< HEAD
   setFocusMode: (focusMode) => set({ focusMode }),
-=======
->>>>>>> origin/main
   setListFilters: (patch) => set((s) => ({ listFilters: { ...s.listFilters, ...patch } })),
   setListSort: (listSort) => set({ listSort }),
   resetListFilters: () => set({ listFilters: DEFAULT_FILTERS }),

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* ==========================================================================
  *  A FOLHA DO CADERNO (fichário: abas + folha + divisórias)
  * ==========================================================================
@@ -24,34 +23,6 @@
   --page-pad-right: var(--layout-page-pad-right);
   --page-pad-bottom: var(--layout-page-pad-bottom);
   --page-pad-left: var(--layout-page-pad-left);
-=======
-/*
- * A FOLHA DO CADERNO — layout fluido (nada de largura fixa em px para a folha).
- *
- * A folha ocupa a largura útil da tela (width: 100%, limitada só por
- * --sheet-max-w, em theme.css) e NUNCA fica mais baixa que a altura útil da
- * viewport (--sheet-min-h): em telas altas/estreitas (ex.: "site para
- * computador" no celular) ela cresce para preencher, em vez de virar um
- * retângulo pequeno no meio de um fundo preto.
- *
- * Faixas de largura (ver theme.css):
- *   >= 1280px   3 colunas  [editor de texto | folha | propriedades] — as laterais
- *               reservam espaço, então a folha não "pula" quando um painel abre;
- *   901–1279px  folha com a largura toda; os painéis FLUTUAM sobre ela (position: fixed);
- *   <= 1179px   a barra de ferramentas vira doca no pé da tela e a folha termina acima dela;
- *   <= 900px    celular: folha em tela cheia, divisórias e abas dentro do fluxo.
- */
-
-/* ======================================================================
-   Base (fluida) — vale para qualquer largura
-   ====================================================================== */
-.notebook-page {
-  /* Respiros da página. São variáveis porque a altura mínima da folha é
-     calculada a partir deles (têm que andar juntos). */
-  --page-pad-top: 46px; /* espaço para as abas dos tópicos, que saem acima da folha */
-  --page-pad-x: 24px;
-  --page-pad-bottom: 40px;
->>>>>>> origin/main
 
   /* Altura útil: viewport − barra superior − respiros. */
   --sheet-min-h: calc(100vh - var(--topbar-h) - var(--safe-top) - var(--page-pad-top) - var(--page-pad-bottom));
@@ -62,13 +33,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-<<<<<<< HEAD
   /* À direita, a folga das divisórias das matérias (--tabs-gutter), coladas na borda da folha. */
   padding: var(--page-pad-top) calc(var(--page-pad-right) + var(--tabs-gutter)) var(--page-pad-bottom) var(--page-pad-left);
-=======
-  /* À direita, a folga das divisórias das matérias, que ficam coladas na borda da folha. */
-  padding: var(--page-pad-top) calc(var(--page-pad-x) + var(--tabs-gutter)) var(--page-pad-bottom) var(--page-pad-x);
->>>>>>> origin/main
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -98,7 +64,6 @@
   min-width: 0;
 }
 
-<<<<<<< HEAD
 /* Faixa de cima da folha: abas dos tópicos (rolam se forem muitas) + nome da página à direita. */
 .notebook-page__topics {
   position: absolute;
@@ -107,25 +72,11 @@
   bottom: 100%;
   z-index: var(--z-panel);
   display: flex;
-=======
-.notebook-page__topics {
-  position: absolute;
-  left: 22px;
-  right: 22px;
-  bottom: 100%;
-  z-index: 0;
-  display: flex;
-}
-
-/* Faixa de cima da folha: abas dos tópicos (rolam se forem muitas) + título da página à direita. */
-.notebook-page__topics {
->>>>>>> origin/main
   align-items: flex-end;
 }
 
 .notebook-page__topics > .topic-tabs {
   flex: 0 1 auto;
-<<<<<<< HEAD
   max-width: var(--topic-tabs-max-w);
 }
 
@@ -134,11 +85,6 @@
 }
 
 /* Divisórias das matérias (SubjectTabs): coladas na borda direita da folha. */
-=======
-  max-width: 62%;
-}
-
->>>>>>> origin/main
 .notebook-page__dividers {
   position: absolute;
   left: 100%;
@@ -154,14 +100,8 @@
   min-width: 0;
 }
 
-<<<<<<< HEAD
 /* ---- A folha --------------------------------------------------------------- */
 .notebook-page__sheet {
-=======
-.notebook-page__sheet {
-  --sheet-aspect-ratio: 3 / 4;
-
->>>>>>> origin/main
   position: relative;
   z-index: 1;
   width: 100%;
@@ -174,7 +114,6 @@
   grid-template-rows: auto minmax(0, 1fr);
 
   background: var(--notebook);
-<<<<<<< HEAD
   border-radius: var(--sheet-radius);
   box-shadow: var(--sheet-shadow);
   padding: var(--sheet-content-pad-top) var(--sheet-content-pad-x) var(--sheet-content-pad-bottom);
@@ -192,12 +131,6 @@
   --sheet-ink: var(--sheet-dark-ink);
   --notebook-lines: #202a2e;
   --notebook-grid: var(--sheet-dark-lines);
-=======
-  border-radius: var(--radius-lg);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-  /* Margens internas proporcionais à tela (antes eram 28px/40px fixos). */
-  padding: clamp(18px, 2.6vw, 28px) clamp(16px, 3.4vw, 40px) clamp(20px, 3vw, 40px);
->>>>>>> origin/main
 }
 
 /* Cabeçalho: é um "container" — os campos se reorganizam pela largura da FOLHA, não da tela (ver PageHeader.css). */
@@ -206,15 +139,11 @@
   min-width: 0;
 }
 
-<<<<<<< HEAD
 /* "Salvo / Salvando… / erro" no canto superior direito da folha. */
-=======
->>>>>>> origin/main
 .notebook-page__status {
   position: absolute;
   top: 12px;
   right: 20px;
-<<<<<<< HEAD
   font-size: var(--sheet-status-size);
   color: var(--muted);
   z-index: 10;
@@ -232,20 +161,6 @@
   background: none;
   border: none;
   font-size: var(--sheet-fav-size);
-=======
-  font-size: 12px;
-  color: var(--muted);
-  z-index: 10;
-}
-
-.notebook-page__fav {
-  position: absolute;
-  top: 12px;
-  left: 20px;
-  background: none;
-  border: none;
-  font-size: 18px;
->>>>>>> origin/main
   line-height: 1;
   padding: 0;
   color: var(--favorite);
@@ -274,19 +189,12 @@
 
 /*
  * PageCanvas — o ÚNICO espaço de coordenadas da folha: o ExcalidrawLayer é o
-<<<<<<< HEAD
  * único filho e ocupa 100% dessa área. Texto, desenho e formas vivem como
  * elementos nativos dele. As linhas do caderno ficam no fundo (styles/paper.css).
-=======
- * único filho e ocupa 100% dessa área (position: absolute; inset: 0). Texto,
- * desenho e formas vivem como elementos nativos dele. As linhas do caderno
- * ficam no fundo do canvas (src/styles/paper.css).
->>>>>>> origin/main
  */
 .notebook-page__canvas {
   position: relative;
   overflow: hidden;
-<<<<<<< HEAD
   border-radius: var(--sheet-canvas-radius);
 }
 
@@ -298,28 +206,6 @@
     display: grid;
     grid-template-columns: var(--sheet-side-col-w) minmax(0, var(--sheet-max-w)) var(--sheet-side-col-w);
     justify-content: center;
-=======
-  border-radius: var(--radius-sm);
-}
-
-/* ======================================================================
-   >= 1280px — 3 colunas: [editor de texto | folha | propriedades]
-   As duas laterais têm sempre a mesma largura (mínimo 304px = painel de
-   280px + respiro), então a folha fica centralizada e NÃO se move quando um
-   painel aparece; se a tela for estreita, é a folha que encolhe, igualmente
-   dos dois lados.
-   ====================================================================== */
-@media (min-width: 1280px) {
-  .notebook-page {
-    /* O espaço das divisórias vem da coluna da direita (padding-left abaixo). */
-    padding-inline: var(--page-pad-x);
-  }
-
-  .notebook-page__sheet-wrap {
-    display: grid;
-    grid-template-columns: minmax(304px, 1fr) minmax(0, var(--sheet-max-w)) minmax(304px, 1fr);
-    justify-content: normal;
->>>>>>> origin/main
   }
 
   .notebook-page__aside {
@@ -328,11 +214,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: flex-start;
-<<<<<<< HEAD
     padding-right: 10px;
-=======
-    padding-right: 16px;
->>>>>>> origin/main
   }
 
   .notebook-page__book {
@@ -343,7 +225,6 @@
   .notebook-page__side {
     grid-column: 3;
     grid-row: 1;
-<<<<<<< HEAD
     /* Reserva as divisórias sem empurrar a folha para fora do centro. */
     padding-left: 30px;
   }
@@ -351,18 +232,6 @@
 
 /* ---- 901–1279px — a folha usa a largura toda; os painéis são contextuais ----
    (regras de posição em ElementContextPanel.css e RichTextEditor.css). */
-=======
-    /* 16px de respiro + a largura das divisórias, que invadem esta coluna. */
-    padding-left: calc(var(--tabs-gutter) + 4px);
-  }
-}
-
-/* ======================================================================
-   901–1279px — a folha usa a largura toda; os painéis flutuam sobre ela
-   (as regras de posição estão em ElementContextPanel.css e RichTextEditor.css).
-   As colunas ficam sem tamanho, para não roubar largura da folha.
-   ====================================================================== */
->>>>>>> origin/main
 @media (min-width: 901px) and (max-width: 1279px) {
   .notebook-page__aside,
   .notebook-page__side {
@@ -374,37 +243,11 @@
   }
 }
 
-<<<<<<< HEAD
 /* ---- <= 900px — CELULAR ------------------------------------------------------
    A folha preenche a tela, sem rolagem da página e sem proporção de papel.
    As divisórias e as abas entram no fluxo (grade) em volta da folha. */
 @media (max-width: 900px) {
   .notebook-page {
-=======
-/* ======================================================================
-   <= 1179px — a barra de ferramentas é uma doca fixa no pé da tela
-   (DrawToolbar.css) e publica a sua altura em --mobile-toolbar-h; a folha
-   termina logo acima dela, sem ficar escondida atrás.
-   ====================================================================== */
-@media (max-width: 1179px) {
-  .notebook-page {
-    --page-pad-bottom: calc(16px + var(--mobile-toolbar-h, 0px));
-  }
-}
-
-/* ======================================================================
-   <= 900px — CELULAR: a folha preenche a tela inteira, como o canvas do
-   Excalidraw — sem rolagem da página, sem proporção de papel, com uma margem
-   fina. As divisórias e as abas entram no fluxo (grade) em volta da folha.
-   ====================================================================== */
-@media (max-width: 900px) {
-  .notebook-page {
-    --page-pad-top: 6px;
-    --page-pad-x: 6px;
-    --page-pad-bottom: calc(6px + var(--mobile-toolbar-h, 0px));
-
-    padding: var(--page-pad-top) var(--page-pad-x) var(--page-pad-bottom);
->>>>>>> origin/main
     overflow: hidden;
     overscroll-behavior: none;
   }
@@ -429,20 +272,12 @@
   .notebook-page__book {
     max-width: none;
     display: grid;
-<<<<<<< HEAD
     grid-template-columns: minmax(0, 1fr) var(--subject-tabs-w);
-=======
-    grid-template-columns: minmax(0, 1fr) var(--touch-min);
->>>>>>> origin/main
     grid-template-rows: auto minmax(0, 1fr);
   }
 
   .notebook-page__topics {
-<<<<<<< HEAD
     position: relative;
-=======
-    position: static;
->>>>>>> origin/main
     grid-column: 1;
     grid-row: 1;
     display: flex;
@@ -450,13 +285,8 @@
     min-width: 0;
   }
 
-<<<<<<< HEAD
   .notebook-page__topics > .sheet-appearance {
     right: calc(0px - var(--sheet-appearance-offset-x));
-=======
-  .notebook-page__topics > .topic-tabs {
-    max-width: 70%;
->>>>>>> origin/main
   }
 
   .notebook-page__dividers {
@@ -476,7 +306,6 @@
     grid-row: 2;
     height: 100%;
     min-height: 0;
-<<<<<<< HEAD
   }
 
   /* Estrela: área de toque de 44px sem aumentar o desenho. */
@@ -484,18 +313,6 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-=======
-    aspect-ratio: auto;
-    padding: 10px 8px 8px;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
-  }
-
-  .notebook-page__fav {
-    top: 8px;
-    left: 8px;
-    font-size: 20px;
->>>>>>> origin/main
     padding: 4px;
     margin: -4px;
   }
@@ -504,7 +321,6 @@
   .notebook-page__status {
     display: none;
   }
-<<<<<<< HEAD
   .notebook-page__status.is-error {
     display: flex;
     align-items: center;
@@ -520,8 +336,6 @@
     min-width: var(--touch-min);
     min-height: var(--touch-min);
   }
-=======
->>>>>>> origin/main
 
   .notebook-page__canvas {
     min-height: 0;
@@ -530,27 +344,3 @@
     user-select: none;
   }
 }
-<<<<<<< HEAD
-=======
-
-/* Celular estreito: margens e raio menores = mais área útil de escrita. */
-@media (max-width: 380px) {
-  .notebook-page {
-    --page-pad-x: 4px;
-    --page-pad-top: 4px;
-    --page-pad-bottom: calc(4px + var(--mobile-toolbar-h, 0px));
-  }
-
-  .notebook-page__sheet {
-    padding: 8px 6px 6px;
-    border-radius: 10px;
-  }
-}
-
-/* Celular deitado: pouca altura — margens internas mínimas. */
-@media (max-width: 900px) and (orientation: landscape) and (max-height: 520px) {
-  .notebook-page__sheet {
-    padding: 6px 8px;
-  }
-}
->>>>>>> origin/main
